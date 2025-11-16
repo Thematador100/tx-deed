@@ -1,0 +1,30 @@
+## Pages
+- [About Us - Win With Deeds](/about): Learn about the mission and vision of Win With Deeds, the premier platform for tax deed investors.
+- [Affiliate Program - Win With Deeds](/affiliateprogram): Partner with Win With Deeds and earn by promoting the leading tax deed investment platform.
+- [AI Dispo Copilot - TaxDeeds Pro](/dealmicrosite): Generate price recommendations, one-click microsites, and compliant outreach sequences with AI assistance.
+- [AI Workforce - Win With Deeds](/aiworkforce): Manage and monitor your automated AI
+- [AI-Powered Outreach - TaxDeeds Pro](/outreach): Automate compliant 10DLC/SMS and email sequences for your deals with built-in quiet hours and STOP functionality.
+- [Buyer-Match Graph - TaxDeeds Pro](/buyermatch): Leverage AI to match your deals with the top 20 buyers in any micro-market, complete with personalized reasons.
+- [Checkout - Win With Deeds](/checkout): Complete your purchase for Win With Deeds.
+- [Contact Us - TaxDeeds Pro](/contact): Have questions about tax deed investing? Get in touch with the TaxDeeds Pro team. We
+- [Dashboard - Win With Deeds](/dashboard): Your personalized tax deed investment dashboard with property listings, market insights, and portfolio tracking.
+- [Deal Rescue Engine - TaxDeeds Pro](/dealrescue): Upload your stalled deals and get a new buyer set, revised pricing, and objection-handling scripts to revive them.
+- [Developer Hub - Win With Deeds](/developerhub): Integrate your custom tools and scrapers with the Win With Deeds platform using our API guidelines.
+- [Doc & Process Automation - Win With Deeds](/automation): Automate assignments, addenda, POF requests, and escrow handoffs with templated and prefilled documents.
+- [Funding Partner Portal - Win With Deeds](/fundingportal): Submit your deals to a network of vetted hard money and private lenders.
+- [Lead Marketplace - Win With Deeds](/leadmarketplace): Buy and sell high-quality, vetted tax deed leads from a community of investors.
+- [Login - TaxDeeds Pro](/login): Login to your TaxDeeds Pro account to access premium tax deed investment opportunities.
+- [Member Dashboard - Win With Deeds](/memberdashboard): Your exclusive member dashboard with access to premium tools and resources.
+- [Membership - Win With Deeds](/membership): Unlock exclusive AI-powered tools, resources, and mentorship to accelerate your tax deed investment success.
+- [My Calendar - Win With Deeds](/calendar): View your tracked auctions and important dates on your personal investment calendar.
+- [My Pipeline - Win With Deeds](/mypipeline): Visually manage your tax deed investment pipeline with a drag-and-drop Kanban board.
+- [Profile - TaxDeeds Pro](/profile): Manage your TaxDeeds Pro user profile, update personal information, and view account settings.
+- [Properties - Win With Deeds](/properties): Browse all available tax deed properties, including upcoming auctions and investor marketplace listings.
+- [Property Lookup - Win With Deeds](/propertylookup): Instantly look up any property address to check its status in our database and get AI-powered insights.
+- [Redeemable Deeds - Win With Deeds](/redeemabledeeds): Track and analyze properties in their redemption period.
+- [Register - TaxDeeds Pro](/register): Create your TaxDeeds Pro account and start investing in premium tax deed properties today.
+- [Scout AI Agents - Win With Deeds](/scoutagent): Deploy autonomous AI agents to find deals for you 24/7.
+- [Tax Delinquent Leads - Win With Deeds](/taxdelinquentleads): View and manage your tax delinquent property leads.
+- [TaxDeeds Pro - The Premier Tax Deed Investment Platform](/landing): The all-in-one platform for discovering, analyzing, and acquiring tax deed properties.
+- [Upcoming Auctions & Leads - Win With Deeds](/leads): Discover upcoming tax deed auctions and lead lists from various counties.
+- [Upload Property Lists - Win With Deeds](/leadupload): Easily upload your property lists from Regrid, BatchLeads, PropWire, and more. Let our AI process them for you.
