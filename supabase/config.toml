@@ -1,0 +1,7 @@
+# Supabase Edge Functions Configuration
+
+[functions.hillsborough-scraper]
+verify_jwt = false
+
+[functions.property-analysis]
+verify_jwt = false
