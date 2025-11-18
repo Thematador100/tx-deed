@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  # API Service
+  api:
+    build: .
+    container_name: taxsales-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    environment:
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+      - DATABASE_URL=sqlite+aiosqlite:///./data/taxsales.db
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - SCRAPING_DELAY_MIN=2
+      - SCRAPING_DELAY_MAX=5
+      - MAX_RETRIES=3
+      - LOG_LEVEL=INFO
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Scheduler Service
+  scheduler:
+    build: .
+    container_name: taxsales-scheduler
+    command: python scheduler.py
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    environment:
+      - DATABASE_URL=sqlite+aiosqlite:///./data/taxsales.db
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - SCRAPE_SCHEDULE_CRON=0 2 * * *
+      - LOG_LEVEL=INFO
+    depends_on:
+      - api
+    restart: unless-stopped
+
+volumes:
+  data:
+  logs:
