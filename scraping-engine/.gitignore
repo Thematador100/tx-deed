@@ -1,0 +1,66 @@
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# Environment
+.env
+.env.local
+.env.production
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pino-*.log
+
+# Data
+data/
+*.json.gz
+
+# Screenshots
+screenshots/
+*.png
+*.jpg
+*.jpeg
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE
+.vscode/
+.idea/
+*.sublime-*
+.project
+
+# Build
+dist/
+build/
+.cache/
+
+# Testing
+coverage/
+.nyc_output/
+
+# Temp
+tmp/
+temp/
+*.tmp
+
+# Browser
+.config/
+.local-chromium/
+.local-firefox/
+
+# Prisma
+prisma/migrations/
+!prisma/migrations/.gitkeep
+
+# Docker
+docker-compose.override.yml
