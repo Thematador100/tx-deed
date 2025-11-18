@@ -44,6 +44,9 @@ import AdminAffiliates from '@/pages/admin/AdminAffiliates';
 import AdminApiKeys from '@/pages/admin/AdminApiKeys';
 import AdminProperties from '@/pages/admin/AdminProperties';
 import AdminSmartImport from '@/pages/admin/AdminSmartImport';
+import AdminPrivateListings from '@/pages/admin/AdminPrivateListings';
+import MemberExclusives from '@/pages/MemberExclusives';
+import MemberExclusiveDetails from '@/pages/MemberExclusiveDetails';
 import LibrarianChat from '@/components/LibrarianChat';
 import AdminLayout from '@/pages/admin/AdminLayout';
 import MemberDashboard from '@/pages/MemberDashboard';
@@ -101,6 +104,8 @@ function App() {
             <Route path="/tax-delinquent-leads" element={<ProtectedRoute><TaxDelinquentLeads /></ProtectedRoute>} />
             <Route path="/redeemable-deeds" element={<ProtectedRoute><RedeemableDeeds /></ProtectedRoute>} />
             <Route path="/member-dashboard" element={<ProtectedRoute><MemberDashboard /></ProtectedRoute>} />
+            <Route path="/member-exclusives" element={<ProtectedRoute><MemberExclusives /></ProtectedRoute>} />
+            <Route path="/member-exclusives/:id" element={<ProtectedRoute><MemberExclusiveDetails /></ProtectedRoute>} />
 
             {/* Admin Routes */}
             <Route path="/admin" element={<AdminRoute><AdminLayout><AdminDashboard /></AdminLayout></AdminRoute>} />
@@ -113,6 +118,7 @@ function App() {
             <Route path="/admin/api-keys" element={<AdminRoute><AdminLayout><AdminApiKeys /></AdminLayout></AdminRoute>} />
             <Route path="/admin/properties" element={<AdminRoute><AdminLayout><AdminProperties /></AdminLayout></AdminRoute>} />
             <Route path="/admin/smart-import" element={<AdminRoute><AdminLayout><AdminSmartImport /></AdminLayout></AdminRoute>} />
+            <Route path="/admin/private-listings" element={<AdminRoute><AdminLayout><AdminPrivateListings /></AdminLayout></AdminRoute>} />
 
             {/* Fallback redirect */}
             <Route path="*" element={<Navigate to="/" />} />

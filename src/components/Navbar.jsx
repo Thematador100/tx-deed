@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Building2, Menu, X, LayoutDashboard, LogOut, Search, ChevronDown, ShoppingCart, Bot, ShieldCheck, UploadCloud, Columns, Calendar, Bell, HeartHandshake as Handshake, UserCheck, Users, FileSearch, Terminal, Zap, Briefcase, ListFilter, FileClock, Rocket } from 'lucide-react';
+import { Building2, Menu, X, LayoutDashboard, LogOut, Search, ChevronDown, ShoppingCart, Bot, ShieldCheck, UploadCloud, Columns, Calendar, Bell, HeartHandshake as Handshake, UserCheck, Users, FileSearch, Terminal, Zap, Briefcase, ListFilter, FileClock, Rocket, Star } from 'lucide-react';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
@@ -116,6 +116,7 @@ const Navbar = () => {
           { name: 'Property Lookup', path: '/property-lookup', icon: FileSearch },
           { name: 'Upcoming Auctions', path: '/auctions-leads', icon: Search },
           { name: 'Lead Marketplace', path: '/lead-marketplace', icon: ShoppingCart },
+          { name: 'Member Exclusives', path: '/member-exclusives', icon: Star },
           { name: 'Tax Delinquent Leads', path: '/tax-delinquent-leads', icon: ListFilter },
           { name: 'Redeemable Deeds', path: '/redeemable-deeds', icon: FileClock },
           { name: 'Scout AI', path: '/scout-agent', icon: UserCheck },

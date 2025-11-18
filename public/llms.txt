@@ -17,6 +17,7 @@
 - [Lead Marketplace - Win With Deeds](/leadmarketplace): Buy and sell high-quality, vetted tax deed leads from a community of investors.
 - [Login - TaxDeeds Pro](/login): Login to your TaxDeeds Pro account to access premium tax deed investment opportunities.
 - [Member Dashboard - Win With Deeds](/memberdashboard): Your exclusive member dashboard with access to premium tools and resources.
+- [Member Exclusives - Premium Deals - Win With Deeds](/memberexclusives): Exclusive tax deed properties available only to Win With Deeds members
 - [Membership - Win With Deeds](/membership): Unlock exclusive AI-powered tools, resources, and mentorship to accelerate your tax deed investment success.
 - [My Calendar - Win With Deeds](/calendar): View your tracked auctions and important dates on your personal investment calendar.
 - [My Pipeline - Win With Deeds](/mypipeline): Visually manage your tax deed investment pipeline with a drag-and-drop Kanban board.
@@ -28,5 +29,5 @@
 - [Scout AI Agents - Win With Deeds](/scoutagent): Deploy autonomous AI agents to find deals for you 24/7.
 - [Tax Delinquent Leads - Win With Deeds](/taxdelinquentleads): View and manage your tax delinquent property leads.
 - [TaxDeeds Pro - The Premier Tax Deed Investment Platform](/landing): The all-in-one platform for discovering, analyzing, and acquiring tax deed properties.
-- [Upcoming Auctions & Leads - Win With Deeds](/leads): Discover upcoming tax deed auctions and lead lists from various counties.
+- [Upcoming Tax Sale Auctions - Win With Deeds](/leads): Discover upcoming tax deed and tax lien auctions from counties nationwide. 30+ sales scheduled with 10,000+ properties available.
 - [Upload Property Lists - Win With Deeds](/leadupload): Easily upload your property lists from Regrid, BatchLeads, PropWire, and more. Let our AI process them for you.
