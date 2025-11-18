@@ -43,6 +43,7 @@ import AdminAIWorkforce from '@/pages/admin/AdminAIWorkforce';
 import AdminAffiliates from '@/pages/admin/AdminAffiliates';
 import AdminApiKeys from '@/pages/admin/AdminApiKeys';
 import AdminProperties from '@/pages/admin/AdminProperties';
+import AdminSmartImport from '@/pages/admin/AdminSmartImport';
 import LibrarianChat from '@/components/LibrarianChat';
 import AdminLayout from '@/pages/admin/AdminLayout';
 import MemberDashboard from '@/pages/MemberDashboard';
@@ -111,7 +112,8 @@ function App() {
             <Route path="/admin/affiliates" element={<AdminRoute><AdminLayout><AdminAffiliates /></AdminLayout></AdminRoute>} />
             <Route path="/admin/api-keys" element={<AdminRoute><AdminLayout><AdminApiKeys /></AdminLayout></AdminRoute>} />
             <Route path="/admin/properties" element={<AdminRoute><AdminLayout><AdminProperties /></AdminLayout></AdminRoute>} />
-            
+            <Route path="/admin/smart-import" element={<AdminRoute><AdminLayout><AdminSmartImport /></AdminLayout></AdminRoute>} />
+
             {/* Fallback redirect */}
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>

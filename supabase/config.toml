@@ -1,0 +1,79 @@
+# Supabase Configuration
+# Place this in the root of your Supabase project
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public", "storage", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54322
+shadow_port = 54320
+major_version = 15
+
+[studio]
+enabled = true
+port = 54323
+
+[inbucket]
+enabled = true
+port = 54324
+smtp_port = 54325
+pop3_port = 54326
+
+[storage]
+enabled = true
+file_size_limit = "50MiB"
+
+[auth]
+enabled = true
+site_url = "http://localhost:3000"
+additional_redirect_urls = ["https://yourdomain.com"]
+jwt_expiry = 3600
+enable_signup = true
+
+[auth.email]
+enable_signup = true
+double_confirm_changes = true
+enable_confirmations = true
+
+# Scheduled Jobs (Cron)
+# These run your Supabase Edge Functions on a schedule
+
+[[edge_functions.cron]]
+name = "county-scraper"
+schedule = "0 3 * * *"  # Daily at 3:00 AM
+function_name = "county-scraper"
+description = "Scrape county websites for upcoming tax sales"
+
+[[edge_functions.cron]]
+name = "property-enrichment-batch"
+schedule = "0 4 * * *"  # Daily at 4:00 AM
+function_name = "property-enrichment"
+description = "Batch enrich all properties added yesterday"
+
+[[edge_functions.cron]]
+name = "auction-reminders"
+schedule = "0 9 * * *"  # Daily at 9:00 AM
+function_name = "auction-reminders"
+description = "Send reminders for auctions happening soon"
+
+[[edge_functions.cron]]
+name = "stalled-deal-detector"
+schedule = "0 10 * * 1"  # Mondays at 10:00 AM
+function_name = "stalled-deal-detector"
+description = "Detect deals stuck >14 days, suggest Deal Rescue"
+
+[[edge_functions.cron]]
+name = "weekly-market-analysis"
+schedule = "0 6 * * 0"  # Sundays at 6:00 AM
+function_name = "market-analysis"
+description = "Analyze market trends, generate insights"
+
+[[edge_functions.cron]]
+name = "monthly-report"
+schedule = "0 8 1 * *"  # 1st of month at 8:00 AM
+function_name = "monthly-report"
+description = "Generate admin monthly report"
