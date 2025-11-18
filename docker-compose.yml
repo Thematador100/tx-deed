@@ -1,0 +1,93 @@
+version: '3.8'
+
+services:
+  # Main scraping application
+  scraper:
+    build: .
+    container_name: scraping_system
+    volumes:
+      - ./scraping_system:/app/scraping_system
+      - ./data:/app/data
+      - ./logs:/app/logs
+    environment:
+      - DATABASE_TYPE=postgresql
+      - QUEUE_TYPE=redis
+      - REDIS_HOST=redis
+      - POSTGRES_HOST=postgres
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - scraping_network
+    restart: unless-stopped
+
+  # PostgreSQL database
+  postgres:
+    image: postgres:15-alpine
+    container_name: scraping_postgres
+    environment:
+      - POSTGRES_DB=scraping
+      - POSTGRES_USER=scraper
+      - POSTGRES_PASSWORD=scraper_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - scraping_network
+    restart: unless-stopped
+
+  # Redis for task queue
+  redis:
+    image: redis:7-alpine
+    container_name: scraping_redis
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - scraping_network
+    restart: unless-stopped
+
+  # MongoDB (optional)
+  mongodb:
+    image: mongo:7
+    container_name: scraping_mongodb
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin_password
+      - MONGO_INITDB_DATABASE=scraping
+    volumes:
+      - mongodb_data:/data/db
+    ports:
+      - "27017:27017"
+    networks:
+      - scraping_network
+    restart: unless-stopped
+
+  # RabbitMQ (optional)
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: scraping_rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=scraper
+      - RABBITMQ_DEFAULT_PASS=scraper_password
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    ports:
+      - "5672:5672"   # AMQP
+      - "15672:15672" # Management UI
+    networks:
+      - scraping_network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  redis_data:
+  mongodb_data:
+  rabbitmq_data:
+
+networks:
+  scraping_network:
+    driver: bridge

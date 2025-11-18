@@ -1,0 +1,90 @@
+# Enterprise Scraping System Configuration
+
+# Scraping settings
+scraping:
+  use_proxy: true
+  rate_limit: 2.0  # Requests per second
+  max_retries: 3
+  timeout: 30
+
+# Database settings
+database:
+  type: "sqlite"  # Options: sqlite, postgresql, mongodb
+  sqlite:
+    path: "scraping_system/data/scraping.db"
+  postgresql:
+    host: "localhost"
+    port: 5432
+    database: "scraping"
+    user: "postgres"
+    password: "your_password"
+  mongodb:
+    host: "localhost"
+    port: 27017
+    database: "scraping"
+
+# Queue settings
+queue:
+  type: "memory"  # Options: memory, redis, rabbitmq
+  queue_name: "scraping_tasks"
+  redis:
+    host: "localhost"
+    port: 6379
+    db: 0
+  rabbitmq:
+    host: "localhost"
+    port: 5672
+    username: "guest"
+    password: "guest"
+
+# Proxy settings
+proxy:
+  enabled: false
+  proxy_file: "scraping_system/config/proxies.txt"
+  health_check_url: "https://httpbin.org/ip"
+  health_check_interval: 300
+
+# Data pipeline settings
+pipeline:
+  strict_validation: false
+  enable_enrichment: true
+  batch_size: 100
+
+# Data science settings
+data_science:
+  enable_ml_models: true
+  model_path: "scraping_system/data/models"
+
+# Logging settings
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  log_dir: "scraping_system/logs"
+  max_file_size: 10485760  # 10MB
+  backup_count: 5
+
+# Scraper-specific settings
+scrapers:
+  zillow:
+    enabled: true
+    max_pages: 10
+  realtor:
+    enabled: true
+    max_results: 200
+  redfin:
+    enabled: true
+    max_results: 350
+  county_tax:
+    enabled: true
+    counties:
+      - travis
+      - harris
+      - dallas
+      - bexar
+
+# Output settings
+output:
+  save_raw_data: true
+  save_cleaned_data: true
+  export_formats:
+    - json
+    - csv
