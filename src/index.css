@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Manrope:wght@600;700;800&display=swap');
+
+:root {
+  --background: 0 0% 100%; /* White */
+  --foreground: 222.2 84% 4.9%; /* Dark text */
+  --card: 0 0% 100%;
+  --card-foreground: 222.2 84% 4.9%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222.2 84% 4.9%;
+  --primary: 262.1 83.3% 57.8%; /* Purple */
+  --primary-foreground: 210 40% 98%; /* White */
+  --secondary: 210 40% 96.1%; /* Light gray */
+  --secondary-foreground: 222.2 47.4% 11.2%; /* Darker gray */
+  --muted: 210 40% 96.1%;
+  --muted-foreground: 215.4 16.3% 46.9%;
+  --accent: 210 40% 96.1%;
+  --accent-foreground: 222.2 47.4% 11.2%;
+  --destructive: 0 84.2% 60.2%; /* Red */
+  --destructive-foreground: 210 40% 98%;
+  --border: 214.3 31.8% 91.4%; /* Light border */
+  --input: 214.3 31.8% 91.4%;
+  --ring: 262.1 83.3% 57.8%;
+  --radius: 0.5rem;
+}
+
+* {
+  border-color: hsl(var(--border));
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Manrope', sans-serif;
+}
