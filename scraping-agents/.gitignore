@@ -1,0 +1,48 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+*.egg-info/
+dist/
+build/
+
+# Environment
+.env
+.env.local
+
+# Logs
+logs/
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Data
+data/
+*.csv
+*.json.bak
+
+# Temporary files
+*.tmp
+*.temp
+
+# Chrome/Selenium
+chromedriver
+geckodriver
+*.crx
+
+# Redis
+dump.rdb
+
+# Jupyter
+.ipynb_checkpoints/

@@ -1,0 +1,114 @@
+{
+  "texas_counties": {
+    "harris": {
+      "name": "Harris County",
+      "population": 4731000,
+      "county_seat": "Houston",
+      "websites": {
+        "tax_sale": "https://www.hctax.net/",
+        "appraisal_district": "https://hcad.org/",
+        "county_clerk": "https://www.cclerk.hctx.net/",
+        "delinquent_tax": "https://www.hctax.net/Delinquent/Search"
+      },
+      "scraper_type": "selenium",
+      "data_format": "html_table",
+      "update_frequency": "daily",
+      "enabled": true
+    },
+    "dallas": {
+      "name": "Dallas County",
+      "population": 2647000,
+      "county_seat": "Dallas",
+      "websites": {
+        "tax_sale": "https://www.dallascounty.org/government/tax/",
+        "appraisal_district": "https://www.dallascad.org/",
+        "sheriff_sales": "https://www.dallascounty.org/government/sheriff/sales.php"
+      },
+      "scraper_type": "requests",
+      "data_format": "json_api",
+      "update_frequency": "daily",
+      "enabled": true
+    },
+    "tarrant": {
+      "name": "Tarrant County",
+      "population": 2111000,
+      "county_seat": "Fort Worth",
+      "websites": {
+        "tax_office": "https://www.tarrantcountytx.gov/en/tax-office.html",
+        "appraisal_district": "https://www.tad.org/",
+        "tax_sales": "https://tax.tarrantcountytx.gov/"
+      },
+      "scraper_type": "playwright",
+      "data_format": "html_table",
+      "update_frequency": "daily",
+      "enabled": true
+    },
+    "bexar": {
+      "name": "Bexar County",
+      "population": 2009000,
+      "county_seat": "San Antonio",
+      "websites": {
+        "tax_office": "https://www.bexar.org/1493/Tax-Office",
+        "appraisal_district": "https://www.bcad.org/",
+        "delinquent_tax": "https://bexar.trueautomation.com/clientdb/PropertySearch.aspx"
+      },
+      "scraper_type": "selenium",
+      "data_format": "html_form",
+      "update_frequency": "daily",
+      "enabled": true
+    },
+    "travis": {
+      "name": "Travis County",
+      "population": 1290000,
+      "county_seat": "Austin",
+      "websites": {
+        "tax_office": "https://tax-office.traviscountytx.gov/",
+        "appraisal_district": "https://www.traviscad.org/",
+        "constable_sales": "https://www.traviscountytx.gov/constable"
+      },
+      "scraper_type": "playwright",
+      "data_format": "html_table",
+      "update_frequency": "daily",
+      "enabled": true
+    },
+    "collin": {
+      "name": "Collin County",
+      "population": 1064000,
+      "county_seat": "McKinney",
+      "websites": {
+        "tax_assessor": "https://www.collincountytx.gov/tax_assessor/",
+        "appraisal_district": "https://www.collincad.org/"
+      },
+      "scraper_type": "requests",
+      "data_format": "pdf",
+      "update_frequency": "weekly",
+      "enabled": true
+    },
+    "denton": {
+      "name": "Denton County",
+      "population": 906000,
+      "county_seat": "Denton",
+      "websites": {
+        "tax_office": "https://www.dentoncounty.gov/346/Tax-Office",
+        "appraisal_district": "https://www.dentoncad.com/"
+      },
+      "scraper_type": "playwright",
+      "data_format": "html_table",
+      "update_frequency": "daily",
+      "enabled": true
+    },
+    "fort_bend": {
+      "name": "Fort Bend County",
+      "population": 822000,
+      "county_seat": "Richmond",
+      "websites": {
+        "tax_office": "https://www.fortbendcountytx.gov/government/departments/tax-office",
+        "appraisal_district": "https://www.fbcad.org/"
+      },
+      "scraper_type": "selenium",
+      "data_format": "html_table",
+      "update_frequency": "daily",
+      "enabled": true
+    }
+  }
+}
