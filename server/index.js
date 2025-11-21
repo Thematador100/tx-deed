@@ -15,8 +15,7 @@
  *   PORT - API server port (default: 3001)
  */
 
-import ScraperManager from './lib/ScraperManager.js';
-import DatabaseManager from './lib/DatabaseManager.js';
+import AutonomousAgent from './lib/AutonomousAgent.js';
 import express from 'express';
 import cors from 'cors';
 
@@ -27,30 +26,13 @@ const PORT = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
-// Initialize managers
-const dbManager = new DatabaseManager(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_KEY
-);
-
-const scraperManager = new ScraperManager({
-  maxConcurrent: parseInt(process.env.MAX_CONCURRENT_SCRAPERS) || 3,
-  scheduleCron: process.env.SCRAPER_SCHEDULE || '0 2 * * *',
-  autoStart: process.env.AUTO_START_SCHEDULER === 'true',
-
-  // Callback when data is scraped
-  onDataScraped: async (data) => {
-    try {
-      await dbManager.saveProperty(data);
-    } catch (error) {
-      console.error('[Server] Error saving scraped data:', error);
-    }
-  },
-
-  // Callback for errors
-  onError: async (error, context) => {
-    console.error('[Server] Scraper error:', error.message, context);
-  },
+// Initialize Autonomous Agent - handles everything automatically
+const agent = new AutonomousAgent({
+  checkInterval: 60000, // Health check every minute
+  maxRetries: 5,
+  retryDelay: 300000, // 5 minutes
+  autoRestart: true, // Auto-restart on critical failures
+  runInitialScrape: process.env.RUN_INITIAL_SCRAPE === 'true',
 });
 
 // API Routes
@@ -66,10 +48,10 @@ app.get('/health', (req, res) => {
 });
 
 /**
- * Get scraper status
+ * Get agent status (includes scraper status)
  */
 app.get('/api/scrapers/status', (req, res) => {
-  res.json(scraperManager.getStatus());
+  res.json(agent.getStatus());
 });
 
 /**
@@ -77,10 +59,11 @@ app.get('/api/scrapers/status', (req, res) => {
  */
 app.get('/api/scrapers/stats', async (req, res) => {
   try {
-    const managerStats = scraperManager.getStats();
-    const dbStats = await dbManager.getScraperStats();
+    const managerStats = agent.scraperManager?.getStats() || {};
+    const dbStats = await agent.dbManager?.getScraperStats() || {};
 
     res.json({
+      agent: agent.getStatus(),
       manager: managerStats,
       database: dbStats,
     });
@@ -94,10 +77,14 @@ app.get('/api/scrapers/stats', async (req, res) => {
  */
 app.post('/api/scrapers/scrape-all', async (req, res) => {
   try {
-    scraperManager.scrapeAllCounties();
+    if (!agent.scraperManager) {
+      return res.status(503).json({ error: 'Scraper not initialized' });
+    }
+
+    agent.scraperManager.scrapeAllCounties();
     res.json({
       message: 'Scraping started for all active counties',
-      status: scraperManager.getStatus(),
+      status: agent.getStatus(),
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -109,8 +96,12 @@ app.post('/api/scrapers/scrape-all', async (req, res) => {
  */
 app.post('/api/scrapers/scrape/:countyId', async (req, res) => {
   try {
+    if (!agent.scraperManager) {
+      return res.status(503).json({ error: 'Scraper not initialized' });
+    }
+
     const { countyId } = req.params;
-    const result = await scraperManager.scrapeCounty(countyId);
+    const result = await agent.scraperManager.scrapeCounty(countyId);
     res.json(result);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -122,10 +113,14 @@ app.post('/api/scrapers/scrape/:countyId', async (req, res) => {
  */
 app.post('/api/scrapers/scheduler/start', (req, res) => {
   try {
-    scraperManager.startScheduler();
+    if (!agent.scraperManager) {
+      return res.status(503).json({ error: 'Scraper not initialized' });
+    }
+
+    agent.scraperManager.startScheduler();
     res.json({
       message: 'Scheduler started',
-      schedule: scraperManager.config.scheduleCron,
+      schedule: agent.scraperManager.config.scheduleCron,
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -137,7 +132,11 @@ app.post('/api/scrapers/scheduler/start', (req, res) => {
  */
 app.post('/api/scrapers/scheduler/stop', (req, res) => {
   try {
-    scraperManager.stopScheduler();
+    if (!agent.scraperManager) {
+      return res.status(503).json({ error: 'Scraper not initialized' });
+    }
+
+    agent.scraperManager.stopScheduler();
     res.json({ message: 'Scheduler stopped' });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -149,7 +148,11 @@ app.post('/api/scrapers/scheduler/stop', (req, res) => {
  */
 app.post('/api/scrapers/clear-history', (req, res) => {
   try {
-    scraperManager.clearHistory();
+    if (!agent.scraperManager) {
+      return res.status(503).json({ error: 'Scraper not initialized' });
+    }
+
+    agent.scraperManager.clearHistory();
     res.json({ message: 'History cleared' });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -161,8 +164,12 @@ app.post('/api/scrapers/clear-history', (req, res) => {
  */
 app.get('/api/scrapers/runs', async (req, res) => {
   try {
+    if (!agent.dbManager) {
+      return res.status(503).json({ error: 'Database not initialized' });
+    }
+
     const limit = parseInt(req.query.limit) || 10;
-    const runs = await dbManager.getRecentRuns(limit);
+    const runs = await agent.dbManager.getRecentRuns(limit);
     res.json(runs);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -172,38 +179,56 @@ app.get('/api/scrapers/runs', async (req, res) => {
 // Initialize and start server
 async function start() {
   try {
-    console.log('[Server] Starting scraper server...');
+    console.log('[Server] 🚀 Starting autonomous scraper system...');
+    console.log('[Server] 🤖 Mode: Fully Autonomous (24/7)');
 
-    // Initialize scraper manager
-    await scraperManager.initialize();
+    // Start autonomous agent - it handles everything automatically
+    await agent.start();
 
     // Start Express server
     app.listen(PORT, () => {
-      console.log(`[Server] API server listening on port ${PORT}`);
-      console.log(`[Server] Health check: http://localhost:${PORT}/health`);
-      console.log(`[Server] Status: http://localhost:${PORT}/api/scrapers/status`);
+      console.log(`[Server] ✅ API server listening on port ${PORT}`);
+      console.log(`[Server] 🏥 Health check: http://localhost:${PORT}/health`);
+      console.log(`[Server] 📊 Status: http://localhost:${PORT}/api/scrapers/status`);
+      console.log(`[Server] 🤖 Autonomous agent is managing all operations`);
+      console.log(`[Server] 💾 Database operations are automatic`);
+      console.log(`[Server] 🔄 System will self-heal from errors`);
     });
 
   } catch (error) {
-    console.error('[Server] Failed to start:', error);
-    process.exit(1);
+    console.error('[Server] ❌ Failed to start:', error);
+
+    // Autonomous agent will auto-restart
+    console.log('[Server] 🔄 Auto-restart will trigger in 5 minutes...');
+    setTimeout(start, 300000);
   }
 }
 
 // Handle shutdown gracefully
 process.on('SIGTERM', async () => {
-  console.log('[Server] SIGTERM received, shutting down...');
-  await scraperManager.stopAll();
+  console.log('[Server] SIGTERM received, shutting down gracefully...');
+  await agent.stop();
   process.exit(0);
 });
 
 process.on('SIGINT', async () => {
-  console.log('[Server] SIGINT received, shutting down...');
-  await scraperManager.stopAll();
+  console.log('[Server] SIGINT received, shutting down gracefully...');
+  await agent.stop();
   process.exit(0);
+});
+
+// Handle uncaught errors - agent will auto-recover
+process.on('uncaughtException', (error) => {
+  console.error('[Server] 💥 Uncaught exception:', error);
+  console.log('[Server] 🔄 Autonomous agent will handle recovery...');
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('[Server] 💥 Unhandled rejection at:', promise, 'reason:', reason);
+  console.log('[Server] 🔄 Autonomous agent will handle recovery...');
 });
 
 // Start the server
 start();
 
-export { scraperManager, dbManager };
+export { agent };
