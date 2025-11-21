@@ -11,6 +11,7 @@ import { Loader2, MapPin, Star, ArrowLeft, Bed, Bath, Maximize, Home, Building, 
 import DealDossier from '@/components/DealDossier';
 import { mockProperties, mockTaxSaleProperties } from '@/lib/mockData';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
+import { PropertyMediaGallery, PropertyMap } from '@/components/maps';
 
 const StatPill = ({ icon, label, value, className }) => (
   <div className={`flex flex-col items-center justify-center bg-slate-100 rounded-xl p-4 text-center shadow-sm ${className}`}>
@@ -152,8 +153,6 @@ const PropertyDetails = () => {
     return null; 
   }
 
-  const mapPlaceholderUrl = `https://api.maptiler.com/maps/streets-v2/static/${property.longitude},${property.latitude},14/800x400.png?key=get-your-own-key`;
-
   return (
     <div className="min-h-screen bg-slate-50">
       <Helmet>
@@ -173,11 +172,15 @@ const PropertyDetails = () => {
           <div className="lg:col-span-2 space-y-8">
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
               <div className="relative rounded-2xl overflow-hidden shadow-2xl mb-6 aspect-video">
-                <img
-                  className="w-full h-full object-cover"
-                  alt={`Exterior view of property at ${property.address}`}
-                  src={property.image_url || 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?q=80&w=2000'} />
-                <div className="absolute top-4 left-4 bg-black/50 text-white px-3 py-1 rounded-full text-sm font-semibold">
+                <PropertyMediaGallery
+                  latitude={property.latitude}
+                  longitude={property.longitude}
+                  address={property.address}
+                  imageUrl={property.image_url}
+                  additionalImages={property.additional_images || []}
+                  className="w-full h-full"
+                />
+                <div className="absolute bottom-4 left-4 bg-black/50 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm font-semibold">
                   {property.listing_type === 'auction' ? 'Upcoming Auction' : 'Marketplace Listing'}
                 </div>
               </div>
@@ -208,11 +211,21 @@ const PropertyDetails = () => {
             )}
 
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.2 }}>
-              <InfoCard icon={<MapPin className="w-6 h-6 mr-3 text-purple-600" />} title="Location & Map">
+              <InfoCard icon={<MapPin className="w-6 h-6 mr-3 text-purple-600" />} title="Interactive Location Map">
                 <div className="aspect-video bg-slate-200 rounded-lg overflow-hidden relative">
-                  <img class="w-full h-full object-cover" alt={`Map view of ${property.address}`} src="https://images.unsplash.com/photo-1518487346609-25352f3e0c8c" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-                  <Button variant="secondary" className="absolute bottom-4 right-4">Open Interactive Map</Button>
+                  <PropertyMap
+                    latitude={property.latitude}
+                    longitude={property.longitude}
+                    address={property.address}
+                    zoom={15}
+                    className="w-full h-full"
+                  />
+                </div>
+                <div className="mt-4 text-sm text-slate-600">
+                  <p className="flex items-center">
+                    <MapPin className="w-4 h-4 mr-2 text-purple-600" />
+                    Coordinates: {property.latitude?.toFixed(6)}, {property.longitude?.toFixed(6)}
+                  </p>
                 </div>
               </InfoCard>
             </motion.div>

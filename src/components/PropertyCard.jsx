@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { MapPin, DollarSign, TrendingUp, Zap, AlertTriangle, Mountain, ImageOff } from 'lucide-react';
+import { MapPin, DollarSign, TrendingUp, Zap, AlertTriangle, Mountain, ImageOff, Navigation } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { StreetViewImage } from '@/components/maps';
+import { isGoogleMapsConfigured } from '@/lib/googleMapsConfig';
 
 const PropertyCard = ({ property, onViewDetails }) => {
   const {
@@ -15,24 +17,64 @@ const PropertyCard = ({ property, onViewDetails }) => {
     red_flags,
     property_type,
     bedrooms,
-    bathrooms
+    bathrooms,
+    latitude,
+    longitude
   } = property;
 
+  const [showStreetView, setShowStreetView] = useState(false);
   const potentialEquity = estimated_value - price;
+  const hasGoogleMaps = isGoogleMapsConfigured();
+  const hasCoordinates = latitude && longitude;
 
   return (
     <motion.div
       whileHover={{ y: -5 }}
       className="bg-white rounded-2xl shadow-lg border border-slate-200 overflow-hidden flex flex-col h-full"
     >
-      <div className="relative">
-        {image_url ? (
+      <div className="relative group">
+        {showStreetView && hasGoogleMaps && hasCoordinates ? (
+          <StreetViewImage
+            latitude={latitude}
+            longitude={longitude}
+            address={address}
+            width={400}
+            height={192}
+            fallbackUrl={image_url}
+            className="w-full h-48 object-cover"
+          />
+        ) : image_url ? (
           <img className="w-full h-48 object-cover" alt={address} src={image_url} />
+        ) : hasGoogleMaps && hasCoordinates ? (
+          <StreetViewImage
+            latitude={latitude}
+            longitude={longitude}
+            address={address}
+            width={400}
+            height={192}
+            className="w-full h-48 object-cover"
+          />
         ) : (
           <div className="w-full h-48 bg-slate-200 flex items-center justify-center">
             <ImageOff className="w-12 h-12 text-slate-400" />
           </div>
         )}
+
+        {/* Street View Toggle Button */}
+        {hasGoogleMaps && hasCoordinates && image_url && (
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowStreetView(!showStreetView);
+            }}
+            className="absolute bottom-3 right-3 px-2 py-1 rounded-full text-xs font-bold text-white bg-black/50 backdrop-blur-sm hover:bg-black/70 transition-all flex items-center gap-1 opacity-0 group-hover:opacity-100"
+            title={showStreetView ? "Show Photo" : "Show Street View"}
+          >
+            <Navigation className="w-3 h-3" />
+            {showStreetView ? 'Photo' : 'Street'}
+          </button>
+        )}
+
         <div className={`absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-bold text-white ${listing_type === 'auction' ? 'bg-orange-500' : 'bg-green-500'}`}>
           {listing_type.toUpperCase()}
         </div>
