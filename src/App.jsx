@@ -43,6 +43,8 @@ import AdminAIWorkforce from '@/pages/admin/AdminAIWorkforce';
 import AdminAffiliates from '@/pages/admin/AdminAffiliates';
 import AdminApiKeys from '@/pages/admin/AdminApiKeys';
 import AdminProperties from '@/pages/admin/AdminProperties';
+import AdminTaxLeads from '@/pages/admin/AdminTaxLeads';
+import AdminRedeemableDeeds from '@/pages/admin/AdminRedeemableDeeds';
 import LibrarianChat from '@/components/LibrarianChat';
 import AdminLayout from '@/pages/admin/AdminLayout';
 import MemberDashboard from '@/pages/MemberDashboard';
@@ -111,7 +113,9 @@ function App() {
             <Route path="/admin/affiliates" element={<AdminRoute><AdminLayout><AdminAffiliates /></AdminLayout></AdminRoute>} />
             <Route path="/admin/api-keys" element={<AdminRoute><AdminLayout><AdminApiKeys /></AdminLayout></AdminRoute>} />
             <Route path="/admin/properties" element={<AdminRoute><AdminLayout><AdminProperties /></AdminLayout></AdminRoute>} />
-            
+            <Route path="/admin/tax-leads" element={<AdminRoute><AdminLayout><AdminTaxLeads /></AdminLayout></AdminRoute>} />
+            <Route path="/admin/redeemable-deeds" element={<AdminRoute><AdminLayout><AdminRedeemableDeeds /></AdminLayout></AdminRoute>} />
+
             {/* Fallback redirect */}
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>

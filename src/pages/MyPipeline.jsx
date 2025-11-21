@@ -16,7 +16,6 @@ import { useNavigate } from 'react-router-dom';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { mockProperties } from '@/lib/mockData';
 
 const SortableProperty = ({ property, stageName }) => {
   const navigate = useNavigate();
@@ -178,7 +177,7 @@ const MyPipeline = () => {
       }
 
       if (isDemo || !user) {
-        const mockSavedProperties = mockProperties.map((p, i) => ({
+        const mockSavedProperties = [].map((p, i) => ({
           id: p.id,
           pipeline_stage_id: (i % 5) + 1,
           properties: p
@@ -191,7 +190,7 @@ const MyPipeline = () => {
           .eq('user_id', user.id);
 
         if (propsError || !propsData || propsData.length === 0) {
-          const mockSavedProperties = mockProperties.map((p, i) => ({
+          const mockSavedProperties = [].map((p, i) => ({
             id: p.id,
             pipeline_stage_id: (i % 5) + 1,
             properties: p

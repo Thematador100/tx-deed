@@ -8,10 +8,9 @@ import { Button } from '@/components/ui/button';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
-import { mockRedeemableDeeds } from '@/lib/mockData';
 
 const DealTicker = () => {
-  const duplicatedDeals = [...mockRedeemableDeeds, ...mockRedeemableDeeds];
+  const duplicatedDeals = [...[], ...[]];
 
   return (
     <div className="relative w-full h-20 overflow-hidden bg-slate-800 text-white">

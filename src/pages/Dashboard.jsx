@@ -10,7 +10,6 @@ import PropertyCard from '@/components/PropertyCard';
 import { toast } from '@/components/ui/use-toast';
 import { supabase } from '@/lib/customSupabaseClient';
 import { Button } from '@/components/ui/button';
-import { mockProperties } from '@/lib/mockData';
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -22,19 +21,18 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      
-      // Use mock data as a fallback
-      setProperties(mockProperties.slice(0, 2));
-      setSavedProperties(mockProperties.slice(2, 5));
 
       if (user) {
         const { data: featuredData, error: featuredError } = await supabase
           .from('properties')
           .select('*')
+          .order('opportunity_score', { ascending: false })
           .limit(2);
 
-        if (!featuredError && featuredData.length > 0) {
+        if (!featuredError && featuredData) {
           setProperties(featuredData);
+        } else {
+          setProperties([]);
         }
 
         const { data: savedData, error: savedError } = await supabase
@@ -43,9 +41,25 @@ const Dashboard = () => {
           .eq('user_id', user.id)
           .limit(3);
 
-        if (!savedError && savedData.length > 0) {
+        if (!savedError && savedData) {
           setSavedProperties(savedData.map(sp => sp.properties));
+        } else {
+          setSavedProperties([]);
         }
+      } else {
+        // If not logged in, fetch featured properties
+        const { data: featuredData, error: featuredError } = await supabase
+          .from('properties')
+          .select('*')
+          .order('opportunity_score', { ascending: false })
+          .limit(2);
+
+        if (!featuredError && featuredData) {
+          setProperties(featuredData);
+        } else {
+          setProperties([]);
+        }
+        setSavedProperties([]);
       }
 
       setLoading(false);

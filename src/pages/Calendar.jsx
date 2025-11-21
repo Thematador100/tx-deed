@@ -10,7 +10,6 @@ import { supabase } from '@/lib/customSupabaseClient';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
 import { toast } from '@/components/ui/use-toast';
 import { useNavigate } from 'react-router-dom';
-import { mockTaxSaleProperties, mockRedeemableDeeds } from '@/lib/mockData';
 
 const Calendar = () => {
   const { user } = useAuth();
@@ -22,7 +21,7 @@ const Calendar = () => {
   useEffect(() => {
     setLoading(true);
     // Simulating fetching data. In a real app, this would come from your backend.
-    const taxSaleEvents = mockTaxSaleProperties.map(p => ({
+    const taxSaleEvents = [].map(p => ({
       id: p.id,
       title: `Auction: ${p.address}`,
       date: p.auction_date ? parseISO(p.auction_date) : new Date(), // Fallback for missing dates
@@ -30,7 +29,7 @@ const Calendar = () => {
       link: `/tax-delinquent-leads`
     }));
 
-    const redeemableEvents = mockRedeemableDeeds.map(d => ({
+    const redeemableEvents = [].map(d => ({
       id: d.id,
       title: `Redemption Ends: ${d.address}`,
       date: parseISO(d.redemption_date),

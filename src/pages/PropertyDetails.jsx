@@ -9,7 +9,6 @@ import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Loader2, MapPin, Star, ArrowLeft, Bed, Bath, Maximize, Home, Building, LandPlot, PlusCircle, DollarSign, TrendingUp, School, Wind, Users, AlertTriangle, Gavel } from 'lucide-react';
 import DealDossier from '@/components/DealDossier';
-import { mockProperties, mockTaxSaleProperties } from '@/lib/mockData';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
 
 const StatPill = ({ icon, label, value, className }) => (
@@ -48,19 +47,12 @@ const PropertyDetails = () => {
         .maybeSingle();
 
       if (error || !data) {
-        console.warn('Could not fetch from DB or property not found, using mock data for property ID:', id);
-        const allMockProperties = [...mockProperties, ...mockTaxSaleProperties.map(p => ({...p, price: p.starting_bid, estimated_value: p.starting_bid * 2.5, auction_date: '2025-10-20', roi: 150, opportunity_score: 85, listing_type: 'auction'}))];
-        const mockProperty = allMockProperties.find(p => String(p.id) === String(id));
-        if (mockProperty) {
-          setProperty(mockProperty);
-        } else {
-          toast({
-            title: "Error",
-            description: "Could not find the requested property.",
-            variant: "destructive",
-          });
-          navigate('/properties');
-        }
+        toast({
+          title: "Property Not Found",
+          description: "Could not find the requested property. It may have been removed or doesn't exist yet.",
+          variant: "destructive",
+        });
+        navigate('/properties');
       } else {
         setProperty(data);
       }
