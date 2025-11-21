@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { LayoutDashboard, Users, CreditCard, Library, Zap, Bot, HeartHandshake, KeyRound, Building } from 'lucide-react';
+import { LayoutDashboard, Users, CreditCard, Library, Zap, Bot, HeartHandshake, KeyRound, Building, Activity } from 'lucide-react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 
@@ -11,6 +11,7 @@ const AdminLayout = ({ children }) => {
     { title: "Dashboard", href: "/admin", icon: LayoutDashboard },
     { title: "Users", href: "/admin/users", icon: Users },
     { title: "Properties", href: "/admin/properties", icon: Building },
+    { title: "Scrapers", href: "/admin/scrapers", icon: Activity },
     { title: "Transactions", href: "/admin/transactions", icon: CreditCard },
     { title: "Library", href: "/admin/library", icon: Library },
     { title: "Integrations", href: "/admin/integrations", icon: Zap },

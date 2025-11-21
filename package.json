@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite --host :: --port 3000",
     "build": "node tools/generate-llms.js || true && vite build",
-    "preview": "vite preview --host :: --port 3000"
+    "preview": "vite preview --host :: --port 3000",
+    "scraper": "node server/index.js",
+    "scraper:dev": "nodemon server/index.js"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
@@ -28,11 +30,19 @@
     "@react-google-maps/api": "^2.20.7",
     "@stripe/stripe-js": "^2.1.11",
     "@supabase/supabase-js": "2.30.0",
+    "axios": "^1.13.2",
+    "cheerio": "^1.1.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
+    "cors": "^2.8.5",
+    "cron": "^4.3.4",
     "date-fns": "^4.1.0",
+    "express": "^5.1.0",
     "framer-motion": "^10.16.4",
     "lucide-react": "0.292.0",
+    "puppeteer": "^24.31.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.3.5",
@@ -40,7 +50,8 @@
     "react-router-dom": "^6.16.0",
     "stripe": "^14.5.0",
     "tailwind-merge": "^1.1.4",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "user-agents": "^1.1.669"
   },
   "devDependencies": {
     "@babel/generator": "^7.27.0",
