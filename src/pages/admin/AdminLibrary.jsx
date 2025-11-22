@@ -12,6 +12,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useDropzone } from 'react-dropzone';
+import libraryContent from '@/data/library-content.json';
 
 const DocumentIngestor = ({ onProcessComplete }) => {
   const [isProcessing, setIsProcessing] = useState(false);
@@ -101,12 +102,26 @@ const AdminLibrary = () => {
 
   const fetchItems = useCallback(async () => {
     setLoading(true);
+
+    // Load static library content (all 50 states + educational resources)
+    const staticItems = libraryContent.map(item => ({
+      ...item,
+      isStatic: true, // Mark as static (non-editable)
+      created_at: new Date().toISOString()
+    }));
+
+    // Try to load custom items from Supabase (admin-added content)
     const { data, error } = await supabase.from('library_items').select('*').order('created_at', { ascending: false });
+
     if (error) {
-      toast({ title: "Error", description: "Could not fetch library items.", variant: "destructive" });
+      // If Supabase fails (e.g., migrations not run), just use static content
+      console.log('Using static library content (Supabase not yet configured)');
+      setItems(staticItems);
     } else {
-      setItems(data);
+      // Merge static content with custom admin-added content
+      setItems([...data, ...staticItems]);
     }
+
     setLoading(false);
   }, []);
 
@@ -264,12 +279,20 @@ const AdminLibrary = () => {
                 ) : (
                   items.map((item) => (
                     <tr key={item.id} className="border-b border-slate-100 hover:bg-slate-50">
-                      <td className="p-4 font-medium text-slate-900">{item.title}</td>
+                      <td className="p-4 font-medium text-slate-900">
+                        {item.title}
+                        {item.isStatic && <span className="ml-2 text-xs text-slate-500">(Built-in)</span>}
+                      </td>
                       <td className="p-4 text-slate-600"><span className="flex items-center gap-2">{getIcon(item.item_type)} {item.item_type}</span></td>
                       <td className="p-4 text-slate-600 truncate max-w-xs"><a href={item.url} target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">{item.url}</a></td>
                       <td className="p-4 text-right space-x-2">
-                        <Button variant="outline" size="sm" onClick={() => handleOpenDialog(item)}><Edit className="w-4 h-4" /></Button>
-                        <Button variant="destructive" size="sm" onClick={() => handleDelete(item.id)}><Trash className="w-4 h-4" /></Button>
+                        {!item.isStatic && (
+                          <>
+                            <Button variant="outline" size="sm" onClick={() => handleOpenDialog(item)}><Edit className="w-4 h-4" /></Button>
+                            <Button variant="destructive" size="sm" onClick={() => handleDelete(item.id)}><Trash className="w-4 h-4" /></Button>
+                          </>
+                        )}
+                        {item.isStatic && <span className="text-xs text-slate-400">Read-only</span>}
                       </td>
                     </tr>
                   ))

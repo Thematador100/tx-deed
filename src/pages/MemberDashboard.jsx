@@ -10,6 +10,7 @@ import { supabase } from '@/lib/customSupabaseClient';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
 import { Loader2, BookOpen, Video, FileText, Users, Zap, RefreshCw, Star, Settings, Bell } from 'lucide-react';
 import MemberProfilePanel from '@/components/MemberProfilePanel';
+import libraryContent from '@/data/library-content.json';
 
 const MemberDashboard = () => {
   const navigate = useNavigate();
@@ -21,17 +22,22 @@ const MemberDashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
+
+      // Try to load from Supabase first
       const { data, error } = await supabase
         .from('library_items')
         .select('*')
         .order('created_at', { ascending: false })
         .limit(3);
-      
+
       if (error) {
-        console.error("Error fetching library items:", error);
-        toast({ title: "Error", description: "Could not load library resources.", variant: "destructive" });
+        // If Supabase fails, use static content
+        console.log("Using static library content");
+        setLibraryItems(libraryContent.slice(0, 3));
       } else {
-        setLibraryItems(data);
+        // Merge custom content with static content
+        const combined = [...(data || []), ...libraryContent];
+        setLibraryItems(combined.slice(0, 3));
       }
       setLoading(false);
     };

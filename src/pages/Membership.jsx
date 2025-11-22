@@ -9,6 +9,7 @@ import { toast } from '@/components/ui/use-toast';
 import { CheckCircle, BookOpen, Video, FileText, Loader2, Users, Zap, RefreshCw, Star, BrainCircuit, UserCheck, Layers, ShieldCheck } from 'lucide-react';
 import { supabase } from '@/lib/customSupabaseClient';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
+import libraryContent from '@/data/library-content.json';
 
 const FeatureCard = ({ icon, title, description, delay }) => (
   <motion.div
@@ -34,17 +35,22 @@ const Membership = () => {
   useEffect(() => {
     const fetchLibraryItems = async () => {
       setLoadingLibrary(true);
+
+      // Try to load from Supabase first
       const { data, error } = await supabase
         .from('library_items')
         .select('*')
         .order('created_at', { ascending: false })
         .limit(3);
-      
+
       if (error) {
-        console.error("Error fetching library items:", error);
-        toast({ title: "Error", description: "Could not load library resources.", variant: "destructive" });
+        // If Supabase fails, use static content
+        console.log("Using static library content");
+        setLibraryItems(libraryContent.slice(0, 3));
       } else {
-        setLibraryItems(data);
+        // Merge custom content with static content
+        const combined = [...(data || []), ...libraryContent];
+        setLibraryItems(combined.slice(0, 3));
       }
       setLoadingLibrary(false);
     };

@@ -1,0 +1,542 @@
+[
+  {
+    "id": "al-tax-lien",
+    "title": "Alabama Tax Deed Guide",
+    "description": "Alabama uses tax liens with a 3-year redemption period. Properties are sold through competitive bidding at county tax sales. Investors receive liens, not immediate ownership.",
+    "item_type": "article",
+    "url": "https://revenue.alabama.gov/property-tax/",
+    "state_code": "AL",
+    "category": "Tax Lien Rules",
+    "tags": ["tax lien", "redemption period", "3 years", "competitive bidding"]
+  },
+  {
+    "id": "ak-tax-deed",
+    "title": "Alaska Tax Deed Rules",
+    "description": "Alaska is a tax deed state with a 1-year redemption period. Properties sold at public auction go to the highest bidder. Full ownership transfers after redemption period expires.",
+    "item_type": "article",
+    "url": "https://dnr.alaska.gov/mlw/factsht/tax_sale/",
+    "state_code": "AK",
+    "category": "Tax Deed Rules",
+    "tags": ["tax deed", "redemption period", "1 year", "public auction"]
+  },
+  {
+    "id": "az-tax-lien",
+    "title": "Arizona Tax Lien Certificates",
+    "description": "Arizona sells tax lien certificates at 16% interest. 3-year redemption period. After 3 years, investors can foreclose and obtain tax deed to the property.",
+    "item_type": "article",
+    "url": "https://www.azdor.gov/",
+    "state_code": "AZ",
+    "category": "Tax Lien Rules",
+    "tags": ["tax lien", "16% interest", "3 years", "foreclose"]
+  },
+  {
+    "id": "ar-tax-deed",
+    "title": "Arkansas Tax Deed Process",
+    "description": "Arkansas is a hybrid state (both deeds and liens). Properties can be sold via tax deed after 2-year redemption period. Competitive bidding at county sales.",
+    "item_type": "article",
+    "url": "https://www.dfa.arkansas.gov/",
+    "state_code": "AR",
+    "category": "Tax Deed Rules",
+    "tags": ["hybrid", "tax deed", "2 years", "competitive bidding"]
+  },
+  {
+    "id": "ca-tax-deed",
+    "title": "California Tax Defaulted Property",
+    "description": "California has a 5-year redemption period for tax-defaulted properties. After 5 years, properties are sold at public auction. No tax liens sold to investors.",
+    "item_type": "article",
+    "url": "https://sco.ca.gov/",
+    "state_code": "CA",
+    "category": "Tax Deed Rules",
+    "tags": ["tax deed", "5 years", "no liens", "public auction"]
+  },
+  {
+    "id": "co-tax-lien",
+    "title": "Colorado Tax Lien Certificates",
+    "description": "Colorado sells tax lien certificates with interest rates set by bidding (starts at 9%). 3-year redemption period. Can apply for tax deed after 3 years.",
+    "item_type": "article",
+    "url": "https://tax.colorado.gov/",
+    "state_code": "CO",
+    "category": "Tax Lien Rules",
+    "tags": ["tax lien", "9%+ interest", "3 years", "bidding"]
+  },
+  {
+    "id": "ct-tax-lien",
+    "title": "Connecticut Tax Lien Sales",
+    "description": "Connecticut uses tax liens with an 18% annual interest rate. No competitive bidding - first come, first served. Can foreclose after several years of non-payment.",
+    "item_type": "article",
+    "url": "https://portal.ct.gov/",
+    "state_code": "CT",
+    "category": "Tax Lien Rules",
+    "tags": ["tax lien", "18% interest", "first come first served"]
+  },
+  {
+    "id": "de-tax-deed",
+    "title": "Delaware Tax Deed State",
+    "description": "Delaware is a tax deed state with a 60-day redemption period. Very short redemption makes it attractive for investors. Properties sold at sheriff sale.",
+    "item_type": "article",
+    "url": "https://revenue.delaware.gov/",
+    "state_code": "DE",
+    "category": "Tax Deed Rules",
+    "tags": ["tax deed", "60 days", "short redemption", "sheriff sale"]
+  },
+  {
+    "id": "fl-tax-lien",
+    "title": "Florida Tax Deed Sales",
+    "description": "Florida sells tax deed certificates (liens) with up to 18% interest. 2-year waiting period before tax deed application. Very active market with monthly auctions.",
+    "item_type": "article",
+    "url": "https://floridarevenue.com/",
+    "state_code": "FL",
+    "category": "Tax Lien Rules",
+    "tags": ["tax lien", "18% interest", "2 years", "monthly auctions"]
+  },
+  {
+    "id": "ga-tax-deed",
+    "title": "Georgia Tax Deed Auctions",
+    "description": "Georgia is a tax deed state with a 1-year redemption period (12 months). Properties sold at courthouse steps. High-volume market with good inventory.",
+    "item_type": "article",
+    "url": "https://dor.georgia.gov/",
+    "state_code": "GA",
+    "category": "Tax Deed Rules",
+    "tags": ["tax deed", "1 year", "courthouse", "high volume"]
+  },
+  {
+    "id": "hi-tax-deed",
+    "title": "Hawaii Tax Deed Process",
+    "description": "Hawaii uses tax deeds with a 1-year redemption period. Limited inventory but high property values. Sales conducted by county tax collectors.",
+    "item_type": "article",
+    "url": "https://tax.hawaii.gov/",
+    "state_code": "HI",
+    "category": "Tax Deed Rules",
+    "tags": ["tax deed", "1 year", "limited inventory"]
+  },
+  {
+    "id": "id-tax-deed",
+    "title": "Idaho Tax Deed State",
+    "description": "Idaho is a tax deed state with a 3-year redemption period. Properties sold at public auction after 3 years of delinquency. County-by-county process.",
+    "item_type": "article",
+    "url": "https://tax.idaho.gov/",
+    "state_code": "ID",
+    "category": "Tax Deed Rules",
+    "tags": ["tax deed", "3 years", "public auction"]
+  },
+  {
+    "id": "il-tax-deed",
+    "title": "Illinois Tax Deed Sales",
+    "description": "Illinois sells tax deeds with a 2.5 to 3-year redemption period depending on property type and size. Cook County has largest volume. Overbid process available.",
+    "item_type": "article",
+    "url": "https://www2.illinois.gov/",
+    "state_code": "IL",
+    "category": "Tax Deed Rules",
+    "tags": ["tax deed", "2.5-3 years", "overbid", "Cook County"]
+  },
+  {
+    "id": "in-tax-deed",
+    "title": "Indiana Tax Deed Procedures",
+    "description": "Indiana is a tax deed state with a 1-year redemption period. Properties sold at commissioner sales. Minimum bid covers back taxes plus costs.",
+    "item_type": "article",
+    "url": "https://www.in.gov/dlgf/",
+    "state_code": "IN",
+    "category": "Tax Deed Rules",
+    "tags": ["tax deed", "1 year", "commissioner sale"]
+  },
+  {
+    "id": "ia-tax-deed",
+    "title": "Iowa Tax Deed Sales",
+    "description": "Iowa uses tax deeds with a 1.75-year redemption period (21 months). Public auctions held at county treasurer office. Interest accrues during redemption.",
+    "item_type": "article",
+    "url": "https://tax.iowa.gov/",
+    "state_code": "IA",
+    "category": "Tax Deed Rules",
+    "tags": ["tax deed", "21 months", "treasurer sale"]
+  },
+  {
+    "id": "ks-tax-deed",
+    "title": "Kansas Tax Deed State",
+    "description": "Kansas is a tax deed state with a 3-year redemption period. Properties sold at sheriff sales. Competitive bidding determines winning investor.",
+    "item_type": "article",
+    "url": "https://www.ksrevenue.gov/",
+    "state_code": "KS",
+    "category": "Tax Deed Rules",
+    "tags": ["tax deed", "3 years", "sheriff sale"]
+  },
+  {
+    "id": "ky-tax-lien",
+    "title": "Kentucky Tax Lien Certificates",
+    "description": "Kentucky sells tax lien certificates at 12% annual interest. 1-year redemption for commercial, 2 years for agricultural property. Can obtain deed after redemption expires.",
+    "item_type": "article",
+    "url": "https://revenue.ky.gov/",
+    "state_code": "KY",
+    "category": "Tax Lien Rules",
+    "tags": ["tax lien", "12% interest", "1-2 years"]
+  },
+  {
+    "id": "la-tax-lien",
+    "title": "Louisiana Tax Deed Sales",
+    "description": "Louisiana uses tax liens with a 3-year redemption period and 12% interest (1% per month). After 3 years, investors can file for tax deed. Very investor-friendly.",
+    "item_type": "article",
+    "url": "https://revenue.louisiana.gov/",
+    "state_code": "LA",
+    "category": "Tax Lien Rules",
+    "tags": ["tax lien", "12% annual", "3 years"]
+  },
+  {
+    "id": "me-tax-lien",
+    "title": "Maine Tax Lien Process",
+    "description": "Maine sells tax liens with automatic foreclosure after 18 months. No bidding on interest - flat rate applies. Investors can acquire property title after redemption period.",
+    "item_type": "article",
+    "url": "https://www.maine.gov/revenue/",
+    "state_code": "ME",
+    "category": "Tax Lien Rules",
+    "tags": ["tax lien", "18 months", "automatic foreclosure"]
+  },
+  {
+    "id": "md-tax-lien",
+    "title": "Maryland Tax Deed Sales",
+    "description": "Maryland uses tax lien certificates with a 6-month redemption period. After 6 months, investors can foreclose. High interest rates (varies by county).",
+    "item_type": "article",
+    "url": "https://www.marylandtaxes.gov/",
+    "state_code": "MD",
+    "category": "Tax Lien Rules",
+    "tags": ["tax lien", "6 months", "foreclosure", "high interest"]
+  },
+  {
+    "id": "ma-tax-lien",
+    "title": "Massachusetts Tax Deed Procedures",
+    "description": "Massachusetts uses tax liens with a 6-month redemption period. 16% interest rate. Can foreclose after redemption period. Complex legal process.",
+    "item_type": "article",
+    "url": "https://www.mass.gov/dor",
+    "state_code": "MA",
+    "category": "Tax Lien Rules",
+    "tags": ["tax lien", "16% interest", "6 months", "complex"]
+  },
+  {
+    "id": "mi-tax-deed",
+    "title": "Michigan Tax Deed Auctions",
+    "description": "Michigan is a tax deed state with no redemption period after sale. Properties sold at county auctions. Winner gets immediate ownership. Very competitive market.",
+    "item_type": "article",
+    "url": "https://www.michigan.gov/treasury",
+    "state_code": "MI",
+    "category": "Tax Deed Rules",
+    "tags": ["tax deed", "no redemption", "immediate ownership"]
+  },
+  {
+    "id": "mn-tax-deed",
+    "title": "Minnesota Tax Deed State",
+    "description": "Minnesota uses tax deeds with a 3-year redemption period. Sold at public auction. One of the longer redemption periods, but solid inventory.",
+    "item_type": "article",
+    "url": "https://www.revenue.state.mn.us/",
+    "state_code": "MN",
+    "category": "Tax Deed Rules",
+    "tags": ["tax deed", "3 years", "public auction"]
+  },
+  {
+    "id": "ms-tax-deed",
+    "title": "Mississippi Tax Deed Sales",
+    "description": "Mississippi is a tax deed state with a 2-year redemption period. Properties sold at chancery clerk sales. Good opportunities in rural areas.",
+    "item_type": "article",
+    "url": "https://www.dor.ms.gov/",
+    "state_code": "MS",
+    "category": "Tax Deed Rules",
+    "tags": ["tax deed", "2 years", "chancery sale"]
+  },
+  {
+    "id": "mo-tax-deed",
+    "title": "Missouri Tax Deed Process",
+    "description": "Missouri uses tax deeds with a 1-year redemption period. Properties sold at collector sales. Very active market with good volume in St. Louis and Kansas City.",
+    "item_type": "article",
+    "url": "https://dor.mo.gov/",
+    "state_code": "MO",
+    "category": "Tax Deed Rules",
+    "tags": ["tax deed", "1 year", "collector sale"]
+  },
+  {
+    "id": "mt-tax-lien",
+    "title": "Montana Tax Lien Certificates",
+    "description": "Montana sells tax lien certificates at 10% interest plus penalties. 3-year redemption period. Can apply for tax deed after 3 years of non-redemption.",
+    "item_type": "article",
+    "url": "https://mtrevenue.gov/",
+    "state_code": "MT",
+    "category": "Tax Lien Rules",
+    "tags": ["tax lien", "10% interest", "3 years"]
+  },
+  {
+    "id": "ne-tax-lien",
+    "title": "Nebraska Tax Deed Sales",
+    "description": "Nebraska uses tax certificates (liens) with a 3-year redemption period. 14% interest rate. Can obtain deed after 3 years. Relatively small market.",
+    "item_type": "article",
+    "url": "https://revenue.nebraska.gov/",
+    "state_code": "NE",
+    "category": "Tax Lien Rules",
+    "tags": ["tax lien", "14% interest", "3 years"]
+  },
+  {
+    "id": "nv-tax-deed",
+    "title": "Nevada Tax Deed Auctions",
+    "description": "Nevada is a tax deed state with no redemption period. Properties sold at county treasurer auctions. Immediate ownership transfer. Very competitive in Las Vegas area.",
+    "item_type": "article",
+    "url": "https://tax.nv.gov/",
+    "state_code": "NV",
+    "category": "Tax Deed Rules",
+    "tags": ["tax deed", "no redemption", "immediate"]
+  },
+  {
+    "id": "nh-tax-lien",
+    "title": "New Hampshire Tax Lien Process",
+    "description": "New Hampshire sells tax liens with a 2-year redemption period. 18% interest rate (one of highest). Can execute deed after redemption expires.",
+    "item_type": "article",
+    "url": "https://www.revenue.nh.gov/",
+    "state_code": "NH",
+    "category": "Tax Lien Rules",
+    "tags": ["tax lien", "18% interest", "2 years"]
+  },
+  {
+    "id": "nj-tax-lien",
+    "title": "New Jersey Tax Lien Certificates",
+    "description": "New Jersey sells tax lien certificates at 18% interest (bid down). 2-year redemption period. Can foreclose and obtain deed after 2 years. Very active market.",
+    "item_type": "article",
+    "url": "https://www.nj.gov/treasury/",
+    "state_code": "NJ",
+    "category": "Tax Lien Rules",
+    "tags": ["tax lien", "18% interest", "2 years", "active market"]
+  },
+  {
+    "id": "nm-tax-deed",
+    "title": "New Mexico Tax Deed State",
+    "description": "New Mexico is a tax deed state with a 3-year redemption period. Properties sold at public auction. Good opportunities in smaller counties.",
+    "item_type": "article",
+    "url": "https://www.tax.newmexico.gov/",
+    "state_code": "NM",
+    "category": "Tax Deed Rules",
+    "tags": ["tax deed", "3 years", "public auction"]
+  },
+  {
+    "id": "ny-hybrid",
+    "title": "New York Tax Deed/Lien Hybrid",
+    "description": "New York varies by county. Most use tax liens with 2-year redemption. High interest rates (varies). Can foreclose after redemption. NYC has special process.",
+    "item_type": "article",
+    "url": "https://www.tax.ny.gov/",
+    "state_code": "NY",
+    "category": "Hybrid Rules",
+    "tags": ["hybrid", "2 years", "varies by county", "NYC special"]
+  },
+  {
+    "id": "nc-tax-deed",
+    "title": "North Carolina Tax Deed Sales",
+    "description": "North Carolina is a tax deed state with no redemption period after upset bid period. Properties sold at public auction. Competitive market in urban areas.",
+    "item_type": "article",
+    "url": "https://www.ncdor.gov/",
+    "state_code": "NC",
+    "category": "Tax Deed Rules",
+    "tags": ["tax deed", "upset bid", "no redemption"]
+  },
+  {
+    "id": "nd-tax-deed",
+    "title": "North Dakota Tax Deed State",
+    "description": "North Dakota uses tax deeds with a 3-year redemption period. Properties sold at county director of tax equalization. Small market with limited inventory.",
+    "item_type": "article",
+    "url": "https://www.nd.gov/tax/",
+    "state_code": "ND",
+    "category": "Tax Deed Rules",
+    "tags": ["tax deed", "3 years", "small market"]
+  },
+  {
+    "id": "oh-tax-lien",
+    "title": "Ohio Tax Lien Certificates",
+    "description": "Ohio sells tax lien certificates with a 1-year redemption period. Can foreclose after 1 year. Interest varies by property class. Good volume in major cities.",
+    "item_type": "article",
+    "url": "https://tax.ohio.gov/",
+    "state_code": "OH",
+    "category": "Tax Lien Rules",
+    "tags": ["tax lien", "1 year", "foreclose", "urban volume"]
+  },
+  {
+    "id": "ok-tax-deed",
+    "title": "Oklahoma Tax Deed Resale",
+    "description": "Oklahoma uses tax deeds with a 2-year redemption period. Properties sold at county resale. Good rural opportunities with lower competition.",
+    "item_type": "article",
+    "url": "https://www.ok.gov/tax/",
+    "state_code": "OK",
+    "category": "Tax Deed Rules",
+    "tags": ["tax deed", "2 years", "resale", "rural"]
+  },
+  {
+    "id": "or-tax-deed",
+    "title": "Oregon Tax Deed Foreclosure",
+    "description": "Oregon uses tax deeds with a 2-year redemption period (3 years for certain properties). County treasurer conducts sales. Moderate market activity.",
+    "item_type": "article",
+    "url": "https://www.oregon.gov/dor/",
+    "state_code": "OR",
+    "category": "Tax Deed Rules",
+    "tags": ["tax deed", "2-3 years", "treasurer sale"]
+  },
+  {
+    "id": "pa-tax-deed",
+    "title": "Pennsylvania Tax Deed Sales",
+    "description": "Pennsylvania is a tax deed state with a 1-year redemption period. Upset and judicial sales. Very active market in Philadelphia and Pittsburgh. Complex legal process.",
+    "item_type": "article",
+    "url": "https://www.revenue.pa.gov/",
+    "state_code": "PA",
+    "category": "Tax Deed Rules",
+    "tags": ["tax deed", "1 year", "upset sale", "judicial"]
+  },
+  {
+    "id": "ri-tax-lien",
+    "title": "Rhode Island Tax Lien Sales",
+    "description": "Rhode Island sells tax liens with a 1-year redemption period. 16% interest rate. Can petition for deed after 1 year. Small state with limited inventory.",
+    "item_type": "article",
+    "url": "https://tax.ri.gov/",
+    "state_code": "RI",
+    "category": "Tax Lien Rules",
+    "tags": ["tax lien", "16% interest", "1 year", "small market"]
+  },
+  {
+    "id": "sc-tax-deed",
+    "title": "South Carolina Tax Deed Sales",
+    "description": "South Carolina uses tax deeds with a 1-year redemption period. Properties sold at delinquent tax sales. Good opportunities in coastal areas.",
+    "item_type": "article",
+    "url": "https://dor.sc.gov/",
+    "state_code": "SC",
+    "category": "Tax Deed Rules",
+    "tags": ["tax deed", "1 year", "delinquent sale"]
+  },
+  {
+    "id": "sd-tax-deed",
+    "title": "South Dakota Tax Deed Procedures",
+    "description": "South Dakota is a tax deed state with a 3-year redemption period (4 years for agricultural). County treasurer conducts sales. Rural opportunities available.",
+    "item_type": "article",
+    "url": "https://dor.sd.gov/",
+    "state_code": "SD",
+    "category": "Tax Deed Rules",
+    "tags": ["tax deed", "3-4 years", "agricultural"]
+  },
+  {
+    "id": "tn-tax-deed",
+    "title": "Tennessee Tax Deed Auctions",
+    "description": "Tennessee uses tax deeds with a 1-year redemption period. Properties sold at public auction. Active market in Nashville, Memphis, and Knoxville areas.",
+    "item_type": "article",
+    "url": "https://www.tn.gov/revenue.html",
+    "state_code": "TN",
+    "category": "Tax Deed Rules",
+    "tags": ["tax deed", "1 year", "active market"]
+  },
+  {
+    "id": "tx-tax-deed",
+    "title": "Texas Tax Deed Sales",
+    "description": "Texas is a tax deed state with a 6-month to 2-year redemption period (depends on homestead status). Very large market with monthly sales in most counties. Highly competitive.",
+    "item_type": "article",
+    "url": "https://comptroller.texas.gov/",
+    "state_code": "TX",
+    "category": "Tax Deed Rules",
+    "tags": ["tax deed", "6 months-2 years", "homestead", "large market"]
+  },
+  {
+    "id": "ut-tax-deed",
+    "title": "Utah Tax Deed State",
+    "description": "Utah uses tax deeds with a 4-year redemption period. One of the longest redemption periods. County auditor conducts sales. Growing market along Wasatch Front.",
+    "item_type": "article",
+    "url": "https://tax.utah.gov/",
+    "state_code": "UT",
+    "category": "Tax Deed Rules",
+    "tags": ["tax deed", "4 years", "long redemption"]
+  },
+  {
+    "id": "vt-tax-lien",
+    "title": "Vermont Tax Lien Sales",
+    "description": "Vermont sells tax liens with a 1-year redemption period. 12% interest rate. Can file for deed after 1 year. Small market with limited inventory.",
+    "item_type": "article",
+    "url": "https://tax.vermont.gov/",
+    "state_code": "VT",
+    "category": "Tax Lien Rules",
+    "tags": ["tax lien", "12% interest", "1 year", "small"]
+  },
+  {
+    "id": "va-tax-deed",
+    "title": "Virginia Tax Deed Process",
+    "description": "Virginia is a tax deed state with no redemption period after sale. Properties sold at commissioner sales. Immediate ownership. Active market in Northern Virginia.",
+    "item_type": "article",
+    "url": "https://www.tax.virginia.gov/",
+    "state_code": "VA",
+    "category": "Tax Deed Rules",
+    "tags": ["tax deed", "no redemption", "immediate", "NoVA active"]
+  },
+  {
+    "id": "wa-tax-deed",
+    "title": "Washington Tax Deed Foreclosure",
+    "description": "Washington uses tax deeds with a 3-year redemption period. County treasurer conducts foreclosure sales. Competitive market in Seattle/Tacoma area.",
+    "item_type": "article",
+    "url": "https://dor.wa.gov/",
+    "state_code": "WA",
+    "category": "Tax Deed Rules",
+    "tags": ["tax deed", "3 years", "foreclosure", "competitive"]
+  },
+  {
+    "id": "wv-tax-lien",
+    "title": "West Virginia Tax Lien Certificates",
+    "description": "West Virginia sells tax lien certificates with a 17-month redemption period. 12% interest. Can obtain deed after redemption expires. Small market.",
+    "item_type": "article",
+    "url": "https://tax.wv.gov/",
+    "state_code": "WV",
+    "category": "Tax Lien Rules",
+    "tags": ["tax lien", "12% interest", "17 months"]
+  },
+  {
+    "id": "wi-tax-deed",
+    "title": "Wisconsin Tax Deed Sales",
+    "description": "Wisconsin uses tax deeds with a 3-year redemption period (varies by county). County treasurer holds sales. Moderate activity in Milwaukee and Madison.",
+    "item_type": "article",
+    "url": "https://www.revenue.wi.gov/",
+    "state_code": "WI",
+    "category": "Tax Deed Rules",
+    "tags": ["tax deed", "3 years", "county variance"]
+  },
+  {
+    "id": "wy-tax-deed",
+    "title": "Wyoming Tax Deed State",
+    "description": "Wyoming is a tax deed state with a 4-year redemption period. County treasurer conducts sales. Small market with very limited inventory.",
+    "item_type": "article",
+    "url": "https://revenue.wyo.gov/",
+    "state_code": "WY",
+    "category": "Tax Deed Rules",
+    "tags": ["tax deed", "4 years", "limited inventory"]
+  },
+  {
+    "id": "deed-vs-lien",
+    "title": "Tax Deed vs Tax Lien Explained",
+    "description": "Comprehensive guide explaining the difference between tax deed and tax lien investing. Learn which states use which method and the pros/cons of each strategy.",
+    "item_type": "article",
+    "url": "https://www.winwithdeeds.com/resources/deed-vs-lien",
+    "state_code": null,
+    "category": "Education",
+    "tags": ["beginner", "tax deed", "tax lien", "comparison"]
+  },
+  {
+    "id": "redemption-guide",
+    "title": "Redemption Period Guide",
+    "description": "Understanding redemption periods across all 50 states. Learn how long property owners have to redeem their property and what it means for investors.",
+    "item_type": "article",
+    "url": "https://www.winwithdeeds.com/resources/redemption-periods",
+    "state_code": null,
+    "category": "Education",
+    "tags": ["redemption", "timeline", "all states"]
+  },
+  {
+    "id": "due-diligence",
+    "title": "Due Diligence Checklist",
+    "description": "Step-by-step checklist for researching tax deed and tax lien properties. Avoid costly mistakes by following this comprehensive due diligence process.",
+    "item_type": "pdf",
+    "url": "https://www.winwithdeeds.com/resources/due-diligence-checklist.pdf",
+    "state_code": null,
+    "category": "Education",
+    "tags": ["due diligence", "checklist", "research"]
+  },
+  {
+    "id": "roi-calculator",
+    "title": "ROI Calculator for Tax Deeds",
+    "description": "Learn how to calculate return on investment for tax deed properties. Includes formulas, examples, and a downloadable spreadsheet calculator.",
+    "item_type": "article",
+    "url": "https://www.winwithdeeds.com/resources/roi-calculator",
+    "state_code": null,
+    "category": "Education",
+    "tags": ["ROI", "calculator", "investment analysis"]
+  }
+]
