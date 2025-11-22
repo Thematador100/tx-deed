@@ -12,6 +12,9 @@
 
 import ScraperManager from './ScraperManager.js';
 import DatabaseManager from './DatabaseManager.js';
+import SkipTracingAgent from './SkipTracingAgent.js';
+import PropertyEnrichmentAgent from './PropertyEnrichmentAgent.js';
+import PropertyAssignmentAgent from './PropertyAssignmentAgent.js';
 import { getActiveCounties } from '../config/counties.config.js';
 
 class AutonomousAgent {
@@ -28,6 +31,9 @@ class AutonomousAgent {
 
     this.dbManager = null;
     this.scraperManager = null;
+    this.skipTracingAgent = null;
+    this.enrichmentAgent = null;
+    this.assignmentAgent = null;
     this.isRunning = false;
     this.consecutiveFailures = 0;
     this.lastSuccessfulRun = null;
@@ -55,16 +61,19 @@ class AutonomousAgent {
       // Step 1: Ensure database is ready
       await this.ensureDatabaseReady();
 
-      // Step 2: Initialize managers
+      // Step 2: Initialize all managers and agents
       await this.initializeManagers();
 
-      // Step 3: Start health monitoring
+      // Step 3: Start all autonomous agents
+      await this.startAllAgents();
+
+      // Step 4: Start health monitoring
       this.startHealthMonitoring();
 
-      // Step 4: Start scheduled scraping
+      // Step 5: Start scheduled scraping
       this.scraperManager.startScheduler();
 
-      // Step 5: Run initial scrape if configured
+      // Step 6: Run initial scrape if configured
       if (this.config.runInitialScrape) {
         console.log('[AutonomousAgent] Running initial scrape...');
         await this.runScrapingCycle();
@@ -216,6 +225,40 @@ class AutonomousAgent {
 
     await this.scraperManager.initialize();
     console.log('[AutonomousAgent] ✅ Scraper manager initialized');
+
+    // Initialize other autonomous agents
+    this.skipTracingAgent = new SkipTracingAgent(this.dbManager);
+    this.enrichmentAgent = new PropertyEnrichmentAgent(this.dbManager);
+    this.assignmentAgent = new PropertyAssignmentAgent(this.dbManager);
+
+    console.log('[AutonomousAgent] ✅ All agents initialized');
+  }
+
+  /**
+   * Start all autonomous agents
+   */
+  async startAllAgents() {
+    console.log('[AutonomousAgent] 🚀 Starting all autonomous agents...');
+
+    // Start skip tracing agent
+    this.skipTracingAgent.start().catch(error => {
+      console.error('[AutonomousAgent] Skip tracing agent error:', error);
+    });
+
+    // Start enrichment agent
+    this.enrichmentAgent.start().catch(error => {
+      console.error('[AutonomousAgent] Enrichment agent error:', error);
+    });
+
+    // Start assignment agent
+    this.assignmentAgent.start().catch(error => {
+      console.error('[AutonomousAgent] Assignment agent error:', error);
+    });
+
+    console.log('[AutonomousAgent] ✅ All agents started');
+    console.log('[AutonomousAgent] 🕵️ Skip Tracing: Finding family members & contacts');
+    console.log('[AutonomousAgent] 📊 Enrichment: Building comprehensive property reports');
+    console.log('[AutonomousAgent] 🎯 Assignment: Managing property assignments to members');
   }
 
   /**
@@ -345,6 +388,9 @@ class AutonomousAgent {
         timestamp: new Date(),
         database: await this.checkDatabaseHealth(),
         scraper: this.checkScraperHealth(),
+        skipTracing: this.checkAgentHealth(this.skipTracingAgent, 'SkipTracing'),
+        enrichment: this.checkAgentHealth(this.enrichmentAgent, 'Enrichment'),
+        assignment: this.checkAgentHealth(this.assignmentAgent, 'Assignment'),
         system: this.checkSystemHealth(),
       };
 
@@ -394,6 +440,25 @@ class AutonomousAgent {
       healthy: true,
       message: 'Scraper operational',
       details: status,
+    };
+  }
+
+  /**
+   * Check individual agent health
+   */
+  checkAgentHealth(agent, name) {
+    if (!agent) {
+      return { healthy: false, message: `${name} agent not initialized` };
+    }
+
+    if (!agent.isRunning) {
+      return { healthy: false, message: `${name} agent not running` };
+    }
+
+    return {
+      healthy: true,
+      message: `${name} agent operational`,
+      stats: agent.getStats(),
     };
   }
 
@@ -491,7 +556,12 @@ class AutonomousAgent {
         lastSuccessfulRun: this.lastSuccessfulRun,
         retryQueueLength: this.retryQueue.length,
       },
-      scraper: this.scraperManager?.getStatus() || null,
+      agents: {
+        scraper: this.scraperManager?.getStatus() || null,
+        skipTracing: this.skipTracingAgent?.getStats() || null,
+        enrichment: this.enrichmentAgent?.getStats() || null,
+        assignment: this.assignmentAgent?.getStats() || null,
+      },
     };
   }
 
@@ -522,11 +592,24 @@ class AutonomousAgent {
       clearInterval(this.healthCheckInterval);
     }
 
+    // Stop all agents
     if (this.scraperManager) {
       await this.scraperManager.stopAll();
     }
 
-    console.log('[AutonomousAgent] ✅ Agent stopped gracefully');
+    if (this.skipTracingAgent) {
+      await this.skipTracingAgent.stop();
+    }
+
+    if (this.enrichmentAgent) {
+      await this.enrichmentAgent.stop();
+    }
+
+    if (this.assignmentAgent) {
+      await this.assignmentAgent.stop();
+    }
+
+    console.log('[AutonomousAgent] ✅ All agents stopped gracefully');
   }
 
   /**
