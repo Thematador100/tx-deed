@@ -1,0 +1,13 @@
+{
+  "name": "@tx-deed/county-scraper",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "County tax delinquent property scraper agent",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.30.0"
+  }
+}

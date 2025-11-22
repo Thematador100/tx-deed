@@ -1,0 +1,10 @@
+{
+  "name": "@tx-deed/shared",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Shared utilities for TX Deed agents",
+  "main": "index.js",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.30.0"
+  }
+}

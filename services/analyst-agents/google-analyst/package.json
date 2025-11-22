@@ -1,0 +1,13 @@
+{
+  "name": "@tx-deed/google-analyst",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Google AI-powered market analyst agent",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.30.0"
+  }
+}

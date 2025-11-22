@@ -1,0 +1,13 @@
+{
+  "name": "@tx-deed/legislation-monitor",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "State legislation monitoring agent",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.30.0"
+  }
+}

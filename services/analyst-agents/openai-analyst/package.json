@@ -1,0 +1,13 @@
+{
+  "name": "@tx-deed/openai-analyst",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "OpenAI-powered lead analyst agent",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.30.0"
+  }
+}

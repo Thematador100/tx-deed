@@ -1,0 +1,13 @@
+{
+  "name": "@tx-deed/news-scraper",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "News API scraper agent for real estate news",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.30.0"
+  }
+}
