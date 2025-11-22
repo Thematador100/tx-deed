@@ -77,7 +77,7 @@ npm install
 
 2. **Set environment variables:**
 ```bash
-export SUPABASE_URL=https://aedapqfuegbqztuetkxd.supabase.co
+export SUPABASE_URL=https://yupijhwsiqejapufdwhk.supabase.co
 export SUPABASE_SERVICE_KEY=your-service-key
 export RUN_INTERVAL_MINUTES=60
 ```

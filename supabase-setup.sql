@@ -1,5 +1,5 @@
 -- TX Deed - Supabase Database Setup
--- Run this in your Supabase SQL Editor (https://supabase.com/dashboard/project/aedapqfuegbqztuetkxd/sql)
+-- Run this in your Supabase SQL Editor (https://supabase.com/dashboard/project/yupijhwsiqejapufdwhk/sql)
 
 -- 1. LEADS TABLE (Main table for property leads)
 CREATE TABLE IF NOT EXISTS leads (

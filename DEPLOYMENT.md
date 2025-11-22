@@ -27,7 +27,7 @@ The application consists of:
 
 1. **Railway Account** - Sign up at [railway.app](https://railway.app)
 2. **GitHub Account** - Your code should be in a GitHub repository
-3. **Supabase Account** - For database (already configured at https://aedapqfuegbqztuetkxd.supabase.co)
+3. **Supabase Account** - For database (already configured at https://yupijhwsiqejapufdwhk.supabase.co)
 
 ### Step 1: Deploy the Frontend
 
@@ -40,7 +40,7 @@ The application consists of:
 
 **Environment Variables for Frontend:**
 ```
-VITE_SUPABASE_URL=https://aedapqfuegbqztuetkxd.supabase.co
+VITE_SUPABASE_URL=https://yupijhwsiqejapufdwhk.supabase.co
 VITE_SUPABASE_ANON_KEY=your-supabase-anon-key
 ```
 
@@ -54,7 +54,7 @@ VITE_SUPABASE_ANON_KEY=your-supabase-anon-key
    - Set **Root Directory**: `.`
 5. Add Environment Variables:
 ```
-SUPABASE_URL=https://aedapqfuegbqztuetkxd.supabase.co
+SUPABASE_URL=https://yupijhwsiqejapufdwhk.supabase.co
 SUPABASE_SERVICE_KEY=your-supabase-service-key
 COUNTIES=Harris County, TX,Dallas County, TX,Tarrant County, TX
 RUN_INTERVAL_MINUTES=60
@@ -71,7 +71,7 @@ RUN_INTERVAL_MINUTES=60
    - Set **Root Directory**: `.`
 5. Add Environment Variables:
 ```
-SUPABASE_URL=https://aedapqfuegbqztuetkxd.supabase.co
+SUPABASE_URL=https://yupijhwsiqejapufdwhk.supabase.co
 SUPABASE_SERVICE_KEY=your-supabase-service-key
 NEWS_API_KEY=your-news-api-key
 NEWS_KEYWORDS=tax lien,property foreclosure,tax delinquent
@@ -89,7 +89,7 @@ RUN_INTERVAL_MINUTES=180
    - Set **Root Directory**: `.`
 5. Add Environment Variables:
 ```
-SUPABASE_URL=https://aedapqfuegbqztuetkxd.supabase.co
+SUPABASE_URL=https://yupijhwsiqejapufdwhk.supabase.co
 SUPABASE_SERVICE_KEY=your-supabase-service-key
 MONITOR_STATES=TX,FL,CA,NY,IL
 RUN_INTERVAL_MINUTES=360
@@ -106,7 +106,7 @@ RUN_INTERVAL_MINUTES=360
    - Set **Root Directory**: `.`
 5. Add Environment Variables:
 ```
-SUPABASE_URL=https://aedapqfuegbqztuetkxd.supabase.co
+SUPABASE_URL=https://yupijhwsiqejapufdwhk.supabase.co
 SUPABASE_SERVICE_KEY=your-supabase-service-key
 OPENAI_API_KEY=your-openai-api-key
 RUN_INTERVAL_MINUTES=30
@@ -123,7 +123,7 @@ RUN_INTERVAL_MINUTES=30
    - Set **Root Directory**: `.`
 5. Add Environment Variables:
 ```
-SUPABASE_URL=https://aedapqfuegbqztuetkxd.supabase.co
+SUPABASE_URL=https://yupijhwsiqejapufdwhk.supabase.co
 SUPABASE_SERVICE_KEY=your-supabase-service-key
 GOOGLE_AI_API_KEY=your-google-ai-api-key
 RUN_INTERVAL_MINUTES=45
@@ -140,7 +140,7 @@ RUN_INTERVAL_MINUTES=45
    - Set **Root Directory**: `.`
 5. Add Environment Variables:
 ```
-SUPABASE_URL=https://aedapqfuegbqztuetkxd.supabase.co
+SUPABASE_URL=https://yupijhwsiqejapufdwhk.supabase.co
 SUPABASE_SERVICE_KEY=your-supabase-service-key
 DEEPSEEK_API_KEY=your-deepseek-api-key
 RUN_INTERVAL_MINUTES=60
@@ -311,7 +311,7 @@ railway up --service google-analyst -d services/analyst-agents/google-analyst/Do
 railway up --service deepseek-analyst -d services/analyst-agents/deepseek-analyst/Dockerfile
 
 # Set environment variables for each service
-railway vars set SUPABASE_URL=https://aedapqfuegbqztuetkxd.supabase.co
+railway vars set SUPABASE_URL=https://yupijhwsiqejapufdwhk.supabase.co
 railway vars set SUPABASE_SERVICE_KEY=your-key-here
 # ... etc
 ```

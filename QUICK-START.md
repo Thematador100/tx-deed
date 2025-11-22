@@ -7,7 +7,7 @@ Get your entire AI workforce running in **15 minutes**!
 ## Step 1: Set Up Database (5 minutes)
 
 1. Go to **https://supabase.com/dashboard**
-2. Open your project: **aedapqfuegbqztuetkxd**
+2. Open your project: **yupijhwsiqejapufdwhk**
 3. Click **SQL Editor** (left sidebar)
 4. Click **"New Query"**
 5. **Copy and paste** everything from `supabase-setup.sql` file
@@ -54,7 +54,7 @@ Get your entire AI workforce running in **15 minutes**!
 7. Click **"New Variable"** and add these (one by one):
 
 ```
-SUPABASE_URL = https://aedapqfuegbqztuetkxd.supabase.co
+SUPABASE_URL = https://yupijhwsiqejapufdwhk.supabase.co
 SUPABASE_SERVICE_KEY = [paste the key from Step 2]
 COUNTIES = Harris County, TX,Dallas County, TX,Tarrant County, TX
 NEWS_KEYWORDS = tax lien,property foreclosure,tax delinquent

@@ -1,10 +1,10 @@
 import { createClient } from '@supabase/supabase-js';
 import { readFileSync } from 'fs';
 
-const supabaseUrl = 'https://aedapqfuegbqztuetkxd.supabase.co';
+const supabaseUrl = 'https://yupijhwsiqejapufdwhk.supabase.co';
 
 // Try with service role key from environment, or use anon key as fallback
-const supabaseKey = process.env.SUPABASE_SERVICE_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFlZGFwcWZ1ZWdicXp0dWV0a3hkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTg5MTY4NTEsImV4cCI6MjA3NDQ5Mjg1MX0.mWkZO0jU64_U6JUug7IOhdQmRpiRunahy-QFTLfQCWY';
+const supabaseKey = process.env.SUPABASE_SERVICE_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl1cGlqaHdzaXFlamFwdWZkd2hrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM3NTg3ODksImV4cCI6MjA3OTMzNDc4OX0.MQ1NIAf7i6IDafS0avwYoo2O4DDQ4hLdnlS1nHW_2A4';
 
 console.log('🔧 Setting up Supabase database...\n');
 
@@ -45,7 +45,7 @@ async function runSetup() {
           console.log('\n⚠️  PERMISSION DENIED - Need service_role key!\n');
           console.log('To fix this:');
           console.log('1. Go to https://supabase.com/dashboard');
-          console.log('2. Open your project: aedapqfuegbqztuetkxd');
+          console.log('2. Open your project: yupijhwsiqejapufdwhk');
           console.log('3. Click Settings → API');
           console.log('4. Copy the "service_role" key');
           console.log('5. Run: SUPABASE_SERVICE_KEY=your-key node setup-database.js\n');
@@ -84,7 +84,7 @@ async function tryDirectExecution() {
     if (leadsError && leadsError.code === '42P01') {
       console.log('❌ Tables do not exist yet');
       console.log('\n📋 You need to run the SQL manually in Supabase:');
-      console.log('1. Go to https://supabase.com/dashboard/project/aedapqfuegbqztuetkxd/sql');
+      console.log('1. Go to https://supabase.com/dashboard/project/yupijhwsiqejapufdwhk/sql');
       console.log('2. Click "New Query"');
       console.log('3. Copy/paste the entire contents of supabase-setup.sql');
       console.log('4. Click "Run" or press Ctrl+Enter\n');
