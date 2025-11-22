@@ -1,0 +1,13 @@
+{
+  "name": "@tx-deed/all-agents",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Consolidated service running all TX Deed autonomous agents",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.30.0"
+  }
+}
