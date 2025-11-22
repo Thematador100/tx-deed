@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Building2, Menu, X, LayoutDashboard, LogOut, Search, ChevronDown, ShoppingCart, Bot, ShieldCheck, UploadCloud, Columns, Calendar, Bell, HeartHandshake as Handshake, UserCheck, Users, FileSearch, Terminal, Zap, Briefcase, ListFilter, FileClock, Rocket } from 'lucide-react';
+import { Building2, Menu, X, LayoutDashboard, LogOut, Search, ChevronDown, ShoppingCart, Bot, ShieldCheck, UploadCloud, Columns, Calendar, Bell, HeartHandshake as Handshake, UserCheck, Users, FileSearch, Terminal, Zap, Briefcase, ListFilter, FileClock, Rocket, Map } from 'lucide-react';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
@@ -98,6 +98,7 @@ const Navbar = () => {
   const guestNav = [
     { name: 'Home', path: '/' },
     { name: 'Platform Tour', path: '/platform-tour' },
+    { name: '50-State Rules', path: '/state-rules' },
     { name: 'Membership', path: '/membership' },
     { name: 'About', path: '/about' },
   ];
@@ -135,6 +136,7 @@ const Navbar = () => {
         title: 'Resources',
         icon: Briefcase,
         items: [
+          { name: '50-State Rules Library', path: '/state-rules', icon: Map },
           { name: 'Funding Portal', path: '/funding-portal', icon: Handshake },
           { name: 'Affiliate Program', path: '/affiliate-program', icon: Users },
           { name: 'Developer Hub', path: '/developer-hub', icon: Terminal },

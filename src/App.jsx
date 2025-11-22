@@ -33,6 +33,7 @@ import About from '@/pages/About';
 import TaxDelinquentLeads from '@/pages/TaxDelinquentLeads';
 import RedeemableDeeds from '@/pages/RedeemableDeeds';
 import PlatformTour from '@/pages/PlatformTour';
+import StateRulesExplorer from '@/pages/StateRulesExplorer';
 import AdminLogin from '@/pages/admin/AdminLogin';
 import AdminDashboard from '@/pages/admin/AdminDashboard';
 import AdminUsers from '@/pages/admin/AdminUsers';
@@ -65,6 +66,7 @@ function App() {
             {/* Public Routes */}
             <Route path="/" element={<Landing />} />
             <Route path="/platform-tour" element={<PlatformTour />} />
+            <Route path="/state-rules" element={<StateRulesExplorer />} />
             <Route path="/membership" element={<Membership />} />
             <Route path="/affiliate-program" element={<AffiliateProgram />} />
             <Route path="/about" element={<About />} />
