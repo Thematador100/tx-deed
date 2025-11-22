@@ -1,0 +1,30 @@
+{
+  "name": "@tx-deed/autonomous-enterprise-scraper",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Fully autonomous, self-healing enterprise county scraper with AI-powered discovery",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "install-advanced": "npm install puppeteer puppeteer-extra puppeteer-extra-plugin-stealth pdf-parse cheerio"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.30.0"
+  },
+  "optionalDependencies": {
+    "puppeteer": "^21.0.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
+    "pdf-parse": "^1.1.1",
+    "cheerio": "^1.0.0-rc.12",
+    "proxy-chain": "^2.4.0"
+  },
+  "keywords": [
+    "autonomous",
+    "scraper",
+    "ai-powered",
+    "enterprise",
+    "self-healing",
+    "anti-blocking"
+  ]
+}
