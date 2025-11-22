@@ -1,0 +1,208 @@
+{
+  "counties": {
+    "TX": {
+      "Harris County": {
+        "url": "https://www.hcad.org/records-and-services/delinquent-tax/",
+        "dataSource": "csv",
+        "csvUrl": "https://www.hcad.org/downloads/delinquent-tax-list.csv",
+        "enabled": true,
+        "runFrequency": "daily"
+      },
+      "Dallas County": {
+        "url": "https://www.dallascounty.org/departments/tax/delinquent-tax-sales.php",
+        "dataSource": "pdf",
+        "pdfUrl": "https://www.dallascounty.org/Assets/uploads/docs/tax/delinquent-list.pdf",
+        "enabled": true,
+        "runFrequency": "daily"
+      },
+      "Tarrant County": {
+        "url": "https://www.tarrantcountytx.gov/en/tax/delinquent-taxes.html",
+        "dataSource": "database",
+        "searchUrl": "https://www.tarrantcountytx.gov/tax/search",
+        "enabled": true,
+        "runFrequency": "daily"
+      },
+      "Bexar County": {
+        "url": "https://www.bexar.org/692/Delinquent-Tax",
+        "dataSource": "csv",
+        "enabled": true,
+        "runFrequency": "weekly"
+      },
+      "Travis County": {
+        "url": "https://tax-office.traviscountytx.gov/delinquent-taxes",
+        "dataSource": "database",
+        "enabled": true,
+        "runFrequency": "daily"
+      }
+    },
+    "GA": {
+      "Fulton County": {
+        "url": "https://www.fultoncountyga.gov/services/tax-services/delinquent-tax-sales",
+        "dataSource": "csv",
+        "enabled": true,
+        "runFrequency": "daily",
+        "notes": "Metro Atlanta - biggest market"
+      },
+      "DeKalb County": {
+        "url": "https://www.dekalbcountyga.gov/tax-commissioner/delinquent-taxes",
+        "dataSource": "csv",
+        "enabled": true,
+        "runFrequency": "daily"
+      },
+      "Gwinnett County": {
+        "url": "https://www.gwinnettcounty.com/web/gwinnett/departments/taxcommissioner/delinquenttax",
+        "dataSource": "pdf",
+        "enabled": true,
+        "runFrequency": "weekly"
+      },
+      "Cobb County": {
+        "url": "https://www.cobbcounty.org/tax/delinquent-taxes",
+        "dataSource": "database",
+        "enabled": true,
+        "runFrequency": "daily"
+      }
+    },
+    "FL": {
+      "Miami-Dade County": {
+        "url": "https://www.miamidade.gov/global/service.page?Mduid_service=ser1489696463940968",
+        "dataSource": "database",
+        "enabled": true,
+        "runFrequency": "daily",
+        "notes": "South Florida - huge market"
+      },
+      "Broward County": {
+        "url": "https://www.broward.org/RecordsTaxesTreasury/PropertyTaxes/Pages/DelinquentTaxes.aspx",
+        "dataSource": "csv",
+        "enabled": true,
+        "runFrequency": "daily"
+      },
+      "Palm Beach County": {
+        "url": "https://discover.pbcgov.org/taxcollector/Pages/Delinquent-Taxes.aspx",
+        "dataSource": "pdf",
+        "enabled": true,
+        "runFrequency": "weekly"
+      },
+      "Orange County": {
+        "url": "https://www.octaxcol.com/delinquent-taxes",
+        "dataSource": "csv",
+        "enabled": true,
+        "runFrequency": "daily",
+        "notes": "Central Florida - Orlando area"
+      },
+      "Hillsborough County": {
+        "url": "https://www.hillstax.org/delinquent-taxes/",
+        "dataSource": "database",
+        "enabled": true,
+        "runFrequency": "daily",
+        "notes": "Tampa"
+      },
+      "Pinellas County": {
+        "url": "https://www.pinellascounty.org/taxcoll/delinquent.htm",
+        "dataSource": "csv",
+        "enabled": true,
+        "runFrequency": "weekly"
+      }
+    },
+    "NC": {
+      "Mecklenburg County": {
+        "url": "https://taxcollections.mecklenburgcountync.gov/",
+        "dataSource": "database",
+        "enabled": true,
+        "runFrequency": "daily",
+        "notes": "Charlotte area"
+      },
+      "Wake County": {
+        "url": "https://www.wake.gov/departments-government/tax-administration/delinquent-taxes",
+        "dataSource": "csv",
+        "enabled": true,
+        "runFrequency": "daily",
+        "notes": "Raleigh"
+      },
+      "Guilford County": {
+        "url": "https://www.guilfordcountync.gov/our-county/tax-services/delinquent-taxes",
+        "dataSource": "pdf",
+        "enabled": true,
+        "runFrequency": "weekly"
+      }
+    },
+    "CT": {
+      "Fairfield County": {
+        "url": "https://fairfieldct.org/taxcollector",
+        "dataSource": "csv",
+        "enabled": true,
+        "runFrequency": "monthly",
+        "notes": "Wealthy suburbs"
+      },
+      "Hartford County": {
+        "url": "https://www.hartford.gov/Government/Departments/TPT/Tax-Collector",
+        "dataSource": "pdf",
+        "enabled": true,
+        "runFrequency": "monthly"
+      },
+      "New Haven County": {
+        "url": "https://www.newhavenct.gov/gov/departments/finance/tax_collector.htm",
+        "dataSource": "database",
+        "enabled": true,
+        "runFrequency": "monthly"
+      }
+    },
+    "DE": {
+      "New Castle County": {
+        "url": "https://nccde.org/279/Tax-Office",
+        "dataSource": "csv",
+        "enabled": true,
+        "runFrequency": "monthly",
+        "notes": "Wilmington area"
+      },
+      "Kent County": {
+        "url": "https://www.co.kent.de.us/departments/assessment/tax-info.aspx",
+        "dataSource": "pdf",
+        "enabled": true,
+        "runFrequency": "monthly"
+      },
+      "Sussex County": {
+        "url": "https://sussexcountyde.gov/county-offices/tax-office",
+        "dataSource": "database",
+        "enabled": true,
+        "runFrequency": "monthly"
+      }
+    }
+  },
+  "dataSourceTypes": {
+    "csv": {
+      "description": "Direct CSV download",
+      "difficulty": "easy",
+      "reliability": "high"
+    },
+    "pdf": {
+      "description": "PDF file that needs parsing",
+      "difficulty": "medium",
+      "reliability": "medium",
+      "requires": ["pdf-parse"]
+    },
+    "database": {
+      "description": "Online searchable database",
+      "difficulty": "hard",
+      "reliability": "medium",
+      "requires": ["puppeteer"]
+    },
+    "api": {
+      "description": "Official API endpoint",
+      "difficulty": "easy",
+      "reliability": "high"
+    },
+    "html": {
+      "description": "HTML table scraping",
+      "difficulty": "hard",
+      "reliability": "low",
+      "requires": ["cheerio", "puppeteer"]
+    }
+  },
+  "settings": {
+    "maxConcurrentScrapers": 5,
+    "retryAttempts": 3,
+    "timeoutSeconds": 120,
+    "respectRobotsTxt": true,
+    "userAgent": "TX-Deed Property Scraper (Contact: support@txdeed.com)"
+  }
+}
