@@ -15,6 +15,10 @@ import DatabaseManager from './DatabaseManager.js';
 import SkipTracingAgent from './SkipTracingAgent.js';
 import PropertyEnrichmentAgent from './PropertyEnrichmentAgent.js';
 import PropertyAssignmentAgent from './PropertyAssignmentAgent.js';
+import IntelligentDataParser from './IntelligentDataParser.js';
+import AdvancedValuationEngine from './AdvancedValuationEngine.js';
+import ProspectingAgent from './ProspectingAgent.js';
+import MLDecisionEngine from './MLDecisionEngine.js';
 import { getActiveCounties } from '../config/counties.config.js';
 
 class AutonomousAgent {
@@ -34,6 +38,10 @@ class AutonomousAgent {
     this.skipTracingAgent = null;
     this.enrichmentAgent = null;
     this.assignmentAgent = null;
+    this.dataParser = null;
+    this.valuationEngine = null;
+    this.prospectingAgent = null;
+    this.mlDecisionEngine = null;
     this.isRunning = false;
     this.consecutiveFailures = 0;
     this.lastSuccessfulRun = null;
@@ -226,12 +234,19 @@ class AutonomousAgent {
     await this.scraperManager.initialize();
     console.log('[AutonomousAgent] ✅ Scraper manager initialized');
 
-    // Initialize other autonomous agents
+    // Initialize core autonomous agents
     this.skipTracingAgent = new SkipTracingAgent(this.dbManager);
     this.enrichmentAgent = new PropertyEnrichmentAgent(this.dbManager);
     this.assignmentAgent = new PropertyAssignmentAgent(this.dbManager);
 
+    // Initialize enterprise-level agents
+    this.dataParser = new IntelligentDataParser(this.dbManager);
+    this.valuationEngine = new AdvancedValuationEngine(this.dbManager);
+    this.prospectingAgent = new ProspectingAgent(this.dbManager);
+    this.mlDecisionEngine = new MLDecisionEngine(this.dbManager);
+
     console.log('[AutonomousAgent] ✅ All agents initialized');
+    console.log('[AutonomousAgent] 🏢 Enterprise features: Data Parser, Valuation Engine, Prospecting, ML Decisions');
   }
 
   /**
@@ -240,25 +255,34 @@ class AutonomousAgent {
   async startAllAgents() {
     console.log('[AutonomousAgent] 🚀 Starting all autonomous agents...');
 
-    // Start skip tracing agent
+    // Start core autonomous agents
     this.skipTracingAgent.start().catch(error => {
       console.error('[AutonomousAgent] Skip tracing agent error:', error);
     });
 
-    // Start enrichment agent
     this.enrichmentAgent.start().catch(error => {
       console.error('[AutonomousAgent] Enrichment agent error:', error);
     });
 
-    // Start assignment agent
     this.assignmentAgent.start().catch(error => {
       console.error('[AutonomousAgent] Assignment agent error:', error);
+    });
+
+    // Start enterprise-level autonomous agents
+    this.prospectingAgent.start().catch(error => {
+      console.error('[AutonomousAgent] Prospecting agent error:', error);
+    });
+
+    this.mlDecisionEngine.start().catch(error => {
+      console.error('[AutonomousAgent] ML decision engine error:', error);
     });
 
     console.log('[AutonomousAgent] ✅ All agents started');
     console.log('[AutonomousAgent] 🕵️ Skip Tracing: Finding family members & contacts');
     console.log('[AutonomousAgent] 📊 Enrichment: Building comprehensive property reports');
     console.log('[AutonomousAgent] 🎯 Assignment: Managing property assignments to members');
+    console.log('[AutonomousAgent] 🎯 Prospecting: Generating leads and business opportunities');
+    console.log('[AutonomousAgent] 🧠 ML Decisions: Making intelligent investment decisions');
   }
 
   /**
@@ -391,6 +415,8 @@ class AutonomousAgent {
         skipTracing: this.checkAgentHealth(this.skipTracingAgent, 'SkipTracing'),
         enrichment: this.checkAgentHealth(this.enrichmentAgent, 'Enrichment'),
         assignment: this.checkAgentHealth(this.assignmentAgent, 'Assignment'),
+        prospecting: this.checkAgentHealth(this.prospectingAgent, 'Prospecting'),
+        mlDecisions: this.checkAgentHealth(this.mlDecisionEngine, 'MLDecisions'),
         system: this.checkSystemHealth(),
       };
 
@@ -561,6 +587,10 @@ class AutonomousAgent {
         skipTracing: this.skipTracingAgent?.getStats() || null,
         enrichment: this.enrichmentAgent?.getStats() || null,
         assignment: this.assignmentAgent?.getStats() || null,
+        dataParser: this.dataParser?.getStats() || null,
+        valuation: this.valuationEngine?.getStats() || null,
+        prospecting: this.prospectingAgent?.getStats() || null,
+        mlDecisions: this.mlDecisionEngine?.getStats() || null,
       },
     };
   }
@@ -607,6 +637,14 @@ class AutonomousAgent {
 
     if (this.assignmentAgent) {
       await this.assignmentAgent.stop();
+    }
+
+    if (this.prospectingAgent) {
+      await this.prospectingAgent.stop();
+    }
+
+    if (this.mlDecisionEngine) {
+      await this.mlDecisionEngine.stop();
     }
 
     console.log('[AutonomousAgent] ✅ All agents stopped gracefully');
