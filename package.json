@@ -8,7 +8,10 @@
     "build": "node tools/generate-llms.js || true && vite build",
     "preview": "vite preview --host :: --port 3000",
     "scraper": "node server/index.js",
-    "scraper:dev": "nodemon server/index.js"
+    "scraper:dev": "nodemon server/index.js",
+    "setup:supabase": "node scripts/setup-supabase.js",
+    "verify:supabase": "node scripts/verify-supabase.js",
+    "start:autonomous": "node server/index.js"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
@@ -40,6 +43,7 @@
     "express": "^5.1.0",
     "framer-motion": "^10.16.4",
     "lucide-react": "0.292.0",
+    "papaparse": "^5.5.3",
     "puppeteer": "^24.31.0",
     "puppeteer-extra": "^3.3.6",
     "puppeteer-extra-plugin-stealth": "^2.11.2",
@@ -51,7 +55,8 @@
     "stripe": "^14.5.0",
     "tailwind-merge": "^1.1.4",
     "tailwindcss-animate": "^1.0.7",
-    "user-agents": "^1.1.669"
+    "user-agents": "^1.1.669",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@babel/generator": "^7.27.0",
