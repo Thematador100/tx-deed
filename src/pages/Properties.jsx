@@ -10,7 +10,6 @@ import { supabase } from '@/lib/customSupabaseClient';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger, DropdownMenuCheckboxItem } from "@/components/ui/dropdown-menu";
-import { mockProperties } from '@/lib/mockData';
 
 const Properties = () => {
   const navigate = useNavigate();
@@ -38,13 +37,19 @@ const Properties = () => {
       setLoading(true);
       const { data, error } = await supabase
         .from('properties')
-        .select('*');
+        .select('*')
+        .order('opportunity_score', { ascending: false, nullsFirst: false });
 
-      if (error || !data || data.length === 0) {
-        console.error('Error fetching properties or no properties found, using mock data:', error);
-        setProperties(mockProperties);
+      if (error) {
+        console.error('Error fetching properties:', error);
+        toast({
+          title: "Error loading properties",
+          description: "Please check your database connection and ensure properties table exists.",
+          variant: "destructive"
+        });
+        setProperties([]);
       } else {
-        setProperties(data);
+        setProperties(data || []);
       }
       setLoading(false);
     };

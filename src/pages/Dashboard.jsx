@@ -10,7 +10,6 @@ import PropertyCard from '@/components/PropertyCard';
 import { toast } from '@/components/ui/use-toast';
 import { supabase } from '@/lib/customSupabaseClient';
 import { Button } from '@/components/ui/button';
-import { mockProperties } from '@/lib/mockData';
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -22,29 +21,34 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      
-      // Use mock data as a fallback
-      setProperties(mockProperties.slice(0, 2));
-      setSavedProperties(mockProperties.slice(2, 5));
 
       if (user) {
+        // Fetch top featured properties
         const { data: featuredData, error: featuredError } = await supabase
           .from('properties')
           .select('*')
+          .order('opportunity_score', { ascending: false, nullsFirst: false })
           .limit(2);
 
-        if (!featuredError && featuredData.length > 0) {
-          setProperties(featuredData);
+        if (featuredError) {
+          console.error('Error fetching featured properties:', error);
+          setProperties([]);
+        } else {
+          setProperties(featuredData || []);
         }
 
+        // Fetch user's saved properties
         const { data: savedData, error: savedError } = await supabase
           .from('saved_properties')
           .select('*, properties(*)')
           .eq('user_id', user.id)
           .limit(3);
 
-        if (!savedError && savedData.length > 0) {
-          setSavedProperties(savedData.map(sp => sp.properties));
+        if (savedError) {
+          console.error('Error fetching saved properties:', savedError);
+          setSavedProperties([]);
+        } else {
+          setSavedProperties(savedData?.map(sp => sp.properties) || []);
         }
       }
 
