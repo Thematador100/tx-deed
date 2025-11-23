@@ -245,116 +245,116 @@ const TaxDelinquentLeads = () => {
                 }}
               >
                 {leads.map((lead) => (
-                <motion.div
-                  key={lead.id}
-                  variants={{
-                    hidden: { y: 20, opacity: 0 },
-                    visible: { y: 0, opacity: 1 },
-                  }}
-                >
-                  <Card className="overflow-hidden h-full flex flex-col">
-                    <div className="aspect-video bg-slate-200 relative group">
-                      {lead.image_url ? (
-                        <img
-                          className="w-full h-full object-cover"
-                          alt={lead.image_alt}
-                          src={lead.image_url} />
-                      ) : (
-                        <ImagePlaceholder />
-                      )}
-                       <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                          <Button variant="outline" size="sm" onClick={handleAction}>
-                            <ImagePlus className="w-4 h-4 mr-2" />
-                            Upload Picture
-                          </Button>
-                        </div>
-                    </div>
-                    <CardHeader>
-                      <CardTitle className="text-xl truncate">{lead.owner || lead.address}</CardTitle>
-                    </CardHeader>
-                    <CardContent className="flex-grow">
-                      <div className="space-y-3 text-sm">
-                        <p className="flex items-center"><Tag className="w-4 h-4 mr-2 text-slate-500" /> Parcel ID: {lead.parcel_id}</p>
-                        <p className="flex items-center"><MapPin className="w-4 h-4 mr-2 text-slate-500" /> {lead.address}</p>
-                        {lead.starting_bid > 0 &&
-                          <p className="flex items-center"><DollarSign className="w-4 h-4 mr-2 text-slate-500" /> Starting Bid: <span className="font-semibold text-base">${lead.starting_bid.toLocaleString()}</span></p>
-                        }
-                        <p className="flex items-center"><Info className="w-4 h-4 mr-2 text-slate-500" />
-                          <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getStatusBadge(lead.status)}`}>
-                            {lead.status}
-                          </span>
-                        </p>
+                  <motion.div
+                    key={lead.id}
+                    variants={{
+                      hidden: { y: 20, opacity: 0 },
+                      visible: { y: 0, opacity: 1 },
+                    }}
+                  >
+                    <Card className="overflow-hidden h-full flex flex-col">
+                      <div className="aspect-video bg-slate-200 relative group">
+                        {lead.image_url ? (
+                          <img
+                            className="w-full h-full object-cover"
+                            alt={lead.image_alt}
+                            src={lead.image_url} />
+                        ) : (
+                          <ImagePlaceholder />
+                        )}
+                         <div className="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                            <Button variant="outline" size="sm" onClick={handleAction}>
+                              <ImagePlus className="w-4 h-4 mr-2" />
+                              Upload Picture
+                            </Button>
+                          </div>
                       </div>
-                    </CardContent>
-                    <div className="p-6 pt-0">
-                      <Button className="w-full" onClick={handleAction}>View Details</Button>
-                    </div>
-                  </Card>
-                  </motion.div>
-                ))}
-              </motion.div>
-            )}
-          </TabsContent>
-          <TabsContent value="table">
-            {loading ? (
-              <div className="flex justify-center items-center py-20">
-                <Loader2 className="w-12 h-12 animate-spin text-purple-600" />
-              </div>
-            ) : leads.length === 0 ? (
-              <Card className="p-12 text-center">
-                <Building className="w-16 h-16 mx-auto text-slate-300 mb-4" />
-                <h3 className="text-xl font-semibold text-slate-700 mb-2">No Leads Found</h3>
-                <p className="text-slate-500 mb-4">
-                  Try adjusting your filters or scrape a county to add new leads.
-                </p>
-              </Card>
-            ) : (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5 }}
-              >
-                <Card>
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>Parcel ID</TableHead>
-                        <TableHead>Owner</TableHead>
-                        <TableHead>Address</TableHead>
-                        <TableHead className="text-right">Starting Bid</TableHead>
-                        <TableHead>Status</TableHead>
-                        <TableHead className="text-right">Actions</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {leads.map((lead) => (
-                      <TableRow key={lead.id}>
-                        <TableCell className="font-medium flex items-center gap-2"><Tag className="w-4 h-4 text-slate-400" />{lead.parcel_id}</TableCell>
-                        <TableCell className="max-w-xs truncate">{lead.owner}</TableCell>
-                        <TableCell>{lead.address}</TableCell>
-                        <TableCell className="text-right font-mono">{lead.starting_bid > 0 ? `$${lead.starting_bid.toLocaleString()}` : 'N/A'}</TableCell>
-                        <TableCell>
-                          <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getStatusBadge(lead.status)}`}>
-                            {lead.status}
-                          </span>
-                        </TableCell>
-                        <TableCell className="text-right">
-                          <Button variant="ghost" size="sm" onClick={handleAction}>View</Button>
-                        </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
+                      <CardHeader>
+                        <CardTitle className="text-xl truncate">{lead.owner || lead.address}</CardTitle>
+                      </CardHeader>
+                      <CardContent className="flex-grow">
+                        <div className="space-y-3 text-sm">
+                          <p className="flex items-center"><Tag className="w-4 h-4 mr-2 text-slate-500" /> Parcel ID: {lead.parcel_id}</p>
+                          <p className="flex items-center"><MapPin className="w-4 h-4 mr-2 text-slate-500" /> {lead.address}</p>
+                          {lead.starting_bid > 0 &&
+                            <p className="flex items-center"><DollarSign className="w-4 h-4 mr-2 text-slate-500" /> Starting Bid: <span className="font-semibold text-base">${lead.starting_bid.toLocaleString()}</span></p>
+                          }
+                          <p className="flex items-center"><Info className="w-4 h-4 mr-2 text-slate-500" />
+                            <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getStatusBadge(lead.status)}`}>
+                              {lead.status}
+                            </span>
+                          </p>
+                        </div>
+                      </CardContent>
+                      <div className="p-6 pt-0">
+                        <Button className="w-full" onClick={handleAction}>View Details</Button>
+                      </div>
+                    </Card>
+                    </motion.div>
+                  ))}
+                </motion.div>
+              )}
+            </TabsContent>
+            <TabsContent value="table">
+              {loading ? (
+                <div className="flex justify-center items-center py-20">
+                  <Loader2 className="w-12 h-12 animate-spin text-purple-600" />
+                </div>
+              ) : leads.length === 0 ? (
+                <Card className="p-12 text-center">
+                  <Building className="w-16 h-16 mx-auto text-slate-300 mb-4" />
+                  <h3 className="text-xl font-semibold text-slate-700 mb-2">No Leads Found</h3>
+                  <p className="text-slate-500 mb-4">
+                    Try adjusting your filters or scrape a county to add new leads.
+                  </p>
                 </Card>
-              </motion.div>
-            )}
-          </TabsContent>
-        </Tabs>
-      </main>
+              ) : (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <Card>
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>Parcel ID</TableHead>
+                          <TableHead>Owner</TableHead>
+                          <TableHead>Address</TableHead>
+                          <TableHead className="text-right">Starting Bid</TableHead>
+                          <TableHead>Status</TableHead>
+                          <TableHead className="text-right">Actions</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {leads.map((lead) => (
+                          <TableRow key={lead.id}>
+                            <TableCell className="font-medium flex items-center gap-2"><Tag className="w-4 h-4 text-slate-400" />{lead.parcel_id}</TableCell>
+                            <TableCell className="max-w-xs truncate">{lead.owner}</TableCell>
+                            <TableCell>{lead.address}</TableCell>
+                            <TableCell className="text-right font-mono">{lead.starting_bid > 0 ? `$${lead.starting_bid.toLocaleString()}` : 'N/A'}</TableCell>
+                            <TableCell>
+                              <span className={`px-2 py-1 text-xs font-semibold rounded-full ${getStatusBadge(lead.status)}`}>
+                                {lead.status}
+                              </span>
+                            </TableCell>
+                            <TableCell className="text-right">
+                              <Button variant="ghost" size="sm" onClick={handleAction}>View</Button>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </Card>
+                </motion.div>
+              )}
+            </TabsContent>
+          </Tabs>
+        </main>
 
-      <Footer />
-    </div>
-  );
-};
+        <Footer />
+      </div>
+    );
+  };
 
 export default TaxDelinquentLeads;
