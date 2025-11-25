@@ -52,6 +52,9 @@ import CheckEmail from '@/pages/CheckEmail';
 import RoleProtectedRoute from '@/components/RoleProtectedRoute';
 import AdminRoute from '@/components/AdminRoute';
 import SetupAdmin from '@/pages/SetupAdmin';
+import DoneForYouTraining from '@/pages/DoneForYouTraining';
+import PropertyAnalysisService from '@/pages/PropertyAnalysisService';
+import QuietTitleService from '@/pages/QuietTitleService';
 
 function App() {
   return (
@@ -71,6 +74,9 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/setup-admin" element={<SetupAdmin />} />
+                        <Route path="/training" element={<DoneForYouTraining />} />
+            <Route path="/analysis-service" element={<PropertyAnalysisService />} />
+            <Route path="/quiet-title-service" element={<QuietTitleService />} />
 
             {/* Authentication Routes */}
             <Route path="/login" element={<Login />} />
