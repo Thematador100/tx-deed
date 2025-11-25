@@ -33,6 +33,7 @@ import About from '@/pages/About';
 import TaxDelinquentLeads from '@/pages/TaxDelinquentLeads';
 import RedeemableDeeds from '@/pages/RedeemableDeeds';
 import PlatformTour from '@/pages/PlatformTour';
+import CountyScraper from '@/pages/CountyScraper';
 import AdminLogin from '@/pages/admin/AdminLogin';
 import AdminDashboard from '@/pages/admin/AdminDashboard';
 import AdminUsers from '@/pages/admin/AdminUsers';
@@ -99,6 +100,7 @@ function App() {
             <Route path="/property-lookup" element={<ProtectedRoute><PropertyLookup /></ProtectedRoute>} />
             <Route path="/tax-delinquent-leads" element={<ProtectedRoute><TaxDelinquentLeads /></ProtectedRoute>} />
             <Route path="/redeemable-deeds" element={<ProtectedRoute><RedeemableDeeds /></ProtectedRoute>} />
+            <Route path="/county-scraper" element={<ProtectedRoute><CountyScraper /></ProtectedRoute>} />
             <Route path="/member-dashboard" element={<ProtectedRoute><MemberDashboard /></ProtectedRoute>} />
 
             {/* Admin Routes */}
