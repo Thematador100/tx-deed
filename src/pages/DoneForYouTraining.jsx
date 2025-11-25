@@ -103,7 +103,7 @@ export default function DoneForYouTraining() {
         {/* Pricing */}
         <div className="bg-white shadow-xl rounded-lg p-8 mb-8 text-center">
           <h2 className="text-3xl font-bold text-gray-900 mb-4">Investment:</h2>
-          <div className="text-5xl font-bold text-indigo-600 mb-2">$7,500</div>
+          <div className="text-5xl font-bold text-indigo-600 mb-2">$1,997</div>
           <p className="text-xl text-gray-600 mb-4">Due at closing of YOUR deal</p>
           <p className="text-lg text-gray-500 italic">
             (Or 25% of net profit if deal exceeds $30,000 equity)
