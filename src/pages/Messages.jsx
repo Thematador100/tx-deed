@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSupabaseAuth } from '../contexts/SupabaseAuthContext';
-import { supabase } from '../lib/supabase';
+import { useAuth } from '@/contexts/SupabaseAuthContext';
+import { supabase } from '@/lib/customSupabaseClient';
 import { MessageSquare, Send, Search, User, Clock } from 'lucide-react';
-import { toast } from 'react-hot-toast';
+import { toast } from '@/components/ui/use-toast';
 
 export default function Messages() {
   const navigate = useNavigate();
@@ -81,7 +81,7 @@ export default function Messages() {
       setConversations(conversationsWithUnread);
     } catch (error) {
       console.error('Error fetching conversations:', error);
-      toast.error('Failed to load conversations');
+      toast({ title: "Error", description: "Failed to load conversations", variant: "destructive" });
     } finally {
       setLoading(false);
     }
@@ -103,7 +103,7 @@ export default function Messages() {
       setMessages(data || []);
     } catch (error) {
       console.error('Error fetching messages:', error);
-      toast.error('Failed to load messages');
+      toast({ title: "Error", description: "Failed to load messages", variant: "destructive" });
     }
   }
 
@@ -161,7 +161,7 @@ export default function Messages() {
 
     } catch (error) {
       console.error('Error sending message:', error);
-      toast.error('Failed to send message');
+      toast({ title: "Error", description: "Failed to send message", variant: "destructive" });
     } finally {
       setSendingMessage(false);
     }
@@ -197,12 +197,12 @@ export default function Messages() {
         .single();
 
       if (userError || !targetUser) {
-        toast.error('User not found');
+        toast({ title: "Error", description: "User not found", variant: "destructive" });
         return;
       }
 
       if (targetUser.id === user.id) {
-        toast.error('You cannot message yourself');
+        toast({ title: "Error", description: "You cannot message yourself", variant: "destructive" });
         return;
       }
 
@@ -218,7 +218,7 @@ export default function Messages() {
           ...existingConvo,
           other_participant: targetUser
         });
-        toast.success('Opening existing conversation');
+        toast({ title: "Success", description: "Opening existing conversation" });
         return;
       }
 
@@ -240,10 +240,10 @@ export default function Messages() {
       });
 
       fetchConversations();
-      toast.success('New conversation started');
+      toast({ title: "Success", description: "New conversation started" });
     } catch (error) {
       console.error('Error starting conversation:', error);
-      toast.error('Failed to start conversation');
+      toast({ title: "Error", description: "Failed to start conversation", variant: "destructive" });
     }
   }
 
