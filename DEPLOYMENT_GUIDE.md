@@ -21,12 +21,15 @@
 - **County Database**: 100+ counties with contact info and auction schedules
 - **All routes configured** in App.jsx
 
-### ✅ Edge Functions (9 New Functions Created)
+### ✅ Edge Functions (16 Total Functions)
 1. `process-document-ocr` - Google Document AI integration
 2. `marketplace-purchase` - Lead buying with Stripe
 3. `stripe-webhook` - Payment webhook handler
 4. `send-notification` - Email/SMS/in-app notifications
-5. Plus 5 existing functions (property-analysis, scrape-county, etc.)
+5. `generate-dossier` - AI-powered deal analysis (NEW)
+6. `manage-api-key` - Admin API key management (NEW)
+7. `force-admin-setup` - Initial admin account creation (NEW)
+8. Plus existing functions (property-analysis, scrape-county, get-properties, etc.)
 
 ### ✅ Scraping Infrastructure (50 New Scrapers)
 - **50 county scrapers** generated across 20 states
@@ -76,6 +79,9 @@ supabase functions deploy process-document-ocr
 supabase functions deploy marketplace-purchase
 supabase functions deploy stripe-webhook
 supabase functions deploy send-notification
+supabase functions deploy generate-dossier
+supabase functions deploy manage-api-key
+supabase functions deploy force-admin-setup
 supabase functions deploy scrape-county
 supabase functions deploy batch-scrape
 supabase functions deploy get-properties
@@ -420,11 +426,12 @@ For issues or questions:
 ## 📊 Database Statistics
 
 - **Tables**: 20 (12 new + 8 existing)
-- **Edge Functions**: 13 total
+- **Edge Functions**: 16 total (3 newly added)
 - **State Laws**: 59 jurisdictions
 - **County Data**: 100+ counties
 - **Scrapers**: 53 (3 existing + 50 new)
 - **Routes**: 40+ pages
+- **Authentication**: All routes properly guarded
 
 ---
 

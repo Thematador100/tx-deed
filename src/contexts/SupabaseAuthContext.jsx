@@ -14,21 +14,68 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   const fetchProfile = useCallback(async (userId) => {
-    const { data, error } = await supabase
-      .from('profiles')
-      .select('*')
-      .eq('id', userId)
-      .single();
-    
-    if (error) {
-      console.error('Error fetching profile:', error);
+    try {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', userId)
+        .single();
+
+      if (error) {
+        console.error('Error fetching profile:', error);
+
+        // If profile doesn't exist, try to create one
+        if (error.code === 'PGRST116') {
+          const { data: newProfile, error: createError } = await supabase
+            .from('profiles')
+            .insert({
+              id: userId,
+              role: 'member',
+              created_at: new Date().toISOString()
+            })
+            .select()
+            .single();
+
+          if (createError) {
+            console.error('Error creating profile:', createError);
+            toast({
+              variant: "destructive",
+              title: "Profile Setup Failed",
+              description: "Could not create user profile. Please contact support.",
+            });
+            return null;
+          }
+
+          return newProfile;
+        }
+
+        // Handle database connection errors
+        if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
+          toast({
+            variant: "destructive",
+            title: "Connection Error",
+            description: "Unable to connect to database. Please check your internet connection.",
+          });
+        }
+
+        return null;
+      }
+
+      if (data && !data.role) {
+        data.role = 'member';
+      }
+
+      return data;
+    } catch (err) {
+      console.error('Unexpected error fetching profile:', err);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "An unexpected error occurred. Please try again.",
+      });
       return null;
     }
-    if (data && !data.role) {
-      data.role = 'member';
-    }
-    return data;
-  }, []);
+  }, [toast]);
 
   const handleSession = useCallback(async (session) => {
     setSession(session);
@@ -80,20 +127,41 @@ export const AuthProvider = ({ children }) => {
   }, [toast]);
 
   const signIn = useCallback(async (email, password) => {
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
 
-    if (error) {
+      if (error) {
+        // Provide more helpful error messages
+        let errorMessage = error.message;
+
+        if (error.message.includes('Invalid login credentials')) {
+          errorMessage = 'Invalid email or password. Please check your credentials and try again.';
+        } else if (error.message.includes('Email not confirmed')) {
+          errorMessage = 'Please confirm your email address before signing in.';
+        } else if (error.message.includes('Failed to fetch')) {
+          errorMessage = 'Unable to connect to authentication server. Please check your internet connection.';
+        }
+
+        toast({
+          variant: "destructive",
+          title: "Sign in Failed",
+          description: errorMessage,
+        });
+      }
+
+      return { error };
+    } catch (err) {
+      console.error('Unexpected error during sign in:', err);
       toast({
         variant: "destructive",
         title: "Sign in Failed",
-        description: error.message || "Something went wrong",
+        description: "An unexpected error occurred. Please try again.",
       });
+      return { error: err };
     }
-
-    return { error };
   }, [toast]);
 
   const signOut = useCallback(async () => {
