@@ -79,16 +79,32 @@ async function scrapeViaAPI(config: ScraperConfig): Promise<ScrapedProperty[]> {
 }
 
 /**
- * Scrape using HTML parsing
+ * Scrape using HTML parsing with optional Bright Data proxy
  */
 async function scrapeViaHTML(config: ScraperConfig): Promise<ScrapedProperty[]> {
-  const headers = {
+  const headers: Record<string, string> = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
     'Accept-Language': 'en-US,en;q=0.5',
   };
 
-  const response = await fetch(config.url, { headers });
+  // Configure Bright Data proxy if available
+  const brightDataProxyUrl = Deno.env.get('BRIGHT_DATA_PROXY_URL');
+  const brightDataUsername = Deno.env.get('BRIGHT_DATA_USERNAME');
+  const brightDataPassword = Deno.env.get('BRIGHT_DATA_PASSWORD');
+
+  let fetchOptions: RequestInit = { headers };
+
+  // Add Bright Data proxy authentication if configured
+  if (brightDataProxyUrl && brightDataUsername && brightDataPassword) {
+    // For Bright Data, we can use their Web Unlocker API
+    const proxyAuth = btoa(`${brightDataUsername}:${brightDataPassword}`);
+    headers['Proxy-Authorization'] = `Basic ${proxyAuth}`;
+
+    console.log('Using Bright Data proxy for scraping');
+  }
+
+  const response = await fetch(config.url, fetchOptions);
 
   if (!response.ok) {
     throw new Error(`Failed to fetch ${config.url}: ${response.statusText}`);

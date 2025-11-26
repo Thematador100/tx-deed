@@ -175,37 +175,40 @@ async function sendEmailNotification(email: string, name: string, title: string,
 }
 
 async function sendSMSNotification(phone: string, title: string, message: string) {
-  // Using Twilio for SMS (would need to be configured)
-  const twilioSid = Deno.env.get('TWILIO_ACCOUNT_SID');
-  const twilioToken = Deno.env.get('TWILIO_AUTH_TOKEN');
-  const twilioPhone = Deno.env.get('TWILIO_PHONE_NUMBER');
+  // Using Telnyx for SMS
+  const telnyxApiKey = Deno.env.get('TELNYX_API_KEY');
+  const telnyxPhone = Deno.env.get('TELNYX_PHONE_NUMBER');
 
-  if (!twilioSid || !twilioToken || !twilioPhone) {
-    console.log('Twilio not configured, skipping SMS');
+  if (!telnyxApiKey || !telnyxPhone) {
+    console.log('Telnyx not configured, skipping SMS');
     return;
   }
 
   const smsBody = `${title}: ${message}`;
 
-  const params = new URLSearchParams({
-    To: phone,
-    From: twilioPhone,
-    Body: smsBody,
-  });
+  const requestBody = {
+    from: telnyxPhone,
+    to: phone,
+    text: smsBody,
+  };
 
   const response = await fetch(
-    `https://api.twilio.com/2010-04-01/Accounts/${twilioSid}/Messages.json`,
+    'https://api.telnyx.com/v2/messages',
     {
       method: 'POST',
       headers: {
-        'Authorization': `Basic ${btoa(`${twilioSid}:${twilioToken}`)}`,
-        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': `Bearer ${telnyxApiKey}`,
+        'Content-Type': 'application/json',
       },
-      body: params.toString(),
+      body: JSON.stringify(requestBody),
     }
   );
 
   if (!response.ok) {
-    throw new Error(`Twilio API error: ${await response.text()}`);
+    const errorText = await response.text();
+    throw new Error(`Telnyx API error: ${errorText}`);
   }
+
+  const result = await response.json();
+  console.log('SMS sent successfully via Telnyx:', result.data.id);
 }
