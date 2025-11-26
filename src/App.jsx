@@ -56,6 +56,8 @@ import DoneForYouTraining from '@/pages/DoneForYouTraining';
 import PropertyAnalysisService from '@/pages/PropertyAnalysisService';
 import QuietTitleService from '@/pages/QuietTitleService';
 import Messages from '@/pages/Messages';
+import AIDealDossier from '@/pages/AIDealDossier';
+import AIDispoCopilot from '@/pages/AIDispoCopilot';
 
 function App() {
   return (
@@ -110,6 +112,8 @@ function App() {
             <Route path="/county-scraper" element={<ProtectedRoute><CountyScraper /></ProtectedRoute>} />
             <Route path="/member-dashboard" element={<ProtectedRoute><MemberDashboard /></ProtectedRoute>} />
             <Route path="/messages" element={<ProtectedRoute><Messages /></ProtectedRoute>} />
+            <Route path="/ai-deal-dossier" element={<ProtectedRoute><AIDealDossier /></ProtectedRoute>} />
+            <Route path="/ai-dispo-copilot" element={<ProtectedRoute><AIDispoCopilot /></ProtectedRoute>} />
 
             {/* Admin Routes */}
             <Route path="/admin" element={<AdminRoute><AdminLayout><AdminDashboard /></AdminLayout></AdminRoute>} />

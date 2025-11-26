@@ -2,16 +2,19 @@
 - [About Us - Win With Deeds](/about): Learn about the mission and vision of Win With Deeds, the premier platform for tax deed investors.
 - [Admin Setup - Win With Deeds](/setupadmin): One-time secure setup for the site administrator.
 - [Affiliate Program - Win With Deeds](/affiliateprogram): Partner with Win With Deeds and earn by promoting the leading tax deed investment platform.
+- [AI Deal Dossier - Win With Deeds](/aidealdossier): Generate comprehensive AI-powered property analysis reports with title risk, market data, and financial projections.
 - [AI Dispo Copilot - TaxDeeds Pro](/dealmicrosite): Generate price recommendations, one-click microsites, and compliant outreach sequences with AI assistance.
+- [AI Dispo Copilot - Win With Deeds](/aidispocopilot): Generate AI-powered disposition content including emails, SMS, call scripts, and social media posts to sell your properties faster.
 - [AI Workforce - Win With Deeds](/aiworkforce): Manage and monitor your automated AI
 - [AI-Powered Outreach - TaxDeeds Pro](/outreach): Automate compliant 10DLC/SMS and email sequences for your deals with built-in quiet hours and STOP functionality.
-- [Buyer-Match Graph - TaxDeeds Pro](/buyermatch): Leverage AI to match your deals with the top 20 buyers in any micro-market, complete with personalized reasons.
+- [Buyer-Match Graph - Win With Deeds](/buyermatch): Leverage AI to match your deals with the top 20 buyers in any micro-market, complete with personalized reasons.
 - [Check Your Email - Win With Deeds](/checkemail): Please check your email to activate your Win With Deeds account.
 - [Checkout - Win With Deeds](/checkout): Complete your purchase for Win With Deeds.
 - [Contact Us - TaxDeeds Pro](/contact): Have questions about tax deed investing? Get in touch with the TaxDeeds Pro team. We
 - [County Scraper - Win With Deeds](/countyscraper): Automatically scrape tax deed listings from Texas counties
 - [Dashboard - Win With Deeds](/dashboard): Your personalized tax deed investment dashboard with property listings, market insights, and portfolio tracking.
-- [Deal Rescue Engine - TaxDeeds Pro](/dealrescue): Upload your stalled deals and get a new buyer set, revised pricing, and objection-handling scripts to revive them.
+- [Deal Rescue Engine - TaxDeeds Pro](/dealrescue.jsx): Upload your stalled deals and get a new buyer set, revised pricing, and objection-handling scripts to revive them.
+- [Deal Rescue Engine - Win With Deeds](/dealrescue): AI-powered analysis to revive stalled deals with new pricing, buyer lists, and objection handling.
 - [Developer Hub - Win With Deeds](/developerhub): Integrate your custom tools and scrapers with the Win With Deeds platform using our API guidelines.
 - [Doc & Process Automation - Win With Deeds](/automation): Automate assignments, addenda, POF requests, and escrow handoffs with templated and prefilled documents.
 - [Funding Partner Portal - Win With Deeds](/fundingportal): Submit your deals to a network of vetted hard money and private lenders.

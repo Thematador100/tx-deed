@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useAuth } from '@/contexts/SupabaseAuthContext';
 import { useToast } from '@/components/ui/use-toast';
+import LibrarianChat from '@/components/LibrarianChat';
 
 const AdminLogin = () => {
   const [email, setEmail] = useState('');
@@ -118,6 +119,7 @@ const AdminLogin = () => {
             </div>
         </motion.div>
       </div>
+      <LibrarianChat />
     </div>
   );
 };
