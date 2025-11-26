@@ -55,6 +55,7 @@ import SetupAdmin from '@/pages/SetupAdmin';
 import DoneForYouTraining from '@/pages/DoneForYouTraining';
 import PropertyAnalysisService from '@/pages/PropertyAnalysisService';
 import QuietTitleService from '@/pages/QuietTitleService';
+import Messages from '@/pages/Messages';
 
 function App() {
   return (
@@ -108,6 +109,7 @@ function App() {
             <Route path="/redeemable-deeds" element={<ProtectedRoute><RedeemableDeeds /></ProtectedRoute>} />
             <Route path="/county-scraper" element={<ProtectedRoute><CountyScraper /></ProtectedRoute>} />
             <Route path="/member-dashboard" element={<ProtectedRoute><MemberDashboard /></ProtectedRoute>} />
+            <Route path="/messages" element={<ProtectedRoute><Messages /></ProtectedRoute>} />
 
             {/* Admin Routes */}
             <Route path="/admin" element={<AdminRoute><AdminLayout><AdminDashboard /></AdminLayout></AdminRoute>} />
