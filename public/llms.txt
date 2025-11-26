@@ -1,12 +1,15 @@
 ## Pages
 - [About Us - Win With Deeds](/about): Learn about the mission and vision of Win With Deeds, the premier platform for tax deed investors.
+- [Admin Setup - Win With Deeds](/setupadmin): One-time secure setup for the site administrator.
 - [Affiliate Program - Win With Deeds](/affiliateprogram): Partner with Win With Deeds and earn by promoting the leading tax deed investment platform.
 - [AI Dispo Copilot - TaxDeeds Pro](/dealmicrosite): Generate price recommendations, one-click microsites, and compliant outreach sequences with AI assistance.
 - [AI Workforce - Win With Deeds](/aiworkforce): Manage and monitor your automated AI
 - [AI-Powered Outreach - TaxDeeds Pro](/outreach): Automate compliant 10DLC/SMS and email sequences for your deals with built-in quiet hours and STOP functionality.
 - [Buyer-Match Graph - TaxDeeds Pro](/buyermatch): Leverage AI to match your deals with the top 20 buyers in any micro-market, complete with personalized reasons.
+- [Check Your Email - Win With Deeds](/checkemail): Please check your email to activate your Win With Deeds account.
 - [Checkout - Win With Deeds](/checkout): Complete your purchase for Win With Deeds.
 - [Contact Us - TaxDeeds Pro](/contact): Have questions about tax deed investing? Get in touch with the TaxDeeds Pro team. We
+- [County Scraper - Win With Deeds](/countyscraper): Automatically scrape tax deed listings from Texas counties
 - [Dashboard - Win With Deeds](/dashboard): Your personalized tax deed investment dashboard with property listings, market insights, and portfolio tracking.
 - [Deal Rescue Engine - TaxDeeds Pro](/dealrescue): Upload your stalled deals and get a new buyer set, revised pricing, and objection-handling scripts to revive them.
 - [Developer Hub - Win With Deeds](/developerhub): Integrate your custom tools and scrapers with the Win With Deeds platform using our API guidelines.
@@ -22,7 +25,7 @@
 - [Properties - Win With Deeds](/properties): Browse all available tax deed properties, including upcoming auctions and investor marketplace listings.
 - [Property Lookup - Win With Deeds](/propertylookup): Instantly look up any property address to check its status in our database and get AI-powered insights.
 - [Redeemable Deeds - Win With Deeds](/redeemabledeeds): Track and analyze properties in their redemption period.
-- [Register - TaxDeeds Pro](/register): Create your TaxDeeds Pro account and start investing in premium tax deed properties today.
+- [Register - Win With Deeds](/register): Create your Win With Deeds account and start investing in premium tax deed properties today.
 - [Scout AI Agents - Win With Deeds](/scoutagent): Deploy autonomous AI agents to find deals for you 24/7.
 - [Tax Delinquent Leads - Win With Deeds](/taxdelinquentleads): View and manage your tax delinquent property leads.
 - [TaxDeeds Pro - The Premier Tax Deed Investment Platform](/landing): The all-in-one platform for discovering, analyzing, and acquiring tax deed properties.
