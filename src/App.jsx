@@ -13,6 +13,7 @@ import Profile from '@/pages/Profile';
 import PropertyDetails from '@/pages/PropertyDetails';
 import BuyerMatch from '@/pages/BuyerMatch';
 import DealMicrosite from '@/pages/DealMicrosite';
+import DealDossier from '@/pages/DealDossier';
 import Outreach from '@/pages/Outreach';
 import DealRescue from '@/pages/DealRescue';
 import Automation from '@/pages/Automation';
@@ -92,6 +93,7 @@ function App() {
             <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
             <Route path="/buyer-match" element={<ProtectedRoute><BuyerMatch /></ProtectedRoute>} />
             <Route path="/deal-microsite" element={<ProtectedRoute><DealMicrosite /></ProtectedRoute>} />
+            <Route path="/deal-dossier" element={<ProtectedRoute><DealDossier /></ProtectedRoute>} />
             <Route path="/outreach" element={<ProtectedRoute><Outreach /></ProtectedRoute>} />
             <Route path="/deal-rescue" element={<ProtectedRoute><DealRescue /></ProtectedRoute>} />
             <Route path="/automation" element={<ProtectedRoute><Automation /></ProtectedRoute>} />
