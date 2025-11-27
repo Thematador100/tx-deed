@@ -15,19 +15,51 @@ export default function DealDossier() {
   const handleAnalyze = async () => {
     if (!propertyAddress.trim()) return;
     setIsAnalyzing(true);
-    // Simulate AI analysis
-    setTimeout(() => {
+
+    try {
+      // Call the deal-dossier Edge Function
+      const { data, error } = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/deal-dossier`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`
+        },
+        body: JSON.stringify({ address: propertyAddress })
+      }).then(res => res.json());
+
+      if (error) throw error;
+
+      if (data && data.dossier) {
+        setAnalysisResult({
+          address: data.dossier.address,
+          titleStatus: data.dossier.title_status,
+          liens: data.dossier.liens || [],
+          courtRecords: data.dossier.court_records || [],
+          redFlags: data.dossier.red_flags || [],
+          overallScore: data.dossier.overall_score,
+          recommendation: data.dossier.recommendation,
+          actionItems: data.dossier.action_items || [],
+          riskLevel: data.dossier.risk_level || 'Medium',
+          detailedAnalysis: data.dossier.detailed_analysis || data.dossier.recommendation,
+          titleRecords: data.dossier.title_records || []
+        });
+      } else {
+        throw new Error('Invalid response from server');
+      }
+    } catch (error) {
+      console.error('Analysis error:', error);
       setAnalysisResult({
         address: propertyAddress,
-        titleStatus: 'Clear',
+        titleStatus: 'Error',
         liens: [],
         courtRecords: [],
-        redFlags: [],
-        overallScore: 92,
-        recommendation: 'This property appears to be a solid investment opportunity with clear title and no significant issues found.'
+        redFlags: ['Could not complete analysis. Please try again.'],
+        overallScore: 0,
+        recommendation: 'Analysis failed. Please verify the address and try again.'
       });
+    } finally {
       setIsAnalyzing(false);
-    }, 2000);
+    }
   };
 
   return (
@@ -83,7 +115,18 @@ export default function DealDossier() {
                 <CardHeader>
                   <CardTitle className="flex items-center justify-between">
                     <span>Analysis Results</span>
-                    <span className="text-2xl font-bold text-green-600">{analysisResult.overallScore}/100</span>
+                    <div className="flex items-center gap-3">
+                      {analysisResult.riskLevel && (
+                        <span className={`px-3 py-1 rounded-full text-sm font-semibold ${
+                          analysisResult.riskLevel === 'Low' ? 'bg-green-100 text-green-800' :
+                          analysisResult.riskLevel === 'Medium' ? 'bg-yellow-100 text-yellow-800' :
+                          'bg-red-100 text-red-800'
+                        }`}>
+                          {analysisResult.riskLevel} Risk
+                        </span>
+                      )}
+                      <span className="text-2xl font-bold text-green-600">{analysisResult.overallScore}/100</span>
+                    </div>
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -121,10 +164,137 @@ export default function DealDossier() {
                       </div>
                     </div>
                   </div>
-                  <div className="mt-6 p-4 bg-green-50 rounded-lg border border-green-200">
-                    <p className="font-medium text-green-800">AI Recommendation</p>
-                    <p className="text-sm text-green-700 mt-1">{analysisResult.recommendation}</p>
+
+                  {/* AI Recommendation */}
+                  <div className={`mt-6 p-4 rounded-lg border ${
+                    analysisResult.overallScore >= 80 ? 'bg-green-50 border-green-200' :
+                    analysisResult.overallScore >= 50 ? 'bg-yellow-50 border-yellow-200' :
+                    'bg-red-50 border-red-200'
+                  }`}>
+                    <p className={`font-medium ${
+                      analysisResult.overallScore >= 80 ? 'text-green-800' :
+                      analysisResult.overallScore >= 50 ? 'text-yellow-800' :
+                      'text-red-800'
+                    }`}>AI Recommendation</p>
+                    <p className={`text-sm mt-1 ${
+                      analysisResult.overallScore >= 80 ? 'text-green-700' :
+                      analysisResult.overallScore >= 50 ? 'text-yellow-700' :
+                      'text-red-700'
+                    }`}>{analysisResult.recommendation}</p>
                   </div>
+
+                  {/* Action Items */}
+                  {analysisResult.actionItems && analysisResult.actionItems.length > 0 && (
+                    <div className="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                      <p className="font-medium text-blue-800 mb-2">Action Items:</p>
+                      <ul className="space-y-1">
+                        {analysisResult.actionItems.map((item, idx) => (
+                          <li key={idx} className="text-sm text-blue-700 flex items-start gap-2">
+                            <span className="text-blue-500 mt-0.5">•</span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+
+                  {/* Title Records */}
+                  {analysisResult.titleRecords && analysisResult.titleRecords.length > 0 && (
+                    <div className="mt-6">
+                      <h3 className="font-semibold text-slate-900 mb-3">Title History ({analysisResult.titleRecords.length} records)</h3>
+                      <div className="space-y-2">
+                        {analysisResult.titleRecords.slice(0, 5).map((record, idx) => (
+                          <div key={idx} className="bg-slate-50 p-3 rounded-lg text-sm">
+                            <div className="flex justify-between items-start">
+                              <div>
+                                <span className="font-medium text-slate-900">{record.type}</span>
+                                <span className="text-slate-500 ml-2">{new Date(record.date).toLocaleDateString()}</span>
+                              </div>
+                              {record.amount && (
+                                <span className="font-semibold text-green-600">${record.amount.toLocaleString()}</span>
+                              )}
+                            </div>
+                            {record.grantor && record.grantee && (
+                              <p className="text-slate-600 mt-1">{record.grantor} → {record.grantee}</p>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Liens Detail */}
+                  {analysisResult.liens && analysisResult.liens.length > 0 && (
+                    <div className="mt-6">
+                      <h3 className="font-semibold text-slate-900 mb-3">Liens Detail ({analysisResult.liens.length} liens)</h3>
+                      <div className="space-y-2">
+                        {analysisResult.liens.map((lien, idx) => (
+                          <div key={idx} className="bg-yellow-50 p-3 rounded-lg border border-yellow-200">
+                            <div className="flex justify-between items-start">
+                              <div>
+                                <span className="font-medium text-yellow-900">{lien.type}</span>
+                                <span className={`ml-2 px-2 py-0.5 rounded text-xs ${
+                                  lien.status === 'active' ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'
+                                }`}>
+                                  {lien.status}
+                                </span>
+                              </div>
+                              <span className="font-semibold text-yellow-900">${lien.amount.toLocaleString()}</span>
+                            </div>
+                            <p className="text-sm text-yellow-700 mt-1">
+                              Filed: {new Date(lien.filed_date).toLocaleDateString()}
+                              {lien.creditor && ` • ${lien.creditor}`}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Court Records Detail */}
+                  {analysisResult.courtRecords && analysisResult.courtRecords.length > 0 && (
+                    <div className="mt-6">
+                      <h3 className="font-semibold text-slate-900 mb-3">Court Records ({analysisResult.courtRecords.length} cases)</h3>
+                      <div className="space-y-2">
+                        {analysisResult.courtRecords.map((record, idx) => (
+                          <div key={idx} className="bg-purple-50 p-3 rounded-lg border border-purple-200">
+                            <div className="flex justify-between items-start">
+                              <div>
+                                <span className="font-medium text-purple-900">{record.case_type}</span>
+                                <span className="text-sm text-purple-600 ml-2">#{record.case_number}</span>
+                              </div>
+                              <span className={`px-2 py-0.5 rounded text-xs ${
+                                record.status === 'Active' ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800'
+                              }`}>
+                                {record.status}
+                              </span>
+                            </div>
+                            <p className="text-sm text-purple-700 mt-1">
+                              Filed: {new Date(record.filed_date).toLocaleDateString()}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Red Flags */}
+                  {analysisResult.redFlags && analysisResult.redFlags.length > 0 && (
+                    <div className="mt-6 p-4 bg-red-50 rounded-lg border border-red-200">
+                      <p className="font-medium text-red-800 flex items-center gap-2 mb-2">
+                        <AlertTriangle className="w-5 h-5" />
+                        Red Flags Identified:
+                      </p>
+                      <ul className="space-y-1">
+                        {analysisResult.redFlags.map((flag, idx) => (
+                          <li key={idx} className="text-sm text-red-700 flex items-start gap-2">
+                            <span className="text-red-500 mt-0.5">⚠</span>
+                            <span>{flag}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             </div>

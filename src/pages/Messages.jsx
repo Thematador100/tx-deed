@@ -7,7 +7,7 @@ import { toast } from '@/components/ui/use-toast';
 
 export default function Messages() {
   const navigate = useNavigate();
-  const { user } = useSupabaseAuth();
+  const { user } = useAuth();
   const [conversations, setConversations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
