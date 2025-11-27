@@ -15,6 +15,7 @@ const features = [
     description: 'Deploy autonomous agents that hunt for deals 24/7 based on your exact criteria, from specific counties to minimum opportunity scores. Your personal deal-finding army never sleeps.',
     color: 'text-purple-500',
     bg: 'bg-purple-50',
+        path: '/scout-agent',
   },
   {
     id: 'dossier',
@@ -23,6 +24,7 @@ const features = [
     description: 'Get instant, comprehensive due diligence reports. Our AI summarizes title information, checks for liens, analyzes court records, and flags potential red flags, saving you hours of manual research.',
     color: 'text-indigo-500',
     bg: 'bg-indigo-50',
+        path: '/deal-dossier',
   },
   {
     id: 'buyer-match',
@@ -31,6 +33,7 @@ const features = [
     description: 'Instantly find the top 20 most likely cash buyers for any property in your portfolio. Our AI analyzes public records to connect you with investors who have a proven track record of buying similar properties in that exact area.',
     color: 'text-blue-500',
     bg: 'bg-blue-50',
+        path: '/buyer-match',
   },
   {
     id: 'dispo-copilot',
@@ -39,6 +42,7 @@ const features = [
     description: 'Generate stunning, one-click deal microsites complete with AI-generated copy, underwriting highlights, and an NDA gate. Also creates compliant email and SMS outreach campaigns to sell your deals faster.',
     color: 'text-green-500',
     bg: 'bg-green-50',
+        path: '/deal-microsite',
   },
   {
     id: 'deal-rescue',
@@ -47,6 +51,7 @@ const features = [
     description: 'Is a deal going stale? The Deal Rescue Engine analyzes what went wrong, suggests new pricing strategies, and generates a fresh list of potential buyers who might have been overlooked.',
     color: 'text-red-500',
     bg: 'bg-red-50',
+        path: '/deal-rescue',
   },
   {
     id: 'uploader',
@@ -63,6 +68,7 @@ const features = [
     description: 'Quickly check any US address to see if it\'s already in our database, view its history, and get a preliminary AI analysis on its potential as a tax deed investment.',
     color: 'text-sky-500',
     bg: 'bg-sky-50',
+        path: '/property-lookup',
   },
   {
     id: 'pipeline',
@@ -71,6 +77,7 @@ const features = [
     description: 'Manage your deals from research to closing with a drag-and-drop Kanban board. Includes a pre-flight checklist to ensure you never miss a critical step before an auction.',
     color: 'text-teal-500',
     bg: 'bg-teal-50',
+        path: '/my-pipeline',
   },
   {
     id: 'calendar',
@@ -79,6 +86,7 @@ const features = [
     description: 'All your important dates in one place. Automatically tracks auction dates and redemption period deadlines for every property in your pipeline.',
     color: 'text-rose-500',
     bg: 'bg-rose-50',
+        path: '/calendar',
   },
   {
     id: 'funding',
@@ -86,6 +94,7 @@ const features = [
     title: 'Funding Portal',
     description: 'Submit your best deals directly to our network of vetted hard money lenders and private capital partners, including our own in-house fund, WinWithDeeds Capital.',
     color: 'text-amber-500',
+        path: '/funding-portal',
     bg: 'bg-amber-50',
   },
   {
@@ -95,6 +104,7 @@ const features = [
     description: 'For power users and teams, our Developer Hub allows you to connect your own custom scrapers and tools directly to our backend via a secure API.',
     color: 'text-slate-500',
     bg: 'bg-slate-100',
+        path: '/developer-hub',
   },
   {
     id: 'marketplace',
@@ -103,6 +113,7 @@ const features = [
     description: 'A peer-to-peer marketplace for buying and selling high-quality, vetted tax deed leads. Monetize your research or find deals in new markets.',
     color: 'text-lime-500',
     bg: 'bg-lime-50',
+        path: '/lead-marketplace',
   },
 ];
 
@@ -177,7 +188,7 @@ const PlatformTour = () => {
                   </div>
                 </div>
                 <motion.div className="mt-6 text-right">
-                  <Button onClick={() => navigate('/membership')} className="bg-purple-600 hover:bg-purple-700 text-white">
+                  <Button onClick={() => navigate(selectedFeature.path || '/membership')} className="bg-purple-600 hover:bg-purple-700 text-white">
                     Unlock This Feature
                   </Button>
                 </motion.div>
