@@ -11,7 +11,7 @@ import Dashboard from '@/pages/Dashboard';
 import Properties from '@/pages/Properties';
 import Profile from '@/pages/Profile';
 import PropertyDetails from '@/pages/PropertyDetails';
-import BuyerMatch from '@/pages/BuyerMatch';
+import BuyerMatchGraph from '@/pages/BuyerMatchGraph';
 import DealDossier from '@/pages/DealDossier';
 import DealMicrosite from '@/pages/DealMicrosite';
 import Outreach from '@/pages/Outreach';
@@ -91,7 +91,7 @@ function App() {
             <Route path="/properties" element={<ProtectedRoute><Properties /></ProtectedRoute>} />
             <Route path="/property/:id" element={<ProtectedRoute><PropertyDetails /></ProtectedRoute>} />
             <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
-            <Route path="/buyer-match" element={<ProtectedRoute><BuyerMatch /></ProtectedRoute>} />
+            <Route path="/buyer-match" element={<ProtectedRoute><BuyerMatchGraph /></ProtectedRoute>} />
                       <Route path="/deal-dossier" element={<ProtectedRoute><DealDossier /></ProtectedRoute>} />
             <Route path="/deal-microsite" element={<ProtectedRoute><DealMicrosite /></ProtectedRoute>} />
             <Route path="/outreach" element={<ProtectedRoute><Outreach /></ProtectedRoute>} />
