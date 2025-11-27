@@ -128,6 +128,7 @@ const Navbar = () => {
         icon: Zap,
         items: [
           { name: 'Buyer-Match Graph', path: '/buyer-match', icon: Users },
+                    { name: 'AI Deal Dossier', path: '/deal-dossier', icon: ShieldCheck },
           { name: 'AI Dispo Copilot', path: '/deal-microsite', icon: Zap },
           { name: 'Deal Rescue Engine', path: '/deal-rescue', icon: Handshake },
         ]
