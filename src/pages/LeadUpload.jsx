@@ -64,48 +64,77 @@ const LeadUpload = () => {
     }
 
     setIsUploading(true);
-    toast({ title: "Uploading...", description: "Your property lists are being processed by our AI." });
+    toast({ title: "Uploading...", description: "Your property lists are being uploaded and processed." });
 
     for (const file of files) {
-      const fileFormat = file.name.split('.').pop();
-      const { data: uploadRecord, error: uploadError } = await supabase
-        .from('lead_uploads')
-        .insert({
-          user_id: user.id,
-          file_name: file.name,
-          file_format: fileFormat,
-          status: 'processing',
-        })
-        .select()
-        .single();
+      try {
+        const fileFormat = file.name.split('.').pop().toLowerCase();
+        const fileName = `${user.id}/${Date.now()}_${file.name}`;
 
-      if (uploadError) {
-        toast({ title: `Upload failed for ${file.name}`, description: uploadError.message, variant: "destructive" });
-        continue;
-      }
+        // Upload file to Supabase Storage
+        const { data: storageData, error: storageError } = await supabase.storage
+          .from('lead-uploads')
+          .upload(fileName, file, {
+            cacheControl: '3600',
+            upsert: false,
+          });
 
-      await new Promise(resolve => setTimeout(resolve, 3000));
+        if (storageError) {
+          toast({ title: `Upload failed for ${file.name}`, description: storageError.message, variant: "destructive" });
+          continue;
+        }
 
-      const newProperties = [
-        { address: '123 E Broughton St, Savannah, GA', price: 85000, estimated_value: 220000, auction_date: new Date(new Date().setDate(new Date().getDate() + 25)).toISOString().split('T')[0], status: 'Upcoming Auction', roi: 158, listing_type: 'auction', deal_stage: 'Lead', opportunity_score: 94, bedrooms: 3, bathrooms: 2, sqft: 1800, year_built: 1955, property_type: 'Single Family', description: 'Historic district tax deed property with significant upside potential.', latitude: 32.0798, longitude: -81.0895, image_url: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811' },
-        { address: '456 Abercorn St, Savannah, GA', price: 110000, estimated_value: 280000, auction_date: new Date(new Date().setDate(new Date().getDate() + 35)).toISOString().split('T')[0], status: 'Upcoming Auction', roi: 154, listing_type: 'auction', deal_stage: 'Lead', opportunity_score: 96, bedrooms: 4, bathrooms: 3, sqft: 2400, year_built: 1962, property_type: 'Single Family', description: 'Large family home near Forsyth Park, available via tax deed auction.', latitude: 32.0721, longitude: -81.0923, image_url: 'https://images.unsplash.com/photo-1572120360610-d971b9d7767c' },
-      ];
+        // Create upload record in database
+        const { data: uploadRecord, error: uploadError } = await supabase
+          .from('lead_uploads')
+          .insert({
+            user_id: user.id,
+            file_name: file.name,
+            file_format: fileFormat,
+            file_size: file.size,
+            storage_path: storageData.path,
+            status: 'pending',
+          })
+          .select()
+          .single();
 
-      const { error: propertiesError } = await supabase.from('properties').insert(newProperties);
+        if (uploadError) {
+          toast({ title: `Upload record creation failed for ${file.name}`, description: uploadError.message, variant: "destructive" });
+          // Clean up uploaded file
+          await supabase.storage.from('lead-uploads').remove([fileName]);
+          continue;
+        }
 
-      if (propertiesError) {
-        await supabase.from('lead_uploads').update({ status: 'error' }).eq('id', uploadRecord.id);
-        toast({ title: `Processing failed for ${file.name}`, description: propertiesError.message, variant: "destructive" });
-      } else {
-        await supabase.from('lead_uploads').update({ status: 'completed', leads_found: newProperties.length }).eq('id', uploadRecord.id);
-        toast({
-          title: "Processing Complete!",
-          description: `${newProperties.length} properties from ${file.name} have been added to your Deal Stream.`,
-          action: <Button onClick={() => navigate('/properties')}>View Properties</Button>,
+        // Call Edge Function to process the file
+        const { data: session } = await supabase.auth.getSession();
+        const response = await fetch(`${supabase.supabaseUrl}/functions/v1/process-lead-upload`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${session?.session?.access_token}`,
+          },
+          body: JSON.stringify({
+            uploadId: uploadRecord.id,
+          }),
         });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          toast({ title: `Processing failed for ${file.name}`, description: errorData.error || 'Unknown error', variant: "destructive" });
+        } else {
+          const result = await response.json();
+          toast({
+            title: "Processing Complete!",
+            description: `${result.propertiesImported || 0} properties from ${file.name} have been added to your Deal Stream.`,
+            action: <Button onClick={() => navigate('/properties')}>View Properties</Button>,
+          });
+        }
+      } catch (error) {
+        console.error('Upload error:', error);
+        toast({ title: `Error uploading ${file.name}`, description: error.message, variant: "destructive" });
       }
     }
-    
+
     setFiles([]);
     setIsUploading(false);
     fetchUploadHistory();
