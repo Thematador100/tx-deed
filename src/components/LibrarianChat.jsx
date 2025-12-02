@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { BookUser, X, Send, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { supabase } from '@/lib/customSupabaseClient';
 
 const LibrarianChat = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -41,7 +42,26 @@ const LibrarianChat = () => {
       setIsLoading(false);
     }, 1500);
   };
+    // Call AI backend
+    try {
+      const { data, error } = await supabase.functions.invoke('librarian-chat', {
+        body: { message: input }
+      });
 
+      if (error) throw error;
+
+      const aiMessage = { sender: 'ai', text: data.response || 'I apologize, but I encountered an error. Please try again.' };
+      setMessages(prev => [...prev, aiMessage]);
+    } catch (error) {
+      console.error('Librarian AI error:', error);
+      const errorMessage = { 
+        sender: 'ai', 
+        text: 'I apologize, but I\'m having trouble connecting right now. Please try again in a moment.' 
+      };
+      setMessages(prev => [...prev, errorMessage]);
+    } finally {
+      setIsLoading(false);
+    }
   return (
     <>
       <AnimatePresence>
