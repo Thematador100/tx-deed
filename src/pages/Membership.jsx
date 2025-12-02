@@ -55,6 +55,8 @@ const Membership = () => {
     {
       name: 'Pro Investor',
       price: '$99',
+      // TODO: Replace with your real Stripe Price ID from: https://dashboard.stripe.com/products
+      // Create a recurring price for $99/month in your Stripe dashboard and paste the price_xxx ID here
       priceId: 'price_1P5qYgRxxxxxxxxxxxxxxxxx',
       description: 'For active investors who need the core toolset.',
       features: [
@@ -69,6 +71,8 @@ const Membership = () => {
     {
       name: 'Mentee Elite',
       price: '$299',
+      // TODO: Replace with your real Stripe Price ID from: https://dashboard.stripe.com/products
+      // Create a recurring price for $299/month in your Stripe dashboard and paste the price_xxx ID here
       priceId: 'price_1P5qZgRxxxxxxxxxxxxxxxxx',
       description: 'For dedicated mentees seeking an unfair advantage.',
       features: [
