@@ -7,38 +7,19 @@ import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { toast } from '@/components/ui/use-toast';
 import { supabase } from '@/lib/customSupabaseClient';
-
-// Texas counties with major metropolitan areas
-const TEXAS_COUNTIES = [
-  { id: 'harris', name: 'Harris County', city: 'Houston' },
-  { id: 'dallas', name: 'Dallas County', city: 'Dallas' },
-  { id: 'tarrant', name: 'Tarrant County', city: 'Fort Worth' },
-  { id: 'bexar', name: 'Bexar County', city: 'San Antonio' },
-  { id: 'travis', name: 'Travis County', city: 'Austin' },
-  { id: 'collin', name: 'Collin County', city: 'Plano' },
-  { id: 'denton', name: 'Denton County', city: 'Denton' },
-  { id: 'el-paso', name: 'El Paso County', city: 'El Paso' },
-  { id: 'fort-bend', name: 'Fort Bend County', city: 'Sugar Land' },
-  { id: 'hidalgo', name: 'Hidalgo County', city: 'McAllen' },
-  { id: 'montgomery', name: 'Montgomery County', city: 'Conroe' },
-  { id: 'williamson', name: 'Williamson County', city: 'Round Rock' },
-  { id: 'cameron', name: 'Cameron County', city: 'Brownsville' },
-  { id: 'nueces', name: 'Nueces County', city: 'Corpus Christi' },
-  { id: 'brazoria', name: 'Brazoria County', city: 'Pearland' },
-  { id: 'bell', name: 'Bell County', city: 'Killeen' },
-  { id: 'galveston', name: 'Galveston County', city: 'Galveston' },
-  { id: 'webb', name: 'Webb County', city: 'Laredo' },
-  { id: 'jefferson', name: 'Jefferson County', city: 'Beaumont' },
-  { id: 'smith', name: 'Smith County', city: 'Tyler' }
-];
+import { US_COUNTIES_BY_STATE, US_STATES } from '@/data/usCountiesData';
 
 const CountyScraper = () => {
+  const [selectedState, setSelectedState] = useState('');
   const [selectedCounty, setSelectedCounty] = useState('');
   const [isScraperRunning, setIsScraperRunning] = useState(false);
   const [progress, setProgress] = useState(0);
   const [status, setStatus] = useState('');
   const [results, setResults] = useState([]);
   const [completedScrapers, setCompletedScrapers] = useState([]);
+
+  // Get counties for selected state
+  const availableCounties = selectedState ? US_COUNTIES_BY_STATE[selectedState] || [] : [];
 
   // Call real scraper API
   const scrapeCountyData = async (countyName, state) => {
@@ -70,16 +51,26 @@ const CountyScraper = () => {
   };
 
   const handleStartScraper = async () => {
-    if (!selectedCounty) {
+    if (!selectedState) {
       toast({
-        title: "⚠️ Please select a county",
-        description: "Choose a Texas county to scrape tax deed listings.",
+        title: "⚠️ Please select a state",
+        description: "Choose a state first, then select a county.",
         variant: "destructive"
       });
       return;
     }
 
-    const countyData = TEXAS_COUNTIES.find(c => c.id === selectedCounty);
+    if (!selectedCounty) {
+      toast({
+        title: "⚠️ Please select a county",
+        description: "Choose a county to scrape tax deed listings.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    const countyData = availableCounties.find(c => c.name === selectedCounty);
+    const scrapeKey = `${selectedState}-${selectedCounty}`;
 
     setIsScraperRunning(true);
     setProgress(0);
@@ -88,18 +79,18 @@ const CountyScraper = () => {
 
     try {
       // Call real scraper API
-      const result = await scrapeCountyData(countyData.name, 'TX');
+      const result = await scrapeCountyData(countyData.name, selectedState);
 
       // Get properties from the API result
       const properties = result.properties || [];
       setResults(properties);
 
       // Mark as completed
-      setCompletedScrapers(prev => [...new Set([...prev, selectedCounty])]);
+      setCompletedScrapers(prev => [...new Set([...prev, scrapeKey])]);
 
       toast({
         title: "✅ Scraper Complete!",
-        description: `Found ${properties.length} properties in ${countyData.name}`,
+        description: `Found ${properties.length} properties in ${countyData.name}, ${selectedState}`,
       });
 
     } catch (error) {
@@ -126,7 +117,7 @@ const CountyScraper = () => {
     <div className="min-h-screen bg-slate-50 text-slate-800">
       <Helmet>
         <title>County Scraper - Win With Deeds</title>
-        <meta name="description" content="Automatically scrape tax deed listings from Texas counties" />
+        <meta name="description" content="Automatically scrape tax deed listings from any US county" />
       </Helmet>
 
       <Navbar />
@@ -139,10 +130,10 @@ const CountyScraper = () => {
           className="mb-8"
         >
           <h1 className="text-3xl font-bold text-slate-900 mb-2">
-            🏛️ County Tax Deed Scraper
+            🏛️ Universal County Tax Deed Scraper
           </h1>
           <p className="text-slate-600">
-            Automatically discover and import tax deed properties from Texas counties
+            Scrape tax deed properties from any county in all 50 US states
           </p>
         </motion.div>
 
@@ -158,34 +149,69 @@ const CountyScraper = () => {
             Scraper Controls
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+            {/* State Selector */}
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-2">
-                Select County
+                Select State
               </label>
-              <Select value={selectedCounty} onValueChange={setSelectedCounty} disabled={isScraperRunning}>
+              <Select
+                value={selectedState}
+                onValueChange={(val) => {
+                  setSelectedState(val);
+                  setSelectedCounty(''); // Reset county when state changes
+                }}
+                disabled={isScraperRunning}
+              >
                 <SelectTrigger className="w-full">
-                  <SelectValue placeholder="Choose a Texas county..." />
+                  <SelectValue placeholder="Choose a state..." />
                 </SelectTrigger>
                 <SelectContent className="max-h-[300px]">
-                  {TEXAS_COUNTIES.map((county) => (
-                    <SelectItem key={county.id} value={county.id}>
-                      <div className="flex items-center gap-2">
-                        {completedScrapers.includes(county.id) && (
-                          <CheckCircle className="w-4 h-4 text-green-500" />
-                        )}
-                        {county.name} ({county.city})
-                      </div>
+                  {US_STATES.map((state) => (
+                    <SelectItem key={state.code} value={state.code}>
+                      {state.name}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
             </div>
 
+            {/* County Selector */}
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-2">
+                Select County
+              </label>
+              <Select
+                value={selectedCounty}
+                onValueChange={setSelectedCounty}
+                disabled={isScraperRunning || !selectedState}
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder={selectedState ? "Choose a county..." : "Select state first"} />
+                </SelectTrigger>
+                <SelectContent className="max-h-[300px]">
+                  {availableCounties.map((county) => {
+                    const scrapeKey = `${selectedState}-${county.name}`;
+                    return (
+                      <SelectItem key={county.name} value={county.name}>
+                        <div className="flex items-center gap-2">
+                          {completedScrapers.includes(scrapeKey) && (
+                            <CheckCircle className="w-4 h-4 text-green-500" />
+                          )}
+                          {county.name} ({county.city})
+                        </div>
+                      </SelectItem>
+                    );
+                  })}
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Start Button */}
             <div className="flex items-end">
               <Button
                 onClick={handleStartScraper}
-                disabled={isScraperRunning || !selectedCounty}
+                disabled={isScraperRunning || !selectedCounty || !selectedState}
                 className="w-full bg-purple-600 hover:bg-purple-700 text-white"
                 size="lg"
               >
@@ -239,19 +265,19 @@ const CountyScraper = () => {
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-green-600">
-                  {formatCurrency(results.reduce((sum, p) => sum + p.minimum_bid, 0) / results.length)}
+                  {formatCurrency(results.reduce((sum, p) => sum + (p.minimum_bid || 0), 0) / results.length)}
                 </div>
                 <div className="text-xs text-slate-600">Avg Min Bid</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-blue-600">
-                  {formatCurrency(results.reduce((sum, p) => sum + p.assessed_value, 0) / results.length)}
+                  {formatCurrency(results.reduce((sum, p) => sum + (p.assessed_value || 0), 0) / results.length)}
                 </div>
                 <div className="text-xs text-slate-600">Avg Value</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-orange-600">
-                  {Math.round((results.reduce((sum, p) => sum + p.minimum_bid, 0) / results.reduce((sum, p) => sum + p.assessed_value, 0)) * 100)}%
+                  {Math.round((results.reduce((sum, p) => sum + (p.minimum_bid || 0), 0) / results.reduce((sum, p) => sum + (p.assessed_value || 1), 0)) * 100)}%
                 </div>
                 <div className="text-xs text-slate-600">Avg Discount</div>
               </div>
@@ -272,7 +298,7 @@ const CountyScraper = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {results.map((property, index) => (
                 <motion.div
-                  key={property.id}
+                  key={property.id || index}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: index * 0.05 }}
@@ -282,7 +308,7 @@ const CountyScraper = () => {
                     <div className="flex items-start justify-between mb-3">
                       <div className="flex items-center gap-2 text-purple-600">
                         <Building2 className="w-5 h-5" />
-                        <span className="text-sm font-semibold">{property.property_type}</span>
+                        <span className="text-sm font-semibold">{property.property_type || 'Property'}</span>
                       </div>
                       <span className="px-2 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded">
                         NEW
@@ -292,38 +318,50 @@ const CountyScraper = () => {
                     <h3 className="font-bold text-slate-900 mb-1">{property.address}</h3>
                     <p className="text-sm text-slate-600 mb-4 flex items-center gap-1">
                       <MapPin className="w-3 h-3" />
-                      {property.city}, {property.state} {property.zip}
+                      {property.city}, {property.state} {property.zip_code || property.zip}
                     </p>
 
                     <div className="space-y-2 mb-4">
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-slate-600">Assessed Value:</span>
-                        <span className="font-semibold text-slate-900">{formatCurrency(property.assessed_value)}</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-slate-600">Minimum Bid:</span>
-                        <span className="font-bold text-purple-600">{formatCurrency(property.minimum_bid)}</span>
-                      </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-sm text-slate-600">Tax Owed:</span>
-                        <span className="font-medium text-red-600">{formatCurrency(property.tax_amount_owed)}</span>
-                      </div>
+                      {property.assessed_value && (
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-slate-600">Assessed Value:</span>
+                          <span className="font-semibold text-slate-900">{formatCurrency(property.assessed_value)}</span>
+                        </div>
+                      )}
+                      {property.minimum_bid && (
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-slate-600">Minimum Bid:</span>
+                          <span className="font-bold text-purple-600">{formatCurrency(property.minimum_bid)}</span>
+                        </div>
+                      )}
+                      {property.tax_amount_owed && (
+                        <div className="flex justify-between items-center">
+                          <span className="text-sm text-slate-600">Tax Owed:</span>
+                          <span className="font-medium text-red-600">{formatCurrency(property.tax_amount_owed)}</span>
+                        </div>
+                      )}
                     </div>
 
-                    <div className="flex items-center gap-2 text-sm text-slate-600 pt-4 border-t border-slate-100">
-                      <Calendar className="w-4 h-4" />
-                      Auction: {property.auction_date}
-                    </div>
+                    {property.auction_date && (
+                      <div className="flex items-center gap-2 text-sm text-slate-600 pt-4 border-t border-slate-100">
+                        <Calendar className="w-4 h-4" />
+                        Auction: {property.auction_date}
+                      </div>
+                    )}
                   </div>
 
                   <div className="bg-slate-50 px-6 py-3 border-t border-slate-100">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs text-slate-500">
-                        Delinquent since {property.year_delinquent}
-                      </span>
-                      <span className="text-xs font-bold text-green-600">
-                        {Math.round((property.minimum_bid / property.assessed_value) * 100)}% of value
-                      </span>
+                      {property.year_delinquent && (
+                        <span className="text-xs text-slate-500">
+                          Delinquent since {property.year_delinquent}
+                        </span>
+                      )}
+                      {property.minimum_bid && property.assessed_value && (
+                        <span className="text-xs font-bold text-green-600">
+                          {Math.round((property.minimum_bid / property.assessed_value) * 100)}% of value
+                        </span>
+                      )}
                     </div>
                   </div>
                 </motion.div>
@@ -342,7 +380,7 @@ const CountyScraper = () => {
           >
             <Database className="w-16 h-16 text-slate-300 mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-slate-600 mb-2">No Results Yet</h3>
-            <p className="text-slate-500">Select a county and click "Start Scraper" to begin</p>
+            <p className="text-slate-500">Select a state and county, then click "Start Scraper"</p>
           </motion.div>
         )}
       </main>
