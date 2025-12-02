@@ -40,69 +40,32 @@ const CountyScraper = () => {
   const [results, setResults] = useState([]);
   const [completedScrapers, setCompletedScrapers] = useState([]);
 
-  // Simulate scraper progress
-  const simulateScraperProgress = async (countyName) => {
-    const stages = [
-      { message: 'Connecting to county database...', progress: 10 },
-      { message: 'Fetching tax deed listings...', progress: 30 },
-      { message: 'Extracting property details...', progress: 50 },
-      { message: 'Analyzing property values...', progress: 70 },
-      { message: 'Saving to database...', progress: 90 },
-      { message: 'Complete!', progress: 100 }
-    ];
+  // Call real scraper API
+  const scrapeCountyData = async (countyName, state) => {
+    setStatus('Connecting to county database...');
+    setProgress(10);
 
-    for (const stage of stages) {
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      setStatus(stage.message);
-      setProgress(stage.progress);
-    }
-  };
-
-  // Generate mock property data
-  const generateMockProperties = (county) => {
-    const countyData = TEXAS_COUNTIES.find(c => c.id === county);
-    const propertyCount = Math.floor(Math.random() * 8) + 5;
-    const properties = [];
-
-    const streetNames = ['Main St', 'Oak Ave', 'Elm Dr', 'Pine Rd', 'Maple Ln', 'Cedar Ct', 'Washington Blvd', 'Lincoln Ave'];
-    const propertyTypes = ['Single Family', 'Condo', 'Multi-Family', 'Land', 'Commercial'];
-
-    for (let i = 0; i < propertyCount; i++) {
-      properties.push({
-        id: `${county}-${Date.now()}-${i}`,
-        address: `${Math.floor(Math.random() * 9000) + 1000} ${streetNames[Math.floor(Math.random() * streetNames.length)]}`,
-        city: countyData.city,
-        county: countyData.name,
-        state: 'TX',
-        zip: Math.floor(Math.random() * 90000) + 10000,
-        property_type: propertyTypes[Math.floor(Math.random() * propertyTypes.length)],
-        assessed_value: Math.floor(Math.random() * 500000) + 50000,
-        minimum_bid: Math.floor(Math.random() * 50000) + 10000,
-        auction_date: new Date(Date.now() + Math.random() * 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-        tax_amount_owed: Math.floor(Math.random() * 20000) + 1000,
-        year_delinquent: 2022 + Math.floor(Math.random() * 2),
-        scraped_at: new Date().toISOString()
-      });
-    }
-
-    return properties;
-  };
-
-  // Save properties to Supabase
-  const savePropertiesToDatabase = async (properties) => {
     try {
-      const { data, error } = await supabase
-        .from('properties')
-        .upsert(properties, { onConflict: 'address,city,state' });
+      const { data, error } = await supabase.functions.invoke('scrape-county', {
+        body: { county: countyName, state: state, type: 'tax_deed' }
+      });
 
-      if (error) {
-        console.error('Error saving to Supabase:', error);
-        // Continue anyway - we'll show the results even if DB save fails
-      } else {
-        console.log('Successfully saved properties to database:', data);
-      }
-    } catch (err) {
-      console.error('Database save error:', err);
+      if (error) throw error;
+
+      // Update progress as data comes back
+      setStatus('Fetching tax deed listings...');
+      setProgress(50);
+
+      setStatus('Saving to database...');
+      setProgress(80);
+
+      setStatus('Complete!');
+      setProgress(100);
+
+      return data;
+    } catch (error) {
+      console.error('Scraper API error:', error);
+      throw error;
     }
   };
 
@@ -124,15 +87,12 @@ const CountyScraper = () => {
     setResults([]);
 
     try {
-      // Simulate scraper progress
-      await simulateScraperProgress(countyData.name);
+      // Call real scraper API
+      const result = await scrapeCountyData(countyData.name, 'TX');
 
-      // Generate mock properties
-      const properties = generateMockProperties(selectedCounty);
+      // Get properties from the API result
+      const properties = result.properties || [];
       setResults(properties);
-
-      // Save to database
-      await savePropertiesToDatabase(properties);
 
       // Mark as completed
       setCompletedScrapers(prev => [...new Set([...prev, selectedCounty])]);
@@ -146,7 +106,7 @@ const CountyScraper = () => {
       console.error('Scraper error:', error);
       toast({
         title: "❌ Scraper Error",
-        description: "An error occurred while scraping. Please try again.",
+        description: error.message || "An error occurred while scraping. Please try again.",
         variant: "destructive"
       });
     } finally {

@@ -17,34 +17,43 @@ const DocumentIngestor = ({ onProcessComplete }) => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [fileName, setFileName] = useState('');
 
-  const onDrop = useCallback(acceptedFiles => {
+  const onDrop = useCallback(async (acceptedFiles) => {
     if (acceptedFiles.length > 0) {
       const file = acceptedFiles[0];
       setFileName(file.name);
       setIsProcessing(true);
 
-      setTimeout(() => {
-        let aiData;
-        if (file.type === 'text/plain') {
-          aiData = {
-            title: `Property Leads from ${file.name}`,
-            description: "Extracted 3 tax deed properties in CT with a 6-month redemption period. Ready for review and import into the main property database.",
-            item_type: 'article',
-            url: `internal://leads-summary/${file.name}`,
-          };
-        } else {
-          aiData = {
-            title: `Summary of ${file.name.replace(/\.[^/.]+$/, "")}`,
-            description: "This document outlines new procedures for surplus funds in Harris County, TX, effective Q4 2025. Key changes include a shortened claim period and new documentation requirements.",
-            item_type: 'pdf',
-            url: `https://your-supabase-bucket.supabase.co/storage/v1/object/public/library-docs/${file.name}`,
-          };
-        }
-        
+      try {
+        // Upload file and process with OCR
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const { data, error } = await supabase.functions.invoke('process-document-ocr', {
+          body: formData
+        });
+
+        if (error) throw error;
+
+        // Extract AI-processed data
+        const aiData = {
+          title: data.title || `Document: ${file.name}`,
+          description: data.summary || data.description || 'Processed document',
+          item_type: file.type === 'application/pdf' ? 'pdf' : 'article',
+          url: data.url || `internal://library-docs/${file.name}`,
+        };
+
         onProcessComplete(aiData);
+      } catch (error) {
+        console.error('Document processing error:', error);
+        toast({
+          title: 'Processing Error',
+          description: 'Failed to process document. Please try again.',
+          variant: 'destructive'
+        });
+      } finally {
         setIsProcessing(false);
         setFileName('');
-      }, 2500);
+      }
     }
   }, [onProcessComplete]);
 
