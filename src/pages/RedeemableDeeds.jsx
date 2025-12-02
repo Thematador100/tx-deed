@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
@@ -7,12 +7,38 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { FileClock, MapPin, DollarSign, Info, Users, Building, BrainCircuit, Search as SearchIcon, TrendingUp, Calculator } from 'lucide-react';
+import { FileClock, MapPin, DollarSign, Info, Users, Building, BrainCircuit, Search as SearchIcon, TrendingUp, Calculator, Loader2 } from 'lucide-react';
 import { mockRedeemableDeeds } from '@/lib/mockData';
 import { toast } from '@/components/ui/use-toast';
 import { format, differenceInDays, parseISO } from 'date-fns';
+import { getRedeemableDeeds } from '@/lib/supabaseAPI';
 
 const RedeemableDeeds = () => {
+  const [deeds, setDeeds] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    fetchDeeds();
+  }, []);
+
+  const fetchDeeds = async () => {
+    setIsLoading(true);
+    try {
+      const data = await getRedeemableDeeds({ limit: 100 });
+      // Use real data if available, otherwise fall back to mock data for demo
+      setDeeds(data.length > 0 ? data : mockRedeemableDeeds);
+    } catch (error) {
+      console.error('Error fetching redeemable deeds:', error);
+      toast({
+        title: 'Error loading deeds',
+        description: 'Failed to fetch redeemable deeds. Showing demo data.',
+        variant: 'destructive',
+      });
+      setDeeds(mockRedeemableDeeds);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleAction = (feature) => {
     toast({
@@ -70,25 +96,31 @@ const RedeemableDeeds = () => {
           </Button>
         </motion.div>
 
-        <Tabs defaultValue="panel" className="w-full">
-          <TabsList className="grid w-full grid-cols-2 md:w-[400px] mb-6">
-            <TabsTrigger value="panel">Panel View</TabsTrigger>
-            <TabsTrigger value="table">Table View</TabsTrigger>
-          </TabsList>
-          <TabsContent value="panel">
-            <motion.div 
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-              initial="hidden"
-              animate="visible"
-              variants={{
-                visible: {
-                  transition: {
-                    staggerChildren: 0.05,
+        {isLoading ? (
+          <div className="flex items-center justify-center py-20">
+            <Loader2 className="w-12 h-12 animate-spin text-purple-600" />
+            <span className="ml-4 text-xl text-slate-600">Loading redeemable deeds...</span>
+          </div>
+        ) : (
+          <Tabs defaultValue="panel" className="w-full">
+            <TabsList className="grid w-full grid-cols-2 md:w-[400px] mb-6">
+              <TabsTrigger value="panel">Panel View</TabsTrigger>
+              <TabsTrigger value="table">Table View</TabsTrigger>
+            </TabsList>
+            <TabsContent value="panel">
+              <motion.div
+                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                initial="hidden"
+                animate="visible"
+                variants={{
+                  visible: {
+                    transition: {
+                      staggerChildren: 0.05,
+                    },
                   },
-                },
-              }}
-            >
-              {mockRedeemableDeeds.map((lead) => {
+                }}
+              >
+                {deeds.map((lead) => {
                 const redemptionAmount = calculateRedemption(lead);
                 return (
                   <motion.div
@@ -126,28 +158,28 @@ const RedeemableDeeds = () => {
                   </motion.div>
                 )
               })}
-            </motion.div>
-          </TabsContent>
-          <TabsContent value="table">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
-            >
-              <Card>
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead>Address</TableHead>
-                      <TableHead>New Owner</TableHead>
-                      <TableHead className="text-right">Sale Price</TableHead>
-                      <TableHead className="text-right">Est. Redemption</TableHead>
-                      <TableHead>Redemption Ends</TableHead>
-                      <TableHead className="text-right">Actions</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {mockRedeemableDeeds.map((lead) => {
+              </motion.div>
+            </TabsContent>
+            <TabsContent value="table">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+              >
+                <Card>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Address</TableHead>
+                        <TableHead>New Owner</TableHead>
+                        <TableHead className="text-right">Sale Price</TableHead>
+                        <TableHead className="text-right">Est. Redemption</TableHead>
+                        <TableHead>Redemption Ends</TableHead>
+                        <TableHead className="text-right">Actions</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {deeds.map((lead) => {
                       const redemptionAmount = calculateRedemption(lead);
                       return (
                         <TableRow key={lead.id}>
@@ -169,12 +201,13 @@ const RedeemableDeeds = () => {
                         </TableRow>
                       )
                     })}
-                  </TableBody>
-                </Table>
-              </Card>
-            </motion.div>
-          </TabsContent>
-        </Tabs>
+                    </TableBody>
+                  </Table>
+                </Card>
+              </motion.div>
+            </TabsContent>
+          </Tabs>
+        )}
       </main>
 
       <Footer />

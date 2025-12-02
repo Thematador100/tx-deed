@@ -84,24 +84,37 @@ const LeadUpload = () => {
         continue;
       }
 
-      await new Promise(resolve => setTimeout(resolve, 3000));
+      try {
+        // Process file with real AI backend
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('uploadRecordId', uploadRecord.id);
 
-      const newProperties = [
-        { address: '123 E Broughton St, Savannah, GA', price: 85000, estimated_value: 220000, auction_date: new Date(new Date().setDate(new Date().getDate() + 25)).toISOString().split('T')[0], status: 'Upcoming Auction', roi: 158, listing_type: 'auction', deal_stage: 'Lead', opportunity_score: 94, bedrooms: 3, bathrooms: 2, sqft: 1800, year_built: 1955, property_type: 'Single Family', description: 'Historic district tax deed property with significant upside potential.', latitude: 32.0798, longitude: -81.0895, image_url: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811' },
-        { address: '456 Abercorn St, Savannah, GA', price: 110000, estimated_value: 280000, auction_date: new Date(new Date().setDate(new Date().getDate() + 35)).toISOString().split('T')[0], status: 'Upcoming Auction', roi: 154, listing_type: 'auction', deal_stage: 'Lead', opportunity_score: 96, bedrooms: 4, bathrooms: 3, sqft: 2400, year_built: 1962, property_type: 'Single Family', description: 'Large family home near Forsyth Park, available via tax deed auction.', latitude: 32.0721, longitude: -81.0923, image_url: 'https://images.unsplash.com/photo-1572120360610-d971b9d7767c' },
-      ];
+        const { data: processResult, error: processError } = await supabase.functions.invoke('process-property-upload', {
+          body: formData
+        });
 
-      const { error: propertiesError } = await supabase.from('properties').insert(newProperties);
+        if (processError) throw processError;
 
-      if (propertiesError) {
-        await supabase.from('lead_uploads').update({ status: 'error' }).eq('id', uploadRecord.id);
-        toast({ title: `Processing failed for ${file.name}`, description: propertiesError.message, variant: "destructive" });
-      } else {
-        await supabase.from('lead_uploads').update({ status: 'completed', leads_found: newProperties.length }).eq('id', uploadRecord.id);
+        const propertiesCount = processResult.properties?.length || 0;
+
+        await supabase.from('lead_uploads').update({
+          status: 'completed',
+          leads_found: propertiesCount
+        }).eq('id', uploadRecord.id);
+
         toast({
           title: "Processing Complete!",
-          description: `${newProperties.length} properties from ${file.name} have been added to your Deal Stream.`,
+          description: `${propertiesCount} properties from ${file.name} have been added to your Deal Stream.`,
           action: <Button onClick={() => navigate('/properties')}>View Properties</Button>,
+        });
+      } catch (error) {
+        console.error('Property processing error:', error);
+        await supabase.from('lead_uploads').update({ status: 'error' }).eq('id', uploadRecord.id);
+        toast({
+          title: `Processing failed for ${file.name}`,
+          description: error.message || 'Failed to process file',
+          variant: "destructive"
         });
       }
     }

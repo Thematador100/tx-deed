@@ -33,10 +33,36 @@ const DealRescue = () => {
     fetchInvoices();
   }, [user]);
 
-  const handleAction = () => {
-    toast({
-      title: "🚧 This feature isn't implemented yet—but don't worry! You can request it in your next prompt! 🚀"
-    });
+  const handleRescueDeal = async () => {
+    if (!user) {
+      toast({
+        title: "Please log in",
+        description: "You need to be logged in to use Deal Rescue",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    try {
+      // Call real deal-rescue edge function
+      const { data, error } = await supabase.functions.invoke('deal-rescue', {
+        body: { action: 'rescue' }
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Deal Rescue Initiated!",
+        description: "We're analyzing your stalled deal and generating fresh strategies.",
+      });
+    } catch (error) {
+      console.error('Deal rescue error:', error);
+      toast({
+        title: "Rescue Failed",
+        description: error.message || "Could not initiate deal rescue. Please try again.",
+        variant: "destructive"
+      });
+    }
   };
 
   const handlePayInvoice = (invoice) => {
@@ -104,7 +130,7 @@ const DealRescue = () => {
           </div>
 
           <div className="text-center">
-            <Button onClick={handleAction} size="lg" className="bg-gradient-to-r from-purple-600 to-indigo-700 hover:from-purple-700 hover:to-indigo-800 text-white text-lg px-8 py-6 shadow-lg">
+            <Button onClick={handleRescueDeal} size="lg" className="bg-gradient-to-r from-purple-600 to-indigo-700 hover:from-purple-700 hover:to-indigo-800 text-white text-lg px-8 py-6 shadow-lg">
               Rescue Your Deal
             </Button>
           </div>

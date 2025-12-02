@@ -27,21 +27,7 @@ const LibrarianChat = () => {
     setInput('');
     setIsLoading(true);
 
-    // Simulate AI response
-    setTimeout(() => {
-      let aiResponseText = "I'm sorry, I can only provide pre-canned responses for this demonstration. How can I help you with tax deeds?";
-      
-      if (input.toLowerCase().includes("redemption period")) {
-        aiResponseText = "The redemption period is the time frame during which a property owner can reclaim their property after a tax sale by paying the delinquent taxes, interest, and penalties. In Alabama, for example, the redemption period is generally three years from the date of the sale. This is a critical factor in your bidding strategy, as a shorter redemption period means you can take possession of the property sooner if it's not redeemed.";
-      } else if (input.toLowerCase().includes("surplus funds")) {
-        aiResponseText = "Surplus funds (or 'overbids') are the amount of money left over after the delinquent taxes and costs of the sale have been paid from the winning bid. The original property owner is typically entitled to claim these funds. Some investors specialize in helping owners recover these funds for a fee. We've noticed a 30% increase in surplus fund availability in Florida, which could be a new opportunity.";
-      }
-
-      const aiMessage = { sender: 'ai', text: aiResponseText };
-      setMessages(prev => [...prev, aiMessage]);
-      setIsLoading(false);
-    }, 1500);
-  };    // Call AI backend
+    // Call real AI backend
     try {
       const { data, error } = await supabase.functions.invoke('librarian-chat', {
         body: { message: input }
@@ -53,34 +39,16 @@ const LibrarianChat = () => {
       setMessages(prev => [...prev, aiMessage]);
     } catch (error) {
       console.error('Librarian AI error:', error);
-      const errorMessage = { 
-        sender: 'ai', 
-        text: 'I apologize, but I\'m having trouble connecting right now. Please try again in a moment.' 
+      const errorMessage = {
+        sender: 'ai',
+        text: 'I apologize, but I\'m having trouble connecting right now. Please try again in a moment.'
       };
       setMessages(prev => [...prev, errorMessage]);
     } finally {
       setIsLoading(false);
     }
-    // Call AI backend
-    try {
-      const { data, error } = await supabase.functions.invoke('librarian-chat', {
-        body: { message: input }
-      });
+  };
 
-      if (error) throw error;
-
-      const aiMessage = { sender: 'ai', text: data.response || 'I apologize, but I encountered an error. Please try again.' };
-      setMessages(prev => [...prev, aiMessage]);
-    } catch (error) {
-      console.error('Librarian AI error:', error);
-      const errorMessage = { 
-        sender: 'ai', 
-        text: 'I apologize, but I\'m having trouble connecting right now. Please try again in a moment.' 
-      };
-      setMessages(prev => [...prev, errorMessage]);
-    } finally {
-      setIsLoading(false);
-    }
   return (
     <>
       <AnimatePresence>
