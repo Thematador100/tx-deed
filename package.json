@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite --host :: --port 3000",
     "build": "node tools/generate-llms.js || true && vite build",
-    "preview": "vite preview --host :: --port 3000"
+    "preview": "vite preview --host :: --port 3000",
+    "setup:db": "node scripts/setup-database.js",
+    "setup:check": "node scripts/check-setup.js"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
@@ -25,6 +27,7 @@
     "@radix-ui/react-switch": "^1.1.2",
     "@radix-ui/react-tabs": "^1.0.4",
     "@radix-ui/react-toast": "^1.1.5",
+    "@react-google-maps/api": "^2.19.2",
     "@stripe/stripe-js": "^2.1.11",
     "@supabase/supabase-js": "2.30.0",
     "class-variance-authority": "^0.7.0",
@@ -51,6 +54,7 @@
     "@types/react-dom": "^18.2.7",
     "@vitejs/plugin-react": "^4.0.3",
     "autoprefixer": "^10.4.16",
+    "dotenv": "^16.3.1",
     "eslint": "^8.57.1",
     "eslint-config-react-app": "^7.0.1",
     "pg": "^8.16.3",

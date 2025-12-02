@@ -57,6 +57,7 @@ import DoneForYouTraining from '@/pages/DoneForYouTraining';
 import PropertyAnalysisService from '@/pages/PropertyAnalysisService';
 import QuietTitleService from '@/pages/QuietTitleService';
 import Messages from '@/pages/Messages';
+import AddProperty from '@/pages/AddProperty';
 
 function App() {
   return (
@@ -110,6 +111,7 @@ function App() {
             <Route path="/tax-delinquent-leads" element={<ProtectedRoute><TaxDelinquentLeads /></ProtectedRoute>} />
             <Route path="/redeemable-deeds" element={<ProtectedRoute><RedeemableDeeds /></ProtectedRoute>} />
             <Route path="/county-scraper" element={<ProtectedRoute><CountyScraper /></ProtectedRoute>} />
+            <Route path="/add-property" element={<ProtectedRoute><AddProperty /></ProtectedRoute>} />
             <Route path="/member-dashboard" element={<ProtectedRoute><MemberDashboard /></ProtectedRoute>} />
             <Route path="/messages" element={<ProtectedRoute><Messages /></ProtectedRoute>} />
 
