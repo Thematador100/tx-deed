@@ -7,8 +7,12 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { BadgeCheck, DollarSign, MapPin, Loader2 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/contexts/SupabaseAuthContext';
 
 const LeadMarketplace = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const [leads, setLeads] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -35,10 +39,24 @@ const LeadMarketplace = () => {
     fetchMarketplaceLeads();
   }, []);
 
-  const handleAction = () => {
-    toast({
-      title: "🚧 This feature isn't implemented yet—but don't worry! You can request it in your next prompt! 🚀"
-    });
+  const handleViewDetails = (leadId) => {
+    // Navigate to a detailed view of the lead
+    navigate(`/marketplace/${leadId}`);
+  };
+
+  const handleSellLead = () => {
+    if (!user) {
+      toast({
+        title: "Authentication Required",
+        description: "Please log in to sell leads on the marketplace.",
+        variant: "destructive"
+      });
+      navigate('/login');
+      return;
+    }
+
+    // Navigate to lead upload page
+    navigate('/lead-upload');
   };
 
   return (
@@ -60,7 +78,7 @@ const LeadMarketplace = () => {
           <p className="text-lg text-slate-600 max-w-3xl mx-auto">
             A peer-to-peer marketplace for buying and selling high-quality, vetted tax deed leads.
           </p>
-          <Button onClick={handleAction} size="lg" className="mt-6 bg-purple-600 hover:bg-purple-700 text-white">
+          <Button onClick={handleSellLead} size="lg" className="mt-6 bg-purple-600 hover:bg-purple-700 text-white">
             Sell a Lead
           </Button>
         </motion.div>
@@ -98,7 +116,7 @@ const LeadMarketplace = () => {
                     <DollarSign className="w-5 h-5 text-green-600" />
                     <span className="text-2xl font-bold text-slate-900">{Number(lead.price).toLocaleString()}</span>
                   </div>
-                  <Button onClick={handleAction} variant="outline">View Details</Button>
+                  <Button onClick={() => handleViewDetails(lead.id)} variant="outline">View Details</Button>
                 </div>
               </motion.div>
             ))}

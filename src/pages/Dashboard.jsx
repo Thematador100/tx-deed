@@ -18,16 +18,23 @@ const Dashboard = () => {
   const [properties, setProperties] = useState([]);
   const [savedProperties, setSavedProperties] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [stats, setStats] = useState({
+    totalInvestments: 0,
+    successfulBids: 0,
+    portfolioValue: 0,
+    activeWatchlist: 0
+  });
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      
+
       // Use mock data as a fallback
       setProperties(mockProperties.slice(0, 2));
       setSavedProperties(mockProperties.slice(2, 5));
 
       if (user) {
+        // Fetch featured properties
         const { data: featuredData, error: featuredError } = await supabase
           .from('properties')
           .select('*')
@@ -37,6 +44,7 @@ const Dashboard = () => {
           setProperties(featuredData);
         }
 
+        // Fetch saved properties for pipeline preview
         const { data: savedData, error: savedError } = await supabase
           .from('saved_properties')
           .select('*, properties(*)')
@@ -46,6 +54,53 @@ const Dashboard = () => {
         if (!savedError && savedData.length > 0) {
           setSavedProperties(savedData.map(sp => sp.properties));
         }
+
+        // Fetch user stats
+        // Total properties in pipeline
+        const { count: pipelineCount } = await supabase
+          .from('saved_properties')
+          .select('*', { count: 'exact', head: true })
+          .eq('user_id', user.id);
+
+        // Count acquired properties (stage 4)
+        const { data: acquiredStage } = await supabase
+          .from('pipeline_stages')
+          .select('id')
+          .eq('name', 'Acquired')
+          .single();
+
+        let acquiredCount = 0;
+        if (acquiredStage) {
+          const { count } = await supabase
+            .from('saved_properties')
+            .select('*', { count: 'exact', head: true })
+            .eq('user_id', user.id)
+            .eq('pipeline_stage_id', acquiredStage.id);
+          acquiredCount = count || 0;
+        }
+
+        // Calculate portfolio value from acquired properties
+        let totalValue = 0;
+        if (acquiredStage) {
+          const { data: acquiredProps } = await supabase
+            .from('saved_properties')
+            .select('properties(estimated_value)')
+            .eq('user_id', user.id)
+            .eq('pipeline_stage_id', acquiredStage.id);
+
+          if (acquiredProps) {
+            totalValue = acquiredProps.reduce((sum, item) => {
+              return sum + (item.properties?.estimated_value || 0);
+            }, 0);
+          }
+        }
+
+        setStats({
+          totalInvestments: acquiredCount,
+          successfulBids: acquiredCount,
+          portfolioValue: totalValue,
+          activeWatchlist: pipelineCount || 0
+        });
       }
 
       setLoading(false);
@@ -56,12 +111,6 @@ const Dashboard = () => {
 
   const handleViewProperty = (id) => {
     navigate(`/property/${id}`);
-  };
-
-  const handleAction = () => {
-    toast({
-      title: "🚧 This feature isn't implemented yet—but don't worry! You can request it in your next prompt! 🚀"
-    });
   };
 
   const userName = user?.user_metadata?.full_name || user?.email || "Guest";
@@ -96,10 +145,10 @@ const Dashboard = () => {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8"
         >
-          <StatsCard title="Total Investments" value="3" icon={Building2} color="purple" />
-          <StatsCard title="Successful Bids" value="1" icon={TrendingUp} color="green" />
-          <StatsCard title="Portfolio Value" value="$450,000" icon={DollarSign} color="blue" />
-          <StatsCard title="Active Watchlist" value="5" icon={MapPin} color="orange" />
+          <StatsCard title="Total Investments" value={stats.totalInvestments.toString()} icon={Building2} color="purple" />
+          <StatsCard title="Successful Bids" value={stats.successfulBids.toString()} icon={TrendingUp} color="green" />
+          <StatsCard title="Portfolio Value" value={`$${stats.portfolioValue.toLocaleString()}`} icon={DollarSign} color="blue" />
+          <StatsCard title="Active Watchlist" value={stats.activeWatchlist.toString()} icon={MapPin} color="orange" />
         </motion.div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -130,7 +179,6 @@ const Dashboard = () => {
                       <PropertyCard
                         property={property}
                         onViewDetails={() => handleViewProperty(property.id)}
-                        onPlaceBid={handleAction}
                       />
                     </motion.div>
                   ))}

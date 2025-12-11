@@ -56,12 +56,6 @@ const Properties = () => {
     navigate(`/property/${id}`);
   };
 
-  const handleAction = () => {
-    toast({
-      title: "🚧 This feature isn't implemented yet—but don't worry! You can request it in your next prompt! 🚀"
-    });
-  };
-
   const handleFilterChange = (type, value) => {
     setFilters(prev => {
       const newValues = prev[type].includes(value)
@@ -199,7 +193,6 @@ const Properties = () => {
                   <PropertyCard
                     property={property}
                     onViewDetails={() => handleViewProperty(property.id)}
-                    onPlaceBid={handleAction}
                   />
                 </motion.div>
               ))}

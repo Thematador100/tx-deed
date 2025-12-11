@@ -18,7 +18,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { mockProperties } from '@/lib/mockData';
 
-const SortableProperty = ({ property, stageName }) => {
+const SortableProperty = ({ property, stageName, onListOnMarketplace }) => {
   const navigate = useNavigate();
   const { attributes, listeners, setNodeRef, transform, transition } = useSortable({ id: property.id });
   const style = {
@@ -27,9 +27,8 @@ const SortableProperty = ({ property, stageName }) => {
   };
 
   const handleListOnMarketplace = () => {
-    toast({
-      title: "🚧 This feature isn't implemented yet—but don't worry! You can request it in your next prompt! 🚀",
-    });
+    const propertyData = property.properties || property;
+    onListOnMarketplace(propertyData);
   };
 
   const propertyData = property.properties || property;
@@ -68,14 +67,14 @@ const SortableProperty = ({ property, stageName }) => {
   );
 };
 
-const PipelineColumn = ({ stage, properties }) => {
+const PipelineColumn = ({ stage, properties, onListOnMarketplace }) => {
   return (
     <div className="bg-slate-100/80 rounded-xl p-4 w-80 flex-shrink-0">
       <h3 className="font-bold text-lg text-slate-800 mb-4 px-2">{stage.name} <span className="text-sm font-medium text-slate-500">({properties.length})</span></h3>
       <SortableContext items={properties.map(p => p.id)} strategy={verticalListSortingStrategy}>
         <div className="space-y-3 min-h-[100px]">
           {properties.map(prop => (
-            <SortableProperty key={prop.id} property={prop} stageName={stage.name} />
+            <SortableProperty key={prop.id} property={prop} stageName={stage.name} onListOnMarketplace={onListOnMarketplace} />
           ))}
         </div>
       </SortableContext>
@@ -260,6 +259,55 @@ const MyPipeline = () => {
     setChecklistState({ isOpen: false, propertyId: null, newStageId: null });
   };
 
+  const handleListOnMarketplace = async (property) => {
+    if (!user) {
+      toast({
+        title: "Authentication Required",
+        description: "Please log in to list properties on the marketplace.",
+        variant: "destructive"
+      });
+      navigate('/login');
+      return;
+    }
+
+    // Create a marketplace listing
+    const { error } = await supabase
+      .from('marketplace_leads')
+      .insert({
+        seller_id: user.id,
+        property_id: property.id,
+        title: property.address,
+        description: property.description || `${property.property_type} property with ${property.bedrooms || 'N/A'} beds, ${property.bathrooms || 'N/A'} baths. Great investment opportunity!`,
+        location: property.address.split(',').slice(1).join(',').trim(),
+        price: property.price || property.estimated_value,
+        is_certified: false,
+        status: 'active'
+      });
+
+    if (error) {
+      if (error.code === '23505') {
+        toast({
+          title: "Already Listed",
+          description: "This property is already listed on the marketplace.",
+          variant: "destructive"
+        });
+      } else {
+        toast({
+          title: "Error",
+          description: "Failed to list property on marketplace. Please try again.",
+          variant: "destructive"
+        });
+      }
+    } else {
+      toast({
+        title: "Success!",
+        description: "Property listed on the marketplace successfully.",
+        className: "bg-green-100 text-green-800"
+      });
+      navigate('/lead-marketplace');
+    }
+  };
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col">
       <Helmet>
@@ -294,6 +342,7 @@ const MyPipeline = () => {
                   <PipelineColumn
                     stage={stage}
                     properties={properties.filter(p => p.pipeline_stage_id === stage.id)}
+                    onListOnMarketplace={handleListOnMarketplace}
                   />
                 </SortableContext>
               ))}

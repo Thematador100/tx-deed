@@ -7,8 +7,12 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Button } from '@/components/ui/button';
 import { Calendar, MapPin, List, Loader2 } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/contexts/SupabaseAuthContext';
 
 const Leads = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
   const [sales, setSales] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -35,10 +39,47 @@ const Leads = () => {
     fetchUpcomingSales();
   }, []);
 
-  const handleAction = () => {
-    toast({
-      title: "🚧 This feature isn't implemented yet—but don't worry! You can request it in your next prompt! 🚀"
-    });
+  const handleViewDetails = (sale) => {
+    // Navigate to properties page with county filter
+    navigate(`/properties?county=${encodeURIComponent(sale.county)}&saleDate=${sale.sale_date}`);
+  };
+
+  const handleTrackAuction = async (sale) => {
+    if (!user) {
+      toast({
+        title: "Authentication Required",
+        description: "Please log in to track auctions.",
+        variant: "destructive"
+      });
+      navigate('/login');
+      return;
+    }
+
+    // Add auction tracking to user's notifications
+    const { error } = await supabase
+      .from('notifications')
+      .insert({
+        user_id: user.id,
+        type: 'auction_reminder',
+        title: `Auction Reminder: ${sale.county}`,
+        message: `Tax deed auction scheduled for ${new Date(sale.sale_date).toLocaleDateString()}`,
+        metadata: { sale_id: sale.id, county: sale.county, sale_date: sale.sale_date },
+        is_read: false
+      });
+
+    if (error) {
+      toast({
+        title: "Error",
+        description: "Failed to track auction. Please try again.",
+        variant: "destructive"
+      });
+    } else {
+      toast({
+        title: "Success!",
+        description: `Now tracking ${sale.county} auction. You'll receive a reminder before the sale date.`,
+        className: "bg-green-100 text-green-800"
+      });
+    }
   };
 
   return (
@@ -90,8 +131,8 @@ const Leads = () => {
                   </div>
                 </div>
                 <div className="flex-shrink-0 flex flex-col md:flex-row items-stretch md:items-center gap-3 w-full md:w-auto">
-                  <Button onClick={handleAction} variant="outline" className="w-full md:w-auto">View Details</Button>
-                  <Button onClick={handleAction} className="bg-purple-600 hover:bg-purple-700 text-white w-full md:w-auto">Track Auction</Button>
+                  <Button onClick={() => handleViewDetails(sale)} variant="outline" className="w-full md:w-auto">View Details</Button>
+                  <Button onClick={() => handleTrackAuction(sale)} className="bg-purple-600 hover:bg-purple-700 text-white w-full md:w-auto">Track Auction</Button>
                 </div>
               </motion.div>
             ))}

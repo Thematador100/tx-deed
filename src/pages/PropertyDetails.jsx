@@ -122,10 +122,45 @@ const PropertyDetails = () => {
     setIsSaving(false);
   };
 
-  const handlePlaceBid = () => {
-    toast({
-      title: "🚧 This feature isn't implemented yet—but don't worry! You can request it in your next prompt! 🚀"
-    });
+  const handlePlaceBid = async () => {
+    if (!user) {
+      toast({
+        title: "Authentication Required",
+        description: "Please log in to place a bid or make an offer.",
+        variant: "destructive"
+      });
+      navigate('/login');
+      return;
+    }
+
+    // For auction properties, navigate to auction details/bidding page
+    if (property.listing_type === 'auction') {
+      toast({
+        title: "Auction Information",
+        description: `This property will be auctioned on ${new Date(property.auction_date).toLocaleDateString()}. Check your email for bidding instructions or contact the county directly.`,
+        duration: 5000
+      });
+
+      // Save to pipeline if not already saved
+      const { data: existing } = await supabase
+        .from('saved_properties')
+        .select('id')
+        .eq('user_id', user.id)
+        .eq('property_id', property.id)
+        .single();
+
+      if (!existing) {
+        await handleSaveToPipeline();
+      }
+    } else {
+      // For marketplace listings, create an offer
+      toast({
+        title: "Make an Offer",
+        description: "Contact the seller through the messaging system to make an offer on this property.",
+        duration: 5000
+      });
+      navigate('/messages');
+    }
   };
 
   const getPropertyTypeIcon = (type) => {

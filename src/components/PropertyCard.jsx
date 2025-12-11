@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { MapPin, DollarSign, TrendingUp, Zap, AlertTriangle, Mountain, ImageOff } from 'lucide-react';
+import { MapPin, DollarSign, TrendingUp, Zap, AlertTriangle, Mountain, ImageOff, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { supabase } from '@/lib/customSupabaseClient';
+import { useAuth } from '@/contexts/SupabaseAuthContext';
+import { toast } from '@/components/ui/use-toast';
+import { useNavigate } from 'react-router-dom';
 
-const PropertyCard = ({ property, onViewDetails }) => {
+const PropertyCard = ({ property, onViewDetails, isSaved: initialIsSaved = false, onSaveToggle }) => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  const [isSaved, setIsSaved] = useState(initialIsSaved);
+  const [isSaving, setIsSaving] = useState(false);
   const {
     address,
     price,
@@ -19,6 +27,93 @@ const PropertyCard = ({ property, onViewDetails }) => {
   } = property;
 
   const potentialEquity = estimated_value - price;
+
+  const handleSaveToggle = async (e) => {
+    e.stopPropagation();
+
+    if (!user) {
+      toast({
+        title: "Login Required",
+        description: "Please log in to save properties to your pipeline.",
+        variant: "destructive"
+      });
+      navigate('/login');
+      return;
+    }
+
+    setIsSaving(true);
+
+    if (isSaved) {
+      // Unsave the property
+      const { error } = await supabase
+        .from('saved_properties')
+        .delete()
+        .eq('user_id', user.id)
+        .eq('property_id', property.id);
+
+      if (error) {
+        toast({
+          title: "Error",
+          description: "Failed to remove property from pipeline.",
+          variant: "destructive"
+        });
+      } else {
+        setIsSaved(false);
+        toast({
+          title: "Removed",
+          description: "Property removed from your pipeline."
+        });
+        if (onSaveToggle) onSaveToggle(property.id, false);
+      }
+    } else {
+      // Save the property
+      let initialStageId = 1;
+      const { data: initialStage } = await supabase
+        .from('pipeline_stages')
+        .select('id')
+        .order('sort_order')
+        .limit(1)
+        .single();
+
+      if (initialStage) {
+        initialStageId = initialStage.id;
+      }
+
+      const { error } = await supabase
+        .from('saved_properties')
+        .insert({
+          user_id: user.id,
+          property_id: property.id,
+          pipeline_stage_id: initialStageId
+        });
+
+      if (error) {
+        if (error.code === '23505') {
+          toast({
+            title: "Already Saved",
+            description: "This property is already in your pipeline."
+          });
+          setIsSaved(true);
+        } else {
+          toast({
+            title: "Error",
+            description: "Failed to save property to pipeline.",
+            variant: "destructive"
+          });
+        }
+      } else {
+        setIsSaved(true);
+        toast({
+          title: "Saved!",
+          description: "Property added to your pipeline.",
+          className: "bg-green-100 text-green-800"
+        });
+        if (onSaveToggle) onSaveToggle(property.id, true);
+      }
+    }
+
+    setIsSaving(false);
+  };
 
   return (
     <motion.div
@@ -37,6 +132,18 @@ const PropertyCard = ({ property, onViewDetails }) => {
           {listing_type.toUpperCase()}
         </div>
         <div className="absolute top-3 right-3 flex items-center gap-2">
+          <button
+            onClick={handleSaveToggle}
+            disabled={isSaving}
+            className={`p-2 rounded-full backdrop-blur-sm transition-all ${
+              isSaved
+                ? 'bg-red-500 text-white hover:bg-red-600'
+                : 'bg-white/90 text-slate-600 hover:bg-white hover:text-red-500'
+            }`}
+            title={isSaved ? "Remove from pipeline" : "Save to pipeline"}
+          >
+            <Heart className={`w-4 h-4 ${isSaved ? 'fill-current' : ''}`} />
+          </button>
           {red_flags && red_flags.length > 0 && (
             <div title={`${red_flags.length} Red Flag(s)`} className="px-2 py-1 rounded-full text-xs font-bold text-white bg-red-600/90 backdrop-blur-sm flex items-center gap-1">
               <AlertTriangle className="w-3 h-3" />

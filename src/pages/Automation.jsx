@@ -5,12 +5,30 @@ import Navbar from '@/components/Navbar';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
 import { FileText, ClipboardCheck, HeartHandshake as Handshake, DollarSign } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/contexts/SupabaseAuthContext';
 
 const Automation = () => {
-  const handleAction = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const handleAutomateWorkflow = () => {
+    if (!user) {
+      toast({
+        title: "Authentication Required",
+        description: "Please log in to access automation features.",
+        variant: "destructive"
+      });
+      navigate('/login');
+      return;
+    }
+
     toast({
-      title: "🚧 This feature isn't implemented yet—but don't worry! You can request it in your next prompt! 🚀"
+      title: "Automation Coming Soon!",
+      description: "Document automation features are currently under development. Check your pipeline for now.",
+      duration: 4000
     });
+    navigate('/my-pipeline');
   };
 
   return (
@@ -60,7 +78,7 @@ const Automation = () => {
           </div>
 
           <div className="text-center">
-            <Button onClick={handleAction} size="lg" className="bg-gradient-to-r from-purple-600 to-indigo-700 hover:from-purple-700 hover:to-indigo-800 text-white text-lg px-8 py-6 shadow-lg">
+            <Button onClick={handleAutomateWorkflow} size="lg" className="bg-gradient-to-r from-purple-600 to-indigo-700 hover:from-purple-700 hover:to-indigo-800 text-white text-lg px-8 py-6 shadow-lg">
               Automate Your Workflow
             </Button>
           </div>
